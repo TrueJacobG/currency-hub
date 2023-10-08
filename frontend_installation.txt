@@ -1,0 +1,11 @@
+1. install node
+2. install git
+3. clone repo
+4. cd frontend/
+5. npm install --global expo-cli
+6. install android studio with sdks - andriod 12
+6a. run sdk
+    or just run it on your android device
+7. npm install
+7a. https://github.com/GeekyAnts/NativeBase/issues/5758#issuecomment-1642579490
+8. npm run android
