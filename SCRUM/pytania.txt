@@ -1,7 +1,6 @@
 1. waterfall, no bo w sumie jest i wgl, ale jakis przyklad gdzie moglby dzialac lepiej niz SCRUM
 2. spotkałem sie ze stwierdzeniem ze taki czysty czysty scrum to istnieje tylko na papierze, czy w takim razie skoro ten 
 system jest taki trudny do wprowadzenia w 100% to czy ma on wgl sens
-3. 
 
 1 odpowiedź - Scrum is free and offered in this Guide. 
 The Scrum framework, as outlined herein, is immutable. 
