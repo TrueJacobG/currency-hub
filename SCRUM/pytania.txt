@@ -2,3 +2,9 @@
 2. spotkałem sie ze stwierdzeniem ze taki czysty czysty scrum to istnieje tylko na papierze, czy w takim razie skoro ten 
 system jest taki trudny do wprowadzenia w 100% to czy ma on wgl sens
 3. 
+
+1 odpowiedź - Scrum is free and offered in this Guide. 
+The Scrum framework, as outlined herein, is immutable. 
+While implementing only parts of Scrum is possible, the result is not Scrum. 
+Scrum exists only in its entirety and functions well as a container for other 
+techniques, methodologies, and practices.

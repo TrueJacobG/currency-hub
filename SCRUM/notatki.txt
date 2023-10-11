@@ -68,5 +68,41 @@ teamami a stakeholderami
 
 
 Scrum Events:
-- 
+- spotkania zaplanowane scrumowe sa po to zeby bylo jak najmniej niespodziewanych spotkan
+- sprint planning, daily, sprint review, sprint retrospective
+
+sprint:
+- max 1 miesiąc
+- jakość nie spada
+- jesli cel sprintu jest nieaktualny to produkt owner moze zcancelowac
+
+- sprint planning: cały team planuje kolejny sprint, product owner mowi ktore zadania 
+są najważniejsze a które mniej, ustala sie cel sprintu, co moze byc zrobione, i jak bedzie praca wykonana, max 8h
+
+- daily: codziennie, 15 min, mowi sie o tym co sie zrobilo i co sie planuje zrobic danego 
+dnia
+
+- review: ostatni event, podsumowanie sprintu, sprawdzenie i określenie przyszłych 
+adaptacji, max 4h, moze byc spotkanie z stakeholderami i pokazanie im przyrostu
+
+- retro: ma na celu zwiększenie wydajności, zobaczenie jak wszystko poszło w last 
+sprincie, max 3h
+
+
+
+sprint artifacts:
+For the Product Backlog it is the Product Goal.
+For the Sprint Backlog it is the Sprint Goal.
+For the Increment it is the Definition of Done.
+
+
+product backlog:
+- lista rzeczy do zrobienia / ulepszen / dodatkow itd.
+- podział np. planu aplikacji na pomniejsze zadania (takie ktore da sie zrobic w 1 sprint)
+- "A product is a vehicle to deliver value. It has a clear boundary, known stakeholders, well-defined users or customers. A product could be a service, a physical product, or something more abstract."
+
+- sprint goal: wspolny cel wszystkich developerów na dany sprint (jaki przyrost 
+ma zostać wygenerowany), tworzony podczas sprint planningu
+
+- przyrost: musi być zgodne z definition of done, musi to być działający kawałek czegoś
 
