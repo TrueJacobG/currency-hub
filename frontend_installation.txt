@@ -5,7 +5,10 @@
 5. npm install --global expo-cli
 6. install android studio with sdks - andriod 12
 6a. run sdk
-    or just run it on your android device
+    - propably you have to install wsl on your windows machine: https://pureinfotech.com/install-windows-subsystem-linux-2-windows-10/
+    - and enable in bios virtualization: https://www.virtualmetric.com/blog/how-to-enable-hardware-virtualization
+    - or just run it on your android device
+    - (recommended) android studio -> setttings -> find on start-up -> disable reopen last project
 7. npm install
 7a. https://github.com/GeekyAnts/NativeBase/issues/5758#issuecomment-1642579490
 8. npm run android
