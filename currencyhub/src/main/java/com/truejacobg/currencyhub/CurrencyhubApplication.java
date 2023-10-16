@@ -16,10 +16,10 @@ public class CurrencyhubApplication {
 		SpringApplication.run(CurrencyhubApplication.class, args);
 
 		MongoClient mongoClient = MongoClients.create("mongodb+srv://client:client@sarektest.dbiwcvg.mongodb.net/?retryWrites=true&w=majority&appName=AtlasApp");
-		MongoDatabase db = mongoClient.getDatabase("currencyHub");
-		MongoCollection col = db.getCollection("User");
-		Document doc = new Document("_id","2").append("name","Amelia Smith");
-		col.insertOne(doc);
+		//MongoDatabase db = mongoClient.getDatabase("currencyHub");
+		//MongoCollection col = db.getCollection("User");
+		//Document doc = new Document("_id","2").append("name","Amelia Smith");
+		//col.insertOne(doc);
 
 	}
 
