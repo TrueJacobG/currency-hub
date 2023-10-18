@@ -1,4 +1,5 @@
-database:
-  credits:
-    link: ""
-    database: ""
+spring:
+  data:
+    mongodb:
+      uri: ""
+      database: ""
