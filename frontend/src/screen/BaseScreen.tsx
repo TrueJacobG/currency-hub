@@ -1,4 +1,4 @@
-import { View } from "native-base";
+import { View, Text } from "react-native";
 import StatusComponent from "../components/status/StatusComponent";
 
 const BaseScreen = () => {

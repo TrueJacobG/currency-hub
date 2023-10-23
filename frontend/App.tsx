@@ -1,15 +1,15 @@
-import { StatusBar } from "expo-status-bar";
-import { Box, NativeBaseProvider } from "native-base";
 import { StyleSheet, Text, View } from "react-native";
 import BaseScreen from "./src/screen/BaseScreen";
 
-export default function App() {
+const App = () => {
   return (
-    <NativeBaseProvider>
+    <View style={styles.container}>
       <BaseScreen />
-    </NativeBaseProvider>
+    </View>
   );
-}
+};
+
+export default App;
 
 const styles = StyleSheet.create({
   container: {

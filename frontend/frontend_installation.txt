@@ -1,0 +1,13 @@
+1. install node
+2. install git
+3. clone repo
+4. cd frontend/
+5. npm install --global expo-cli
+6. install android studio with sdks - andriod 12
+6a. run sdk
+    - propably you have to install wsl on your windows machine: https://pureinfotech.com/install-windows-subsystem-linux-2-windows-10/
+    - and enable in bios virtualization: https://www.virtualmetric.com/blog/how-to-enable-hardware-virtualization
+    - or just run it on your android device
+    - (recommended) android studio -> setttings -> find on start-up -> disable reopen last project
+7. npm install
+8. npx expo
