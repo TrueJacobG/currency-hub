@@ -1,10 +1,12 @@
 import { StyleSheet, Text, View } from "react-native";
 import BaseScreen from "./src/screen/BaseScreen";
+import SignScreen from "./src/screen/SignScreen";
 
 const App = () => {
   return (
     <View style={styles.container}>
-      <BaseScreen />
+      {/* <BaseScreen /> */}
+      <SignScreen />
     </View>
   );
 };
