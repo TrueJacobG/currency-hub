@@ -13,8 +13,8 @@ import java.time.LocalDateTime;
 public class UserDTO {
     // post tworzyć
     private String name;
-    private String authCode;
     private String surname;
+    private String authCode;
     private String email;
     private LocalDateTime creationDate;
 }
