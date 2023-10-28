@@ -35,8 +35,7 @@ public class AuthenticationFilter implements Filter {
 
         authentication.setPassword(encoder.encode(authentication.getPassword()));
 
-       // System.out.println(authentication);
-       //DEBUG HERE
+
         logger.info(authentication);
         // check if user with that username and password exists
 
