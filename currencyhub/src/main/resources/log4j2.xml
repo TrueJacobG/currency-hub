@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Configuration status="INFO">
+
+    <Properties>
+        <Property name="fileName">./src/main/resources/logs/history.log</Property>
+        <Property name="fileNamePattern">./src/main/resources/logs/history.log</Property>
+        <Property name="logPattern">%d{dd-MM-yyyy HH:mm:ss,SSS} %-5p %c - %m%n</Property>
+    </Properties>
+
+    <Appenders>
+        <RollingFile name="file" fileName="${fileName}" filePattern="${fileNamePattern}">
+            <PatternLayout pattern="${logPattern}"/>
+            <Policies>
+                <SizeBasedTriggeringPolicy size="20MB"/>
+            </Policies>
+        </RollingFile>
+
+        <Console name="Console" target="SYSTEM_OUT">
+            <PatternLayout pattern="${logPattern}"/>
+        </Console>
+    </Appenders>
+
+    <Loggers>
+        <Root level="INFO">
+            <AppenderRef ref="file"/>
+            <AppenderRef ref="Console"/>
+        </Root>
+    </Loggers>
+
+</Configuration>
