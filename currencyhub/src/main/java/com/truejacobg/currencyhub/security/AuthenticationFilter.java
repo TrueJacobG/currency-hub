@@ -40,7 +40,7 @@ public class AuthenticationFilter implements Filter {
         // check if user with that username and password exists
 
         // if yes chain
-        boolean valid = false;
+        boolean valid = true;
 
 
         if (valid) {

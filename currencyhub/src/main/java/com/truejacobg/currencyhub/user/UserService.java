@@ -16,11 +16,42 @@ public class UserService {
     private UserRepository userRepository;
 
     public CreateUserResponseDTO createUser(UserDTO userDTO) {
-        UserEntity userEntity = new UserEntity("123124", userDTO.getName(), userDTO.getAuthCode(), userDTO.getSurname(), userDTO.getEmail(), userDTO.getCreationDate());
+        UserEntity userEntity = new UserEntity("100", userDTO.getName(), userDTO.getAuthCode(), userDTO.getSurname(), userDTO.getEmail(), userDTO.getCreationDate());
         userRepository.save(userEntity);
 
         return new CreateUserResponseDTO("ok", HttpStatus.ACCEPTED);
     }
 
 
+    public CreateUserResponseDTO getUser(String userEmail) {
+        UserEntity user = userRepository.findByEmail(userEmail);
+        if (user != null) {
+            // found
+            return new CreateUserResponseDTO("has been found", HttpStatus.OK);
+        } else {
+            return new CreateUserResponseDTO("has not been found", HttpStatus.NOT_FOUND);
+        }
+    }
+
+    public CreateUserResponseDTO updateUser(UserDTO userDTO, String email) {
+        // is he in database?
+        UserEntity user = userRepository.findByEmail(email);
+        if (user == null) {
+            return new CreateUserResponseDTO("User has not been in db", HttpStatus.NOT_FOUND);
+        } else {
+            user.setName(userDTO.getName());
+            user.setSurname(userDTO.getSurname());
+            user.setEmail(userDTO.getEmail());
+
+            userRepository.save(user);
+
+            return new CreateUserResponseDTO("The user has been updated successfully.", HttpStatus.OK);
+
+        }
+    }
+
+    public CreateUserResponseDTO deleteUser(String email) {
+        userRepository.deleteByEmail(email); // TODO: dodać wyjątek
+        return new CreateUserResponseDTO("User has been deleted", HttpStatus.OK);
+    }
 }
