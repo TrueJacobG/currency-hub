@@ -16,7 +16,7 @@ public class UserService {
     private UserRepository userRepository;
 
     public CreateUserResponseDTO createUser(UserDTO userDTO) {
-        UserEntity userEntity = new UserEntity("100", userDTO.getName(), userDTO.getAuthCode(), userDTO.getSurname(), userDTO.getEmail(), userDTO.getCreationDate());
+        UserEntity userEntity = new UserEntity(null, userDTO.getName(), userDTO.getAuthCode(), userDTO.getSurname(), userDTO.getEmail(), userDTO.getCreationDate());
         userRepository.save(userEntity);
 
         return new CreateUserResponseDTO("ok", HttpStatus.ACCEPTED);
