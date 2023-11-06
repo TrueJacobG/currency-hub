@@ -36,3 +36,5 @@ application.yml
 
 ### logger ###
 **.log
+
+/.idea
