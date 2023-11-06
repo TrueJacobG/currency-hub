@@ -4,10 +4,8 @@ import com.truejacobg.currencyhub.user.dto.CreateUserResponseDTO;
 import com.truejacobg.currencyhub.user.dto.UserDTO;
 import com.truejacobg.currencyhub.user.entity.UserEntity;
 import lombok.AllArgsConstructor;
-import org.apache.catalina.User;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
-import org.springframework.web.bind.annotation.RequestBody;
 // prawdziwy backend metody walidacje, zabawa z bazą, prawdziwe mięso, tutaj bedzie cały kod
 // musi implementować repo, 90% będzie tutaj, autoryzacje, zabezpieczenia, uruchomienia, rzucanie błędów
 //
@@ -26,12 +24,11 @@ public class UserService {
 
 
     public CreateUserResponseDTO getUser(String userEmail) {
-        UserEntity user =  userRepository.findByEmail(userEmail);
-        if( user != null){
+        UserEntity user = userRepository.findByEmail(userEmail);
+        if (user != null) {
             // found
             return new CreateUserResponseDTO("has been found", HttpStatus.OK);
-        }
-        else{
+        } else {
             return new CreateUserResponseDTO("has not been found", HttpStatus.NOT_FOUND);
         }
     }
@@ -39,10 +36,9 @@ public class UserService {
     public CreateUserResponseDTO updateUser(UserDTO userDTO, String email) {
         // is he in database?
         UserEntity user = userRepository.findByEmail(email);
-        if(user == null){
+        if (user == null) {
             return new CreateUserResponseDTO("User has not been in db", HttpStatus.NOT_FOUND);
-        }
-        else {
+        } else {
             user.setName(userDTO.getName());
             user.setSurname(userDTO.getSurname());
             user.setEmail(userDTO.getEmail());
@@ -56,6 +52,6 @@ public class UserService {
 
     public CreateUserResponseDTO deleteUser(String email) {
         userRepository.deleteByEmail(email); // TODO: dodać wyjątek
-        return new CreateUserResponseDTO("User has been deleted",HttpStatus.OK);
+        return new CreateUserResponseDTO("User has been deleted", HttpStatus.OK);
     }
 }

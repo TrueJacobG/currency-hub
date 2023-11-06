@@ -3,8 +3,6 @@ package com.truejacobg.currencyhub.user;
 import com.truejacobg.currencyhub.user.dto.CreateUserResponseDTO;
 import com.truejacobg.currencyhub.user.dto.UserDTO;
 import lombok.AllArgsConstructor;
-import org.springframework.data.repository.support.Repositories;
-import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -25,19 +23,19 @@ public class UserController {
     }
 
     @GetMapping("/{email}")
-    ResponseEntity<CreateUserResponseDTO> getUser(@PathVariable String email){
+    ResponseEntity<CreateUserResponseDTO> getUser(@PathVariable String email) {
         CreateUserResponseDTO response = userService.getUser(email);
-        return  ResponseEntity.ok(response);
+        return ResponseEntity.ok(response);
     }
 
     @PutMapping("/{email}")
-    ResponseEntity<CreateUserResponseDTO> upadateUser(@RequestBody UserDTO userDTO, @PathVariable String email){
-        CreateUserResponseDTO response = userService.updateUser(userDTO,email);
+    ResponseEntity<CreateUserResponseDTO> upadateUser(@RequestBody UserDTO userDTO, @PathVariable String email) {
+        CreateUserResponseDTO response = userService.updateUser(userDTO, email);
         return ResponseEntity.ok(response);
     }
 
     @DeleteMapping("/{email}")
-    ResponseEntity<CreateUserResponseDTO> deleteUser(@PathVariable String email){
+    ResponseEntity<CreateUserResponseDTO> deleteUser(@PathVariable String email) {
         CreateUserResponseDTO response = userService.deleteUser(email);
         return ResponseEntity.ok(response);
     }
