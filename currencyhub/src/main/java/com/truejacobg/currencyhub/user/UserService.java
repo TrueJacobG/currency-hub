@@ -6,6 +6,8 @@ import com.truejacobg.currencyhub.user.entity.UserEntity;
 import lombok.AllArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
+
+import java.time.LocalDateTime;
 // prawdziwy backend metody walidacje, zabawa z bazą, prawdziwe mięso, tutaj bedzie cały kod
 // musi implementować repo, 90% będzie tutaj, autoryzacje, zabezpieczenia, uruchomienia, rzucanie błędów
 //
@@ -16,7 +18,7 @@ public class UserService {
     private UserRepository userRepository;
 
     public CreateUserResponseDTO createUser(UserDTO userDTO) {
-        UserEntity userEntity = new UserEntity(null, userDTO.getName(), userDTO.getAuthCode(), userDTO.getSurname(), userDTO.getEmail(), userDTO.getCreationDate());
+        UserEntity userEntity = new UserEntity(null, userDTO.getName(), userDTO.getAuthCode(), userDTO.getSurname(), userDTO.getEmail(), LocalDateTime.now());
         userRepository.save(userEntity);
 
         return new CreateUserResponseDTO("ok", HttpStatus.ACCEPTED);
