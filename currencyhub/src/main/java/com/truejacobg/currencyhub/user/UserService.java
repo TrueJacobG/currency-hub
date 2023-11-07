@@ -24,15 +24,25 @@ public class UserService {
         return new CreateUserResponseDTO("ok", HttpStatus.ACCEPTED);
     }
 
-
     public CreateUserResponseDTO getUser(String userEmail) {
-        UserEntity user = userRepository.findByEmail(userEmail);
-        if (user != null) {
+        UserEntity userEntity = userRepository.findByEmail(userEmail);
+        if (userEntity != null) {
             // found
             return new CreateUserResponseDTO("has been found", HttpStatus.OK);
         } else {
             return new CreateUserResponseDTO("has not been found", HttpStatus.NOT_FOUND);
         }
+    }
+
+    public String getUserPasswordByName(String name){
+        UserEntity userEntity =  userRepository.findByName(name);
+        return userEntity.getAuthCode();
+//        if(userEntity != null){
+//            return userEntity.getAuthCode();
+//        }
+//        else{
+//            //TODO:: ass throw error
+//        }
     }
 
     public CreateUserResponseDTO updateUser(UserDTO userDTO, String email) {
