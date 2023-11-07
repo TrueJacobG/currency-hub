@@ -1,4 +1,4 @@
-import { StyleSheet, Text, View } from "react-native";
+import { StyleSheet } from "react-native";
 import { NavigationContainer } from "@react-navigation/native";
 import { createNativeStackNavigator } from "@react-navigation/native-stack";
 import BaseScreen from "./src/screen/BaseScreen";
@@ -12,8 +12,8 @@ const App = () => {
   return (
     <NavigationContainer>
       <Stack.Navigator>
-        <Stack.Screen name="Home" component={BaseScreen} />
         <Stack.Screen name="Sign" component={SignScreen} />
+        <Stack.Screen name="Home" component={BaseScreen} />
         <Stack.Screen name="Log" component={LogScreen} />
       </Stack.Navigator>
     </NavigationContainer>

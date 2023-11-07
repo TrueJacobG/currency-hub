@@ -4,13 +4,11 @@ import {
   TextInput,
   View,
   Text,
-  Button,
-  Pressable,
 } from "react-native";
 import passwordEncoder from "../../../utils/passwordEncoder";
 
 const LoginComponent = () => {
-  const authorizationService = new AuthorizationService();
+  //const authorizationService = new AuthorizationService();
   const [login, setLogin] = useState("");
   const [password, setPassword] = useState("");
 
@@ -43,7 +41,7 @@ const styles = StyleSheet.create({
     textAlignVertical: "center",
     fontSize: 40,
     width: 300,
-    height: 400,
+    height: 200,
     backgroundColor: "yellow",
     marginLeft: 50,
     marginRight: 100,
