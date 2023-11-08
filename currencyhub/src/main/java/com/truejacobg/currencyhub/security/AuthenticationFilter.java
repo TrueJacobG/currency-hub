@@ -2,7 +2,7 @@ package com.truejacobg.currencyhub.security;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.ObjectWriter;
-import com.truejacobg.currencyhub.exception.AuthenticationFailResponse;
+import com.truejacobg.currencyhub.exception.GlobalException;
 import com.truejacobg.currencyhub.security.jwt.Authentication;
 import com.truejacobg.currencyhub.security.jwt.JWTDecoder;
 import jakarta.servlet.*;
@@ -45,18 +45,8 @@ public class AuthenticationFilter implements Filter {
 
         if (valid) {
             filterChain.doFilter(request, servletResponse);
-        } else {
-            // move it to global exception handler
-
-            String message = "Authentication Fail! Name or password is not valid!";
-            HttpStatus status = HttpStatus.UNAUTHORIZED;
-            AuthenticationFailResponse failResponse = new AuthenticationFailResponse(message, status);
-
-            ObjectWriter ow = new ObjectMapper().writer().withDefaultPrettyPrinter();
-            String jsonFailResponse = ow.writeValueAsString(failResponse);
-
-            response.setStatus(status.value());
-            response.getWriter().write(jsonFailResponse);
+        } else{
+           // throw new GlobalException("Authorization fail! Wrong email or password!"); //TODO:throw when not valid
         }
     }
 }
