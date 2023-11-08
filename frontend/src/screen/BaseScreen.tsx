@@ -1,20 +1,22 @@
-import { StyleSheet, View, Text } from "react-native";
-import StatusComponent from "../components/status/StatusComponent";
-import { NavigationContainer } from "@react-navigation/native";
-import {
-  NativeStackScreenProps,
-  createNativeStackNavigator,
-} from "@react-navigation/native-stack";
+import { NativeStackScreenProps } from "@react-navigation/native-stack";
+import { useAtom } from "jotai";
+import { StyleSheet, Text, View } from "react-native";
+import { loggedUserAtom } from "../jotai/loggedUserAtom";
 import { ScreenNaviagtion } from "../type/ScreenNavigation";
+import { User } from "../type/User";
 
 type Props = NativeStackScreenProps<ScreenNaviagtion, "Home">;
 
 const BaseScreen = ({ navigation }: Props) => {
+  const [loggedUser, setLoggedUser] = useAtom<User>(loggedUserAtom);
+
   return (
     <View>
       <Text style={styles.textintro}>Welcome to CurrencyHub!</Text>
       <Text style={styles.text}>This is not your money any more</Text>
-      <StatusComponent />
+      <View>
+        <Text>Email: {loggedUser.email}</Text>
+      </View>
     </View>
   );
 };

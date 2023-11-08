@@ -1,48 +1,69 @@
 import { useState } from "react";
-import {
-  StyleSheet,
-  TextInput,
-  View,
-  Text,
-} from "react-native";
+import { StyleSheet, Text, TextInput, View } from "react-native";
+import { User } from "../../../type/User";
 
-const SigninComponents = () => {
-  const [login, setLogin] = useState("");
-  const [password, setPassword] = useState(""); //TODO
-  const [name, setName] = useState("");
-  const [surname, setSurnane] = useState("");
+type Props = {
+  user: User;
+  setUser: any;
+};
+
+const SigninComponents = ({ user, setUser }: Props) => {
+  const [password, setPassword] = useState("");
+  const [repassword, setRepassword] = useState("");
+
+  // TODO:
+  // add show error
+  // add validation
+  // and
+  // secure password
+
+  const onChangeName = (name: string) => {
+    setUser({ ...user, name: name });
+  };
+
+  const onChangeSurname = (surname: string) => {
+    setUser({ ...user, surname: surname });
+  };
+
+  const onChangeEmail = (email: string) => {
+    setUser({ ...user, email: email });
+  };
+
+  const onChangeAuthCode = (authCode: string) => {
+    setUser({ ...user, authCode: authCode });
+  };
+
+  const onChangePassword = (password: string) => {
+    setPassword(password);
+
+    if (password !== repassword) {
+      // console.error("Password and repeated password have to be the same!");
+      return;
+    }
+
+    onChangeAuthCode(password);
+  };
+
+  const onChangeRePassword = (repassword: string) => {
+    setRepassword(repassword);
+
+    if (repassword !== password) {
+      // console.error("Password and repeated password have to be the same!");
+      return;
+    }
+
+    onChangeAuthCode(repassword);
+  };
 
   return (
     <View>
       <Text style={styles.text}>Welcome to CurrencyHub</Text>
-      <Text style={styles.textintro}>
-        Please signin if you don't have an account:
-      </Text>
-      <TextInput
-        style={styles.textinput}
-        onChangeText={setName}
-        placeholder={"Enter your name"}
-      />
-      <TextInput
-        style={styles.textinput}
-        onChangeText={setSurnane}
-        placeholder={"Enter your surname"}
-      />
-      <TextInput
-        style={styles.textinput}
-        onChangeText={setLogin}
-        placeholder={"Enter your email"}
-      />
-      <TextInput
-        style={styles.textinput}
-        onChangeText={setPassword}
-        placeholder={"Enter your password"}
-      />
-      <TextInput
-        style={styles.textinput}
-        onChangeText={setPassword}
-        placeholder={"Repeat your password"}
-      />
+      <Text style={styles.textintro}>Please signin if you don't have an account:</Text>
+      <TextInput style={styles.textinput} onChangeText={onChangeName} placeholder={"Enter your name"} />
+      <TextInput style={styles.textinput} onChangeText={onChangeSurname} placeholder={"Enter your surname"} />
+      <TextInput style={styles.textinput} onChangeText={onChangeEmail} placeholder={"Enter your email"} />
+      <TextInput style={styles.textinput} onChangeText={onChangePassword} placeholder={"Enter your password"} />
+      <TextInput style={styles.textinput} onChangeText={onChangeRePassword} placeholder={"Repeat your password"} />
     </View>
   );
 };

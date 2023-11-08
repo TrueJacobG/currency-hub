@@ -1,36 +1,48 @@
-import { StyleSheet, View, Pressable, Text } from "react-native";
+import { NativeStackScreenProps } from "@react-navigation/native-stack";
+import { useAtom } from "jotai";
+import { useState } from "react";
+import { Pressable, StyleSheet, Text, View } from "react-native";
 import LoginComponent from "../components/sign/login/LoginComponent";
-import SigninComponents from "../components/sign/login/SigninComponents";
-import { NavigationContainer } from "@react-navigation/native";
-import {
-  NativeStackScreenProps,
-  createNativeStackNavigator,
-} from "@react-navigation/native-stack";
+import { loggedUserAtom } from "../jotai/loggedUserAtom";
+import { AuthorizationService } from "../services/AuthorizationService";
+import { LoginUser } from "../type/LoginUser";
 import { ScreenNaviagtion } from "../type/ScreenNavigation";
 
 type Props = NativeStackScreenProps<ScreenNaviagtion, "Log">;
 
 const LogScreen = ({ navigation }: Props) => {
+  const authService = new AuthorizationService();
+
+  const [loggedUser, setLoggedUser] = useAtom(loggedUserAtom);
+
+  const [loginUser, setLoginUser] = useState<LoginUser>({ email: "", authCode: "" });
+
+  const onLoginPress = async () => {
+    if (typeof loginUser === "undefined") {
+      console.error("LoginUser is undefined!");
+      return;
+    }
+
+    const result = await authService.loginUser(loginUser);
+
+    console.log(result);
+
+    if (result.status == "OK") {
+      setLoggedUser({ ...loggedUser, ...loginUser });
+      navigation.navigate("Home");
+    }
+  };
+
   return (
     <View>
-      <LoginComponent />
-      <Pressable
-        style={() => [styles.button]}
-        onPress={() => navigation.navigate("Home")}
-      >
+      <LoginComponent loginUser={loginUser} setLoginUser={setLoginUser} />
+      <Pressable style={() => [styles.button]} onPress={onLoginPress}>
         <Text style={[styles.text]}>Login</Text>
       </Pressable>
-      <Text style={styles.textintro}>
-        If you don't have an account please register
-      </Text>
-      {/*Notka: nad wyglądem przycisków i i funkcji jeszcze popracuję. */}
-      <Pressable
-        style={() => [styles.button]}
-        onPress={() => navigation.navigate("Sign")}
-      >
+      <Text style={styles.textintro}>If you don't have an account please register</Text>
+      <Pressable style={() => [styles.button]} onPress={() => navigation.navigate("Sign")}>
         <Text style={[styles.text]}>Register</Text>
       </Pressable>
-      {/*Notka: Nie wiem czy przypadkiem przyciski typu: (Login, Signin) nie powinny sie znaleźć w plikach LoginComponencts i SigninComponents ponieważ jakoś trzeba za pomocą wciśnięcia przycisku przekazać dane do autorization i je przetworzyć oraz przekazać dalej do backendu. */}
     </View>
   );
 };

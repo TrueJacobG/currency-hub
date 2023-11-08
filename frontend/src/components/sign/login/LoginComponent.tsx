@@ -1,36 +1,31 @@
-import { useState } from "react";
-import {
-  StyleSheet,
-  TextInput,
-  View,
-  Text,
-} from "react-native";
-import passwordEncoder from "../../../utils/passwordEncoder";
+import { StyleSheet, Text, TextInput, View } from "react-native";
+import { LoginUser } from "../../../type/LoginUser";
 
-const LoginComponent = () => {
-  //const authorizationService = new AuthorizationService();
-  const [login, setLogin] = useState("");
-  const [password, setPassword] = useState("");
+type Props = {
+  loginUser: LoginUser;
+  setLoginUser: any;
+};
 
-  const securePassword = async (password: string) => {
-    //console.log(password);  //TODO
-    /*let securedPassword: string =await passwordEncoder(password);*/
-    //console.error(setPassword);
-    setPassword(password);
+const LoginComponent = ({ loginUser, setLoginUser }: Props) => {
+  // TODO:
+  // add show error
+  // add validation
+  // and
+  // secure password
+
+  const onChangeEmail = (email: string) => {
+    setLoginUser({ ...loginUser, email: email });
   };
+
+  const onChangeAuthCode = (authCode: string) => {
+    setLoginUser({ ...loginUser, authCode: authCode });
+  };
+
   return (
     <View style={styles.container}>
       <Text style={styles.text}>Login to your account:</Text>
-      <TextInput
-        style={styles.textinput}
-        onChangeText={setLogin}
-        placeholder={"Enter your email"}
-      />
-      <TextInput
-        style={styles.textinput}
-        onChangeText={securePassword}
-        placeholder={"Enter your password"}
-      />
+      <TextInput style={styles.textinput} onChangeText={onChangeEmail} placeholder={"Enter your email"} />
+      <TextInput style={styles.textinput} onChangeText={onChangeAuthCode} placeholder={"Enter your password"} />
     </View>
   );
 };
