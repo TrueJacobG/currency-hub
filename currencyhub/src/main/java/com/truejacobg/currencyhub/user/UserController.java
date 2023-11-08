@@ -9,6 +9,7 @@ import org.springframework.web.bind.annotation.*;
 // trzyma konkretny endpoint, zarzadzaja co sie kiedy ma zadziac, ktore metody
 // jaki typ zwracany itp. te klasy słóżą jaki link ma się zając czym. Kolejność metod staramy sie trzymać CRUDowo
 
+@CrossOrigin(origins = "http://localhost:8081")
 @AllArgsConstructor
 @RequestMapping(value = "/api/v1/user")
 @RestController
