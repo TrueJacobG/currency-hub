@@ -29,7 +29,9 @@ public class AuthenticationFilter implements Filter {
 
     private final UserService userService;
     private final JWTDecoder jwtDecoder = new JWTDecoder();
+    //TODO:: this encoder uses random salt each time .encode is invoked. check for alternatives
     private final BCryptPasswordEncoder encoder = new BCryptPasswordEncoder();
+    //TODO:: salt should be in custonEncoder
     private final String salt = "$2a$10$EUoCY87J.YJD6F4foMJGouI.NrQ1l2hvOoKhdNvi/wwlgtY7433N.";
 
 
