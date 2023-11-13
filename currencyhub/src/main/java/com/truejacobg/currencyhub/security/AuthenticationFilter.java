@@ -29,10 +29,8 @@ public class AuthenticationFilter implements Filter {
 
     private final UserService userService;
     private final JWTDecoder jwtDecoder = new JWTDecoder();
-    //TODO:: this encoder uses random salt each time .encode is invoked. check for alternatives
-    private final BCryptPasswordEncoder encoder = new BCryptPasswordEncoder();
-    //TODO:: salt should be in custonEncoder
-    private final String salt = "$2a$10$EUoCY87J.YJD6F4foMJGouI.NrQ1l2hvOoKhdNvi/wwlgtY7433N.";
+    private final Encoder encoder = new Encoder();
+    private final String blockedPath = "/api/v1/user/";
 
 
     @Override
@@ -40,18 +38,23 @@ public class AuthenticationFilter implements Filter {
         HttpServletRequest request = (HttpServletRequest) servletRequest;
         HttpServletResponse response = (HttpServletResponse) servletResponse;
 
-        String token = request.getHeader("Authorization");
-        Authentication authentication = jwtDecoder.tokenToAuthentication(token);
+        if (!(request.getRequestURI().startsWith(blockedPath) &&
+                (request.getMethod().equals("GET") || request.getMethod().equals("POST")))) {
+            String token = request.getHeader("Authorization");
 
-        authentication.setPassword(BCrypt.hashpw(authentication.getPassword(),salt));
+            Authentication authentication = jwtDecoder.tokenToAuthentication(token);
+            authentication.setPassword(encoder.endoce(authentication.getPassword()));
 
-        String password = BCrypt.hashpw(userService.getUserPasswordByName(authentication.getName()),salt);
+            String password = encoder.endoce(userService.getUserPasswordByName(authentication.getName()));
 
-        //check if user password is equal to users password in database
-        if (authentication.getPassword().equals(password)) {
-            filterChain.doFilter(request, servletResponse);
-        } else{
-           // throw new GlobalException("Authorization fail! Wrong email or password!"); //TODO:throw when not valid
+            if (authentication.getPassword().equals(password)) {
+
+                logger.info("SOMTEHING IS HAPPENING");
+            } else {
+                throw new GlobalException("Authorization fail! Wrong email or password!");
+            }
         }
+
+        filterChain.doFilter(request, servletResponse);
     }
 }

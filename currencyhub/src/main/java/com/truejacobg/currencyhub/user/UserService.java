@@ -30,9 +30,8 @@ public class UserService {
     }
 
     public CreateUserResponseDTO getUser(String userEmail) {
-        Optional<UserEntity> userEntity = Optional.of(userRepository.findByEmail(userEmail));
+        Optional<UserEntity> userEntity = userRepository.findByEmail(userEmail);
         if (userEntity.isPresent()) {
-            // found
             return new CreateUserResponseDTO("has been found", HttpStatus.OK);
         } else {
             return new CreateUserResponseDTO("has not been found", HttpStatus.NOT_FOUND);
@@ -47,17 +46,18 @@ public class UserService {
 
     public CreateUserResponseDTO updateUser(UserDTO userDTO, String email) {
         // is he in database?
-        UserEntity user = userRepository.findByEmail(email);
-        if (user == null) {
+        Optional<UserEntity> userEntity = userRepository.findByEmail(email);
+
+        if (userEntity == null) {
             return new CreateUserResponseDTO("User has not been in db", HttpStatus.NOT_FOUND);
         } else {
-            user.setName(userDTO.getName());
-            user.setSurname(userDTO.getSurname());
-            user.setEmail(userDTO.getEmail());
+            userEntity.get().setName(userDTO.getName());
+            userEntity.get().setSurname(userDTO.getSurname());
+            userEntity.get().setEmail(userDTO.getEmail());
 
-            userRepository.save(user);
+            userRepository.save(userEntity.get());
 
-            return new CreateUserResponseDTO("The user has been updated successfully.", HttpStatus.OK);
+            return new CreateUserResponseDTO("The userEntity has been updated successfully.", HttpStatus.OK);
 
         }
     }
