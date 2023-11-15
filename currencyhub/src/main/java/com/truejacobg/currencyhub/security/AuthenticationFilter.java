@@ -28,11 +28,9 @@ public class AuthenticationFilter implements Filter {
     private final UserService userService;
     private final JWTDecoder jwtDecoder = new JWTDecoder();
 
-    @Autowired
-    private final Encoder encoder = new Encoder();
+    private final Encoder encoder;
 
-    @Autowired
-    private final NoAuthForFilterDTO noAuthUris = new NoAuthForFilterDTO();
+    private final NoAuthForFilterDTO noAuthUris;
     private final String blockedPath = "/api/v1/user/";
 
 
@@ -41,11 +39,12 @@ public class AuthenticationFilter implements Filter {
         HttpServletRequest request = (HttpServletRequest) servletRequest;
         HttpServletResponse response = (HttpServletResponse) servletResponse;
 
-        System.out.println(noAuthUris.request);
-        for (Map<Object, Object> map:noAuthUris.request) {
-            System.out.println(map.get("path"));
-            System.out.println(map.get("method"));
-
+        // TODO:
+        // tutaj oblukaj
+        // dodaj w application.yml.example to z solą i te pathy jak cos
+        System.out.println(noAuthUris);
+        for(Map.Entry<String, String> entry : noAuthUris.request.entrySet()){
+            System.out.println(entry);
         }
 
         if (!(request.getRequestURI().startsWith(blockedPath) &&

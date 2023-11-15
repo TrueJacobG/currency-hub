@@ -1,13 +1,21 @@
 package com.truejacobg.currencyhub.security.dto;
 
+import lombok.AllArgsConstructor;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
 import org.springframework.boot.context.properties.ConfigurationProperties;
 import org.springframework.stereotype.Component;
 
-import java.util.List;
 import java.util.Map;
 
 @Component
 @ConfigurationProperties(prefix = "blocked")
+@AllArgsConstructor
+@NoArgsConstructor
+@Getter
+@Setter
 public class NoAuthForFilterDTO {
-   public List<Map<Object,Object>> request;
+
+   public Map<String, String> request;
 }
