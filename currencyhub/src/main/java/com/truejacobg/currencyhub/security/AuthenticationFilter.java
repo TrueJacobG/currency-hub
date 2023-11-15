@@ -1,27 +1,25 @@
 package com.truejacobg.currencyhub.security;
 
-import com.fasterxml.jackson.databind.ObjectMapper;
-import com.fasterxml.jackson.databind.ObjectWriter;
-import com.truejacobg.currencyhub.exception.GlobalException;
+import com.truejacobg.currencyhub.exception.AuthorizationException;
+import com.truejacobg.currencyhub.security.dto.NoAuthForFilterDTO;
 import com.truejacobg.currencyhub.security.jwt.Authentication;
 import com.truejacobg.currencyhub.security.jwt.JWTDecoder;
-import com.truejacobg.currencyhub.user.UserRepository;
 import com.truejacobg.currencyhub.user.UserService;
-import com.truejacobg.currencyhub.user.entity.UserEntity;
 import jakarta.servlet.*;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import lombok.AllArgsConstructor;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
-import org.springframework.http.HttpStatus;
-import org.springframework.security.crypto.bcrypt.BCrypt;
-import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.context.properties.EnableConfigurationProperties;
 import org.springframework.stereotype.Component;
 
 import java.io.IOException;
+import java.util.Map;
 
 @AllArgsConstructor
+@EnableConfigurationProperties()
 @Component
 public class AuthenticationFilter implements Filter {
 
@@ -29,7 +27,12 @@ public class AuthenticationFilter implements Filter {
 
     private final UserService userService;
     private final JWTDecoder jwtDecoder = new JWTDecoder();
+
+    @Autowired
     private final Encoder encoder = new Encoder();
+
+    @Autowired
+    private final NoAuthForFilterDTO noAuthUris = new NoAuthForFilterDTO();
     private final String blockedPath = "/api/v1/user/";
 
 
@@ -38,20 +41,28 @@ public class AuthenticationFilter implements Filter {
         HttpServletRequest request = (HttpServletRequest) servletRequest;
         HttpServletResponse response = (HttpServletResponse) servletResponse;
 
+        System.out.println(noAuthUris.request);
+        for (Map<Object, Object> map:noAuthUris.request) {
+            System.out.println(map.get("path"));
+            System.out.println(map.get("method"));
+
+        }
+
         if (!(request.getRequestURI().startsWith(blockedPath) &&
                 (request.getMethod().equals("GET") || request.getMethod().equals("POST")))) {
             String token = request.getHeader("Authorization");
 
             Authentication authentication = jwtDecoder.tokenToAuthentication(token);
-            authentication.setPassword(encoder.endoce(authentication.getPassword()));
+            authentication.setPassword(encoder.encode(authentication.getPassword()));
 
-            String password = encoder.endoce(userService.getUserPasswordByName(authentication.getName()));
+            String password = encoder.encode(userService.getUserPasswordByName(authentication.getName()));
 
             if (authentication.getPassword().equals(password)) {
 
-                logger.info("SOMTEHING IS HAPPENING");
+                logger.info(String.format("User [%s] has been authenticated", authentication.getName()));
             } else {
-                throw new GlobalException("Authorization fail! Wrong email or password!");
+                logger.warn(String.format("User [%s] has NOT been authenticated", authentication.getName()));
+                throw new AuthorizationException("Authorization fail! Wrong name or password!");
             }
         }
 

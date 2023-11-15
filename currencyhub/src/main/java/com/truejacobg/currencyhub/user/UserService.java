@@ -11,6 +11,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDateTime;
+import java.util.NoSuchElementException;
 import java.util.Optional;
 // prawdziwy backend metody walidacje, zabawa z bazą, prawdziwe mięso, tutaj bedzie cały kod
 // musi implementować repo, 90% będzie tutaj, autoryzacje, zabezpieczenia, uruchomienia, rzucanie błędów
@@ -45,7 +46,6 @@ public class UserService {
     }
 
     public CreateUserResponseDTO updateUser(UserDTO userDTO, String email) {
-        // is he in database?
         Optional<UserEntity> userEntity = userRepository.findByEmail(email);
 
         if (userEntity == null) {

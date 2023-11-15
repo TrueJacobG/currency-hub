@@ -1,14 +1,15 @@
 package com.truejacobg.currencyhub.security;
 
+import org.springframework.beans.factory.annotation.Value;
+import org.springframework.context.annotation.Configuration;
 import org.springframework.security.crypto.bcrypt.BCrypt;
 
-import java.util.Base64;
-
+@Configuration
 public class Encoder {
+    @Value("${encoder.salt}")
+    private String salt;
 
-    private final String salt = "$2a$10$EUoCY87J.YJD6F4foMJGouI.NrQ1l2hvOoKhdNvi/wwlgtY7433N.";
-
-    public String endoce(String password){
+    public String encode(String password){
         return BCrypt.hashpw(password,salt);
     }
 }
