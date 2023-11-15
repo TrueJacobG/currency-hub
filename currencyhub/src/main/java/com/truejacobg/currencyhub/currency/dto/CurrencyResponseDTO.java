@@ -8,12 +8,13 @@ import org.springframework.http.HttpStatus;
 @Setter
 @Getter
 @Data
-public class CurrencyReponseDTO {
+public class CurrencyResponseDTO {
     private String message;
     private String body;
     private HttpStatus status;
-    public CurrencyReponseDTO(String message, HttpStatus status){
-        this.message=message;
-        this.status=status;
+
+    public CurrencyResponseDTO(String message, HttpStatus status) {
+        this.message = message;
+        this.status = status;
     }
 }

@@ -1,16 +1,11 @@
 package com.truejacobg.currencyhub.currency;
 
-import com.fasterxml.jackson.databind.JsonNode;
-import com.fasterxml.jackson.databind.ObjectMapper;
-import com.truejacobg.currencyhub.currency.dto.CurrencyReponseDTO;
-import com.truejacobg.currencyhub.currency.entity.CurrencyEntity;
+
+import com.truejacobg.currencyhub.currency.dto.CurrencyResponseDTO;
 import lombok.AllArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
-import java.io.BufferedReader;
-import java.io.InputStreamReader;
-import java.net.HttpURLConnection;
-import java.net.URL;
+
 
 @Service
 @AllArgsConstructor
@@ -19,13 +14,12 @@ public class CurrencyService {
     private CurrencyRepository currencyRepository;
 
 
-    public CurrencyReponseDTO getCurrencyRates(){
+    public CurrencyResponseDTO getCurrencyRates() {
 
-        //TODO: sarevice
+        //TODO: do realizacji w service currency
 
-        return new CurrencyReponseDTO("response.body", HttpStatus.OK);
+        return new CurrencyResponseDTO("response.body", HttpStatus.OK);
     }
-
 
 
 }

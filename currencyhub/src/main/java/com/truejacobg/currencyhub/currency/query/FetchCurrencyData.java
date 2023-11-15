@@ -3,7 +3,7 @@ package com.truejacobg.currencyhub.currency.query;
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.truejacobg.currencyhub.currency.CurrencyRepository;
-import com.truejacobg.currencyhub.currency.dto.CurrencyReponseDTO;
+import com.truejacobg.currencyhub.currency.dto.CurrencyResponseDTO;
 import com.truejacobg.currencyhub.currency.entity.CurrencyEntity;
 import org.springframework.http.HttpStatus;
 
@@ -14,7 +14,8 @@ import java.net.URL;
 
 public class FetchCurrencyData {
     private CurrencyRepository currencyRepository;
-    public CurrencyReponseDTO fetchDataAndSaveToMongoDB() {
+
+    public CurrencyResponseDTO fetchDataAndSaveToMongoDB() {
         currencyRepository.deleteAll();
         try {
             try { // Table A
@@ -52,11 +53,11 @@ public class FetchCurrencyData {
                     }
                 } catch (Exception e) {
                     e.printStackTrace();
-                    return new CurrencyReponseDTO("Currency data fatched failed", HttpStatus.EXPECTATION_FAILED);
+                    return new CurrencyResponseDTO("Currency data fetch failed", HttpStatus.EXPECTATION_FAILED);
                 }
             } catch (Exception e) {
                 e.printStackTrace();
-                return new CurrencyReponseDTO("Currency data fatched failed on A", HttpStatus.EXPECTATION_FAILED);
+                return new CurrencyResponseDTO("Currency data fetch failed on A", HttpStatus.EXPECTATION_FAILED);
             }
             try { // Table B
                 String urlB = "https://api.nbp.pl/api/exchangerates/tables/B";
@@ -92,18 +93,18 @@ public class FetchCurrencyData {
                     }
                 } catch (Exception e) {
                     e.printStackTrace();
-                    return new CurrencyReponseDTO("Currency data fatched failed", HttpStatus.EXPECTATION_FAILED);
+                    return new CurrencyResponseDTO("Currency data fetch failed", HttpStatus.EXPECTATION_FAILED);
                 }
             } catch (Exception e) {
                 e.printStackTrace();
-                return new CurrencyReponseDTO("Currency data fatched failed on B", HttpStatus.EXPECTATION_FAILED);
+                return new CurrencyResponseDTO("Currency data fetch failed on B", HttpStatus.EXPECTATION_FAILED);
             }
 
-            return new CurrencyReponseDTO("Currency data fatched and saved from table A and B", HttpStatus.OK);
+            return new CurrencyResponseDTO("Currency data fetch and saved from table A and B", HttpStatus.OK);
 
-        }catch (Exception e){
+        } catch (Exception e) {
             e.printStackTrace();
-            return new CurrencyReponseDTO("Currency data fatched failed", HttpStatus.EXPECTATION_FAILED);
+            return new CurrencyResponseDTO("Currency data fetch failed", HttpStatus.EXPECTATION_FAILED);
         }
     }
 }

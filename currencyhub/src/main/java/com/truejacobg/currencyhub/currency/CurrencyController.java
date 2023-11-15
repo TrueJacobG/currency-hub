@@ -1,6 +1,6 @@
 package com.truejacobg.currencyhub.currency;
 
-import com.truejacobg.currencyhub.currency.dto.CurrencyReponseDTO;
+import com.truejacobg.currencyhub.currency.dto.CurrencyResponseDTO;
 import lombok.AllArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -14,8 +14,8 @@ public class CurrencyController {
     private CurrencyService currencyService;
 
     @GetMapping("/rate")
-    ResponseEntity<CurrencyReponseDTO> getCurrencyRates(){
-        CurrencyReponseDTO reponseDTO=currencyService.getCurrencyRates();
-        return ResponseEntity.ok(reponseDTO);
+    ResponseEntity<CurrencyResponseDTO> getCurrencyRates() {
+        CurrencyResponseDTO responseDTO = currencyService.getCurrencyRates();
+        return ResponseEntity.ok(responseDTO);
     }
 }
