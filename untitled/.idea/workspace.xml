@@ -1,15 +1,27 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
-    <list default="true" id="ab5f85eb-a422-4555-bbae-51fd657161ab" name="Changes" comment="" />
+    <list default="true" id="ab5f85eb-a422-4555-bbae-51fd657161ab" name="Changes" comment="">
+      <change beforePath="$PROJECT_DIR$/../.idea/.gitignore" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../.idea/compiler.xml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../.idea/encodings.xml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../.idea/jarRepositories.xml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../.idea/misc.xml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../.idea/modules.xml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../.idea/projekt-zespolowy.iml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../.idea/vcs.xml" beforeDir="false" />
+    </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
     <option name="LAST_RESOLUTION" value="IGNORE" />
   </component>
-  <component name="ProjectColorInfo"><![CDATA[{
-  "associatedIndex": 4
-}]]></component>
+  <component name="Git.Settings">
+    <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$/.." />
+  </component>
+  <component name="ProjectColorInfo">{
+  &quot;associatedIndex&quot;: 4
+}</component>
   <component name="ProjectId" id="2Xlm7oGgACv0OGrFf1c5HAbm4HZ" />
   <component name="ProjectViewState">
     <option name="hideEmptyMiddlePackages" value="true" />
@@ -20,7 +32,8 @@
     "RunOnceActivity.OpenProjectViewOnStart": "true",
     "RunOnceActivity.ShowReadmeOnStart": "true",
     "WebServerToolWindowFactoryState": "false",
-    "last_opened_file_path": "C:/Users/Jakub/Documents/GitHub/projekt-zespolowy",
+    "git-widget-placeholder": "main",
+    "last_opened_file_path": "C:/Users/Jakub/Documents/GitHub/projekt-zespolowy/currencyhub",
     "onboarding.tips.debug.path": "C:/Users/Jakub/Documents/GitHub/projekt-zespolowy/untitled/src/Main.java",
     "vue.rearranger.settings.migration": "true"
   }
@@ -34,6 +47,7 @@
       <option name="presentableId" value="Default" />
       <updated>1699211877218</updated>
       <workItem from="1699211878223" duration="117000" />
+      <workItem from="1699343048209" duration="13000" />
     </task>
     <servers />
   </component>

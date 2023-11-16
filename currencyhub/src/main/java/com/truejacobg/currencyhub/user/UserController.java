@@ -2,6 +2,7 @@ package com.truejacobg.currencyhub.user;
 
 import com.truejacobg.currencyhub.user.dto.CreateUserResponseDTO;
 import com.truejacobg.currencyhub.user.dto.UserDTO;
+import jakarta.validation.Valid;
 import lombok.AllArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -16,7 +17,7 @@ public class UserController {
     private UserService userService;
 
     @PostMapping("/")
-    ResponseEntity<CreateUserResponseDTO> createUser(@RequestBody UserDTO userDTO) {
+    ResponseEntity<CreateUserResponseDTO> createUser(@RequestBody @Valid UserDTO userDTO) {
         // responseEntity -> menedżer odsyłań
         CreateUserResponseDTO response = userService.createUser(userDTO);
         return ResponseEntity.ok(response);

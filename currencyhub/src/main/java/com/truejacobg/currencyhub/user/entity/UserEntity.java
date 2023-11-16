@@ -1,5 +1,8 @@
 package com.truejacobg.currencyhub.user.entity;
 
+import jakarta.validation.constraints.Email;
+import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.Size;
 import lombok.*;
 import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.mapping.Document;
@@ -17,6 +20,7 @@ import java.time.LocalDateTime;
 public class UserEntity {
     @Id
     private String id;
+    private String firstName;
     private String name;
     private String authCode;
     private String surname;
