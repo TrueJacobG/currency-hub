@@ -3,3 +3,13 @@ spring:
     mongodb:
       uri: ""
       database: ""
+
+encoder:
+  salt: ""
+
+blocked:
+  request:
+    get:
+      - ""
+    post:
+      - ""

@@ -39,16 +39,18 @@ public class AuthenticationFilter implements Filter {
         HttpServletRequest request = (HttpServletRequest) servletRequest;
         HttpServletResponse response = (HttpServletResponse) servletResponse;
 
-        // TODO:
-        // tutaj oblukaj
-        // dodaj w application.yml.example to z solą i te pathy jak cos
-        System.out.println(noAuthUris);
-        for(Map.Entry<String, String> entry : noAuthUris.request.entrySet()){
-            System.out.println(entry);
+        boolean needToBeChecked = true;
+
+        for (Map.Entry<String, String> entry : noAuthUris.request.entrySet())
+        {
+            if(request.getRequestURI().startsWith(entry.getValue()) &&(request.getMethod().equals(entry.getKey().toUpperCase().split("\\.")[0])) )
+            {
+                logger.info("NIE FILTRUJ " + request.getMethod());
+                needToBeChecked=false;
+            }
         }
 
-        if (!(request.getRequestURI().startsWith(blockedPath) &&
-                (request.getMethod().equals("GET") || request.getMethod().equals("POST")))) {
+        if (needToBeChecked) {
             String token = request.getHeader("Authorization");
 
             Authentication authentication = jwtDecoder.tokenToAuthentication(token);
