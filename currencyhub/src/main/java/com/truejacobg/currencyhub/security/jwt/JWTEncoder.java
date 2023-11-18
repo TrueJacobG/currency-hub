@@ -12,7 +12,7 @@ import java.util.Date;
 @Configuration
 public class JWTEncoder {
     @Value(value = "${encoder.secret-key}")
-    String secretKey;
+    private String secretKey;
 
     public String GenerateJWT(UserTokenDTO userTokenDTO) {
         String jwt = Jwts.builder()

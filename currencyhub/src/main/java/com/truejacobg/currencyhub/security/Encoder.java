@@ -6,10 +6,10 @@ import org.springframework.security.crypto.bcrypt.BCrypt;
 
 @Configuration
 public class Encoder {
-    @Value("${encoder.salt}")
+    @Value(value = "${encoder.salt}")
     private String salt;
 
-    public String encode(String password){
-        return BCrypt.hashpw(password,salt);
+    public String encode(String password) {
+        return BCrypt.hashpw(password, salt);
     }
 }
