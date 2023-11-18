@@ -19,7 +19,7 @@ import java.io.IOException;
 import java.util.Map;
 
 @AllArgsConstructor
-@EnableConfigurationProperties()
+@EnableConfigurationProperties
 @Component
 public class AuthenticationFilter implements Filter {
 
@@ -31,7 +31,6 @@ public class AuthenticationFilter implements Filter {
     private final Encoder encoder;
 
     private final NoAuthForFilterDTO noAuthUris;
-    private final String blockedPath = "/api/v1/user/";
 
 
     @Override

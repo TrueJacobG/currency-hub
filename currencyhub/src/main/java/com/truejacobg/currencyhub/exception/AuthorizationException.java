@@ -1,6 +1,6 @@
 package com.truejacobg.currencyhub.exception;
 
-public class AuthorizationException  extends RuntimeException{
+public class AuthorizationException  extends GlobalException{
     public AuthorizationException(String errorMessage){
         super(errorMessage);
     }
