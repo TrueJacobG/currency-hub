@@ -1,6 +1,7 @@
 package com.truejacobg.currencyhub.user;
 
 import com.truejacobg.currencyhub.user.dto.CreateUserResponseDTO;
+import com.truejacobg.currencyhub.user.dto.UpdateUserResponseDTO;
 import com.truejacobg.currencyhub.user.dto.UserDTO;
 import lombok.AllArgsConstructor;
 import org.springframework.http.ResponseEntity;
@@ -29,9 +30,10 @@ public class UserController {
         return ResponseEntity.ok(response);
     }
 
+    //TODO:: add trycatch
     @PutMapping("/{email}")
-    ResponseEntity<CreateUserResponseDTO> upadateUser(@RequestBody UserDTO userDTO, @PathVariable String email) {
-        CreateUserResponseDTO response = userService.updateUser(userDTO, email);
+    ResponseEntity<UpdateUserResponseDTO> updateUser(@RequestBody UserDTO userDTO, @PathVariable String email) {
+        UpdateUserResponseDTO response = userService.updateUser(userDTO, email);
         return ResponseEntity.ok(response);
     }
 

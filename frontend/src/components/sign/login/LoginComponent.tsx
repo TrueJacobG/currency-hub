@@ -1,3 +1,4 @@
+import { useState } from "react";
 import { StyleSheet, Text, TextInput, View } from "react-native";
 import { LoginUser } from "../../../type/LoginUser";
 
@@ -13,8 +14,27 @@ const LoginComponent = ({ loginUser, setLoginUser }: Props) => {
   // and
   // secure password
 
+  const [errorMessage, isErrorMessage] = useState<string>("");
+
   const onChangeEmail = (email: string) => {
+    let emailIsValid = validateEmail(email);
+
+    if (!emailIsValid) {
+      isErrorMessage("Zle haslo!");
+    }
+
     setLoginUser({ ...loginUser, email: email });
+    isErrorMessage("");
+  };
+
+  const validateEmail = (email: string) => {
+    if (email.length < 8) {
+      return false;
+    }
+
+    // ...
+
+    return true;
   };
 
   const onChangeAuthCode = (authCode: string) => {
@@ -25,6 +45,7 @@ const LoginComponent = ({ loginUser, setLoginUser }: Props) => {
     <View style={styles.container}>
       <Text style={styles.text}>Login to your account:</Text>
       <TextInput style={styles.textinput} onChangeText={onChangeEmail} placeholder={"Enter your email"} />
+      {errorMessage}
       <TextInput style={styles.textinput} onChangeText={onChangeAuthCode} placeholder={"Enter your password"} />
     </View>
   );

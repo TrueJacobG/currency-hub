@@ -2,6 +2,7 @@ package com.truejacobg.currencyhub.user;
 
 import com.truejacobg.currencyhub.security.AuthenticationFilter;
 import com.truejacobg.currencyhub.user.dto.CreateUserResponseDTO;
+import com.truejacobg.currencyhub.user.dto.UpdateUserResponseDTO;
 import com.truejacobg.currencyhub.user.dto.UserDTO;
 import com.truejacobg.currencyhub.user.entity.UserEntity;
 import lombok.AllArgsConstructor;
@@ -11,6 +12,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDateTime;
+import java.util.NoSuchElementException;
 import java.util.Optional;
 // prawdziwy backend metody walidacje, zabawa z bazą, prawdziwe mięso, tutaj bedzie cały kod
 // musi implementować repo, 90% będzie tutaj, autoryzacje, zabezpieczenia, uruchomienia, rzucanie błędów
@@ -30,36 +32,25 @@ public class UserService {
     }
 
     public CreateUserResponseDTO getUser(String userEmail) {
-        Optional<UserEntity> userEntity = Optional.of(userRepository.findByEmail(userEmail));
-        if (userEntity.isPresent()) {
-            // found
-            return new CreateUserResponseDTO("has been found", HttpStatus.OK);
-        } else {
-            return new CreateUserResponseDTO("has not been found", HttpStatus.NOT_FOUND);
-        }
+        UserEntity userEntity = userRepository.findByEmail(userEmail).orElseThrow(() -> new NoSuchElementException("There is no such user"));
+        return new CreateUserResponseDTO("has been found", HttpStatus.OK);
     }
 
     public String getUserPasswordByName(String name) {
-        UserEntity userEntity = userRepository.findByName(name);
-
+        UserEntity userEntity = userRepository.findByName(name).orElseThrow(() -> new NoSuchElementException("There is no such user"));
         return userEntity.getAuthCode();
     }
 
-    public CreateUserResponseDTO updateUser(UserDTO userDTO, String email) {
-        // is he in database?
-        UserEntity user = userRepository.findByEmail(email);
-        if (user == null) {
-            return new CreateUserResponseDTO("User has not been in db", HttpStatus.NOT_FOUND);
-        } else {
-            user.setName(userDTO.getName());
-            user.setSurname(userDTO.getSurname());
-            user.setEmail(userDTO.getEmail());
+    public UpdateUserResponseDTO updateUser(UserDTO userDTO, String email) {
+        UserEntity userEntity = userRepository.findByEmail(email).orElseThrow(() -> new NoSuchElementException("There is no such user"));
 
-            userRepository.save(user);
+        userEntity.setName(userDTO.getName());
+        userEntity.setSurname(userDTO.getSurname());
+        userEntity.setEmail(userDTO.getEmail());
 
-            return new CreateUserResponseDTO("The user has been updated successfully.", HttpStatus.OK);
+        userRepository.save(userEntity);
 
-        }
+        return new UpdateUserResponseDTO("The userEntity has been updated successfully.", HttpStatus.OK, "All good");
     }
 
     public CreateUserResponseDTO deleteUser(String email) {
