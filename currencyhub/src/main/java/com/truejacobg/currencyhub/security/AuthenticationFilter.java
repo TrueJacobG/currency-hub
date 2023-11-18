@@ -53,9 +53,14 @@ public class AuthenticationFilter implements Filter {
         if (needToBeChecked) {
             String token = request.getHeader("Authorization");
 
-            Authentication authentication = jwtDecoder.tokenToAuthentication(token);
-            authentication.setPassword(encoder.encode(authentication.getPassword()));
+            logger.info(token);
 
+            Authentication authentication = jwtDecoder.tokenToAuthentication(token);
+
+            logger.info(authentication.getPassword());
+            logger.info(authentication.getName());
+
+            authentication.setPassword(encoder.encode(authentication.getPassword()));
             String password = encoder.encode(userService.getUserPasswordByName(authentication.getName()));
 
             if (authentication.getPassword().equals(password)) {
