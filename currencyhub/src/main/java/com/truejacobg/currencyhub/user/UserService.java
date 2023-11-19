@@ -1,5 +1,6 @@
 package com.truejacobg.currencyhub.user;
 
+import com.truejacobg.currencyhub.exception.UserWithThatEmailDoesNotExistException;
 import com.truejacobg.currencyhub.security.AuthenticationFilter;
 import com.truejacobg.currencyhub.user.dto.CreateUserResponseDTO;
 import com.truejacobg.currencyhub.user.dto.UpdateUserResponseDTO;
@@ -32,17 +33,17 @@ public class UserService {
     }
 
     public CreateUserResponseDTO getUser(String userEmail) {
-        UserEntity userEntity = userRepository.findByEmail(userEmail).orElseThrow(() -> new NoSuchElementException("There is no such user"));
+        UserEntity userEntity = userRepository.findByEmail(userEmail).orElseThrow(() -> new UserWithThatEmailDoesNotExistException("There is no such user"));
         return new CreateUserResponseDTO("has been found", HttpStatus.OK);
     }
 
     public String getUserPasswordByName(String name) {
-        UserEntity userEntity = userRepository.findByName(name).orElseThrow(() -> new NoSuchElementException("There is no such user"));
+        UserEntity userEntity = userRepository.findByName(name).orElseThrow(() -> new UserWithThatEmailDoesNotExistException("There is no such user"));
         return userEntity.getAuthCode();
     }
 
     public UpdateUserResponseDTO updateUser(UserDTO userDTO, String email) {
-        UserEntity userEntity = userRepository.findByEmail(email).orElseThrow(() -> new NoSuchElementException("There is no such user"));
+        UserEntity userEntity = userRepository.findByEmail(email).orElseThrow(() -> new UserWithThatEmailDoesNotExistException("There is no such user"));
 
         userEntity.setName(userDTO.getName());
         userEntity.setSurname(userDTO.getSurname());
@@ -50,7 +51,7 @@ public class UserService {
 
         userRepository.save(userEntity);
 
-        return new UpdateUserResponseDTO("The userEntity has been updated successfully.", HttpStatus.OK, "All good");
+        return new UpdateUserResponseDTO("The userEntity has been updated successfully.", HttpStatus.OK, userDTO.toString());
     }
 
     public CreateUserResponseDTO deleteUser(String email) {
