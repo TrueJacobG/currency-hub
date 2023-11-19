@@ -1,6 +1,8 @@
 package com.truejacobg.currencyhub.user;
 
 import com.truejacobg.currencyhub.user.dto.CreateUserResponseDTO;
+import com.truejacobg.currencyhub.user.dto.DeleteUserResponseDTO;
+import com.truejacobg.currencyhub.user.dto.GetUserResponseDTO;
 import com.truejacobg.currencyhub.user.dto.UserDTO;
 import jakarta.validation.Valid;
 import lombok.AllArgsConstructor;
@@ -24,8 +26,8 @@ public class UserController {
     }
 
     @GetMapping("/{email}")
-    ResponseEntity<CreateUserResponseDTO> getUser(@PathVariable String email) {
-        CreateUserResponseDTO response = userService.getUser(email);
+    ResponseEntity<GetUserResponseDTO> getUser(@PathVariable String email) {
+        GetUserResponseDTO response = userService.getUser(email);
         return ResponseEntity.ok(response);
     }
 
@@ -36,8 +38,8 @@ public class UserController {
     }
 
     @DeleteMapping("/{email}")
-    ResponseEntity<CreateUserResponseDTO> deleteUser(@PathVariable String email) {
-        CreateUserResponseDTO response = userService.deleteUser(email);
+    ResponseEntity<DeleteUserResponseDTO> deleteUser(@PathVariable String email) {
+        DeleteUserResponseDTO response = userService.deleteUser(email);
         return ResponseEntity.ok(response);
     }
 }
