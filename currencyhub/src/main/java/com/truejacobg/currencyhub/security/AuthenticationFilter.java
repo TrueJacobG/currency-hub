@@ -11,12 +11,10 @@ import jakarta.servlet.http.HttpServletResponse;
 import lombok.AllArgsConstructor;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.context.properties.EnableConfigurationProperties;
 import org.springframework.stereotype.Component;
 
 import java.io.IOException;
-import java.util.Map;
 
 @AllArgsConstructor
 @EnableConfigurationProperties
@@ -38,16 +36,11 @@ public class AuthenticationFilter implements Filter {
         HttpServletRequest request = (HttpServletRequest) servletRequest;
         HttpServletResponse response = (HttpServletResponse) servletResponse;
 
-        boolean needToBeChecked = true;
+        // knowledge
+        // Predicate<Map.Entry<String, String>> checker = entry -> request.getRequestURI().startsWith(entry.getValue()) &&(request.getMethod().equals(entry.getKey().toUpperCase().split("\\.")[0]));
+        // boolean needToBeChecked = noAuthUris.request.entrySet().stream().anyMatch(checker);
 
-        for (Map.Entry<String, String> entry : noAuthUris.request.entrySet())
-        {
-            if(request.getRequestURI().startsWith(entry.getValue()) &&(request.getMethod().equals(entry.getKey().toUpperCase().split("\\.")[0])) )
-            {
-                logger.info("NIE FILTRUJ " + request.getMethod());
-                needToBeChecked=false;
-            }
-        }
+        boolean needToBeChecked = noAuthUris.request.entrySet().stream().anyMatch(entry -> request.getRequestURI().startsWith(entry.getValue()) && (request.getMethod().equals(entry.getKey().toUpperCase().split("\\.")[0])));
 
         if (needToBeChecked) {
             String token = request.getHeader("Authorization");
