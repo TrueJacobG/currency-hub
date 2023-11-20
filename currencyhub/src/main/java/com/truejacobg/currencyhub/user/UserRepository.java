@@ -1,7 +1,6 @@
 package com.truejacobg.currencyhub.user;
 
 import com.truejacobg.currencyhub.user.entity.UserEntity;
-import jakarta.validation.constraints.Email;
 import org.springframework.data.mongodb.repository.MongoRepository;
 import org.springframework.stereotype.Repository;
 
@@ -9,8 +8,9 @@ import java.util.Optional;
 
 @Repository
 public interface UserRepository extends MongoRepository<UserEntity, String> {
-    UserEntity findByEmail(String userEmail);
+    Optional<UserEntity> findByEmail(String userEmail);
 
+    Optional<UserEntity> findByName(String name);
     Optional<UserEntity> deleteByEmail(String email);
     Optional<UserEntity> findByNameOrEmail(String Name,String Email);
 

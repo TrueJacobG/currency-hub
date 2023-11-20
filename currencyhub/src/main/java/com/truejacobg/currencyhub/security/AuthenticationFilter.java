@@ -1,62 +1,69 @@
 package com.truejacobg.currencyhub.security;
 
-import com.fasterxml.jackson.databind.ObjectMapper;
-import com.fasterxml.jackson.databind.ObjectWriter;
-import com.truejacobg.currencyhub.exception.AuthenticationFailResponse;
+import com.truejacobg.currencyhub.exception.AuthorizationException;
+import com.truejacobg.currencyhub.security.dto.NoAuthForFilterDTO;
 import com.truejacobg.currencyhub.security.jwt.Authentication;
 import com.truejacobg.currencyhub.security.jwt.JWTDecoder;
+import com.truejacobg.currencyhub.user.UserService;
 import jakarta.servlet.*;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
+import lombok.AllArgsConstructor;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
-import org.springframework.http.HttpStatus;
-import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
+import org.springframework.boot.context.properties.EnableConfigurationProperties;
 import org.springframework.stereotype.Component;
 
 import java.io.IOException;
 
+@AllArgsConstructor
+@EnableConfigurationProperties
 @Component
 public class AuthenticationFilter implements Filter {
 
     private static Logger logger = LogManager.getLogger(AuthenticationFilter.class.getName());
 
+    private final UserService userService;
     private final JWTDecoder jwtDecoder = new JWTDecoder();
-    private final BCryptPasswordEncoder encoder = new BCryptPasswordEncoder();
+
+    private final Encoder encoder;
+
+    private final NoAuthForFilterDTO noAuthUris;
+
 
     @Override
     public void doFilter(ServletRequest servletRequest, ServletResponse servletResponse, FilterChain filterChain) throws IOException, ServletException {
         HttpServletRequest request = (HttpServletRequest) servletRequest;
         HttpServletResponse response = (HttpServletResponse) servletResponse;
 
+        // knowledge
+        // Predicate<Map.Entry<String, String>> checker = entry -> request.getRequestURI().startsWith(entry.getValue()) &&(request.getMethod().equals(entry.getKey().toUpperCase().split("\\.")[0]));
+        // boolean needToBeChecked = noAuthUris.request.entrySet().stream().anyMatch(checker);
 
-        String token = request.getHeader("Authorization");
-        Authentication authentication = jwtDecoder.tokenToAuthentication(token);
+        boolean needToBeChecked = noAuthUris.request.entrySet().stream().anyMatch(entry -> request.getRequestURI().startsWith(entry.getValue()) && (request.getMethod().equals(entry.getKey().toUpperCase().split("\\.")[0])));
 
-        authentication.setPassword(encoder.encode(authentication.getPassword()));
+        if (needToBeChecked) {
+            String token = request.getHeader("Authorization");
 
+            logger.info(token);
 
-        logger.info(authentication);
-        // check if user with that username and password exists
+            Authentication authentication = jwtDecoder.tokenToAuthentication(token);
 
-        // if yes chain
-        boolean valid = true;
+            logger.info(authentication.getPassword());
+            logger.info(authentication.getName());
 
+            authentication.setPassword(encoder.encode(authentication.getPassword()));
+            String password = encoder.encode(userService.getUserPasswordByName(authentication.getName()));
 
-        if (valid) {
-            filterChain.doFilter(request, servletResponse);
-        } else {
-            // move it to global exception handler
+            if (authentication.getPassword().equals(password)) {
 
-            String message = "Authentication Fail! Name or password is not valid!";
-            HttpStatus status = HttpStatus.UNAUTHORIZED;
-            AuthenticationFailResponse failResponse = new AuthenticationFailResponse(message, status);
-
-            ObjectWriter ow = new ObjectMapper().writer().withDefaultPrettyPrinter();
-            String jsonFailResponse = ow.writeValueAsString(failResponse);
-
-            response.setStatus(status.value());
-            response.getWriter().write(jsonFailResponse);
+                logger.info(String.format("User [%s] has been authenticated", authentication.getName()));
+            } else {
+                logger.warn(String.format("User [%s] has NOT been authenticated", authentication.getName()));
+                throw new AuthorizationException("Authorization fail! Wrong name or password!");
+            }
         }
+
+        filterChain.doFilter(request, servletResponse);
     }
 }

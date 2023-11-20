@@ -1,9 +1,6 @@
 package com.truejacobg.currencyhub.user;
 
-import com.truejacobg.currencyhub.user.dto.CreateUserResponseDTO;
-import com.truejacobg.currencyhub.user.dto.DeleteUserResponseDTO;
-import com.truejacobg.currencyhub.user.dto.GetUserResponseDTO;
-import com.truejacobg.currencyhub.user.dto.UserDTO;
+import com.truejacobg.currencyhub.user.dto.*;
 import jakarta.validation.Valid;
 import lombok.AllArgsConstructor;
 import org.springframework.http.ResponseEntity;
@@ -12,6 +9,7 @@ import org.springframework.web.bind.annotation.*;
 // trzyma konkretny endpoint, zarzadzaja co sie kiedy ma zadziac, ktore metody
 // jaki typ zwracany itp. te klasy słóżą jaki link ma się zając czym. Kolejność metod staramy sie trzymać CRUDowo
 
+@CrossOrigin(origins = "http://localhost:8081")
 @AllArgsConstructor
 @RequestMapping(value = "/api/v1/user")
 @RestController
@@ -32,8 +30,8 @@ public class UserController {
     }
 
     @PutMapping("/{email}")
-    ResponseEntity<CreateUserResponseDTO> upadateUser(@RequestBody UserDTO userDTO, @PathVariable String email) {
-        CreateUserResponseDTO response = userService.updateUser(userDTO, email);
+    ResponseEntity<UpdateUserResponseDTO> updateUser(@RequestBody UserDTO userDTO, @PathVariable String email) {
+        UpdateUserResponseDTO response = userService.updateUser(userDTO, email);
         return ResponseEntity.ok(response);
     }
 
