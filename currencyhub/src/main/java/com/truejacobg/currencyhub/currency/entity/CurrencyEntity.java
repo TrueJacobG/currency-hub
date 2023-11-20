@@ -1,5 +1,6 @@
 package com.truejacobg.currencyhub.currency.entity;
 
+
 import lombok.*;
 import org.springframework.data.mongodb.core.mapping.Document;
 

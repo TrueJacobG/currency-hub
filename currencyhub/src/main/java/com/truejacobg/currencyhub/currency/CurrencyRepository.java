@@ -6,4 +6,5 @@ import org.springframework.stereotype.Repository;
 
 @Repository
 public interface CurrencyRepository extends MongoRepository<CurrencyEntity, String> {
+    CurrencyEntity findByCurrencyCode(String currencyCode);
 }
