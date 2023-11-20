@@ -15,7 +15,13 @@ const SignScreen = ({ navigation }: Props) => {
 
   const [loggedUser, setLoggedUser] = useAtom(loggedUserAtom);
 
-  const [user, setUser] = useState<User>({ name: "", surname: "", email: "", authCode: "" });
+  const [user, setUser] = useState<User>({
+    name: "",
+    surname: "",
+    nick: "",
+    email: "",
+    authCode: "",
+  });
 
   const onSignInPress = async () => {
     if (typeof user === "undefined") {
@@ -37,8 +43,13 @@ const SignScreen = ({ navigation }: Props) => {
       <Pressable style={styles.button} onPress={onSignInPress}>
         <Text style={[styles.textbut]}>Signin</Text>
       </Pressable>
-      <Text style={styles.textintro}>If you already have an account please login:</Text>
-      <Pressable style={() => [styles.button]} onPress={() => navigation.navigate("Log")}>
+      <Text style={styles.textintro}>
+        If you already have an account please login:
+      </Text>
+      <Pressable
+        style={() => [styles.button]}
+        onPress={() => navigation.navigate("Log")}
+      >
         <Text style={[styles.textbut]}>Login</Text>
       </Pressable>
     </View>
