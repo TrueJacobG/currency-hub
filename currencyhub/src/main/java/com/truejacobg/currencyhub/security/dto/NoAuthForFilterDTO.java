@@ -17,5 +17,5 @@ import java.util.Map;
 @Setter
 public class NoAuthForFilterDTO {
 
-   public Map<String, String> request;
+    public Map<String, String> request;
 }
