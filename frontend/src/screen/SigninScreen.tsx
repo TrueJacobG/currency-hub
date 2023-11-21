@@ -17,6 +17,7 @@ const SignScreen = ({ navigation }: Props) => {
 
   const [user, setUser] = useState<User>({
     name: "",
+    firstname: "",
     surname: "",
     nick: "",
     email: "",
@@ -35,6 +36,7 @@ const SignScreen = ({ navigation }: Props) => {
       setLoggedUser(user);
       setUser({
         name: "",
+        firstname: "",
         surname: "",
         nick: "",
         email: "",
