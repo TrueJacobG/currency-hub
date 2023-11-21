@@ -2,7 +2,7 @@ import { NativeStackScreenProps } from "@react-navigation/native-stack";
 import { useAtom } from "jotai";
 import { useState } from "react";
 import { Pressable, StyleSheet, Text, View } from "react-native";
-import SigninComponents from "../components/sign/login/SigninComponents";
+import SigninComponents from "../components/auth/SigninComponents";
 import { loggedUserAtom } from "../jotai/loggedUserAtom";
 import { AuthorizationService } from "../services/AuthorizationService";
 import { ScreenNaviagtion } from "../type/ScreenNavigation";
@@ -33,6 +33,13 @@ const SignScreen = ({ navigation }: Props) => {
 
     if (result.message === "ok" && result.status == "ACCEPTED") {
       setLoggedUser(user);
+      setUser({
+        name: "",
+        surname: "",
+        nick: "",
+        email: "",
+        authCode: "",
+      });
       navigation.navigate("Home");
     }
   };
@@ -43,13 +50,8 @@ const SignScreen = ({ navigation }: Props) => {
       <Pressable style={styles.button} onPress={onSignInPress}>
         <Text style={[styles.textbut]}>Signin</Text>
       </Pressable>
-      <Text style={styles.textintro}>
-        If you already have an account please login:
-      </Text>
-      <Pressable
-        style={() => [styles.button]}
-        onPress={() => navigation.navigate("Log")}
-      >
+      <Text style={styles.textintro}>If you already have an account please login:</Text>
+      <Pressable style={() => [styles.button]} onPress={() => navigation.navigate("Log")}>
         <Text style={[styles.textbut]}>Login</Text>
       </Pressable>
     </View>

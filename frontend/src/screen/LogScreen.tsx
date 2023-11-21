@@ -2,7 +2,7 @@ import { NativeStackScreenProps } from "@react-navigation/native-stack";
 import { useAtom } from "jotai";
 import { useState } from "react";
 import { Pressable, StyleSheet, Text, View } from "react-native";
-import LoginComponent from "../components/sign/login/LoginComponent";
+import LoginComponent from "../components/auth/LoginComponent";
 import { loggedUserAtom } from "../jotai/loggedUserAtom";
 import { AuthorizationService } from "../services/AuthorizationService";
 import { LoginUser } from "../type/LoginUser";
@@ -32,6 +32,7 @@ const LogScreen = ({ navigation }: Props) => {
 
     if (result.status == "OK") {
       setLoggedUser({ ...loggedUser, ...loginUser });
+      setLoginUser({ email: "", authCode: "" });
       navigation.navigate("Home");
     }
   };
@@ -42,13 +43,8 @@ const LogScreen = ({ navigation }: Props) => {
       <Pressable style={() => [styles.button]} onPress={onLoginPress}>
         <Text style={[styles.text]}>Login</Text>
       </Pressable>
-      <Text style={styles.textintro}>
-        If you don't have an account please register
-      </Text>
-      <Pressable
-        style={() => [styles.button]}
-        onPress={() => navigation.navigate("Sign")}
-      >
+      <Text style={styles.textintro}>If you don't have an account please register</Text>
+      <Pressable style={() => [styles.button]} onPress={() => navigation.navigate("Sign")}>
         <Text style={[styles.text]}>Register</Text>
       </Pressable>
     </View>

@@ -1,7 +1,8 @@
-import { StyleSheet, Text, TextInput, View } from "react-native";
-import { LoginUser } from "../../../type/LoginUser";
-import { useEffect, useState } from "react";
 import { MaterialCommunityIcons } from "@expo/vector-icons";
+import { useState } from "react";
+import { StyleSheet, Text, TextInput, View } from "react-native";
+import { LoginUser } from "../../type/LoginUser";
+import { isAuthCodeValidate, isEmailValidate } from "../../utils/validationUtils";
 
 type Props = {
   loginUser: LoginUser;
@@ -11,75 +12,35 @@ type Props = {
 const LoginComponent = ({ loginUser, setLoginUser }: Props) => {
   const [showPassword, setShowPassword] = useState(false);
 
+  const [showEmailError, setShowEmailError] = useState<boolean>(false);
+  const [showAuthCodeError, setShowAuthCodeError] = useState<boolean>(false);
+
   const toggleShowPassword = () => {
     setShowPassword(!showPassword);
   };
-  // TODO:
-  // add show error -- i don't know how to do it
-  // add validation -- added simple validation
-  // and
-  // secure password -- password can be seen and hidden
-  // layout
-
-  const validateEmail = (email: string) => {
-    let pattern = /^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w\w+)+$/;
-    if (
-      pattern.test(email) === false &&
-      email.length <= 5 &&
-      email.length >= 50
-    ) {
-      return false;
-    } else {
-      return true;
-    }
-  };
-
-  const validAuthCode = (authCode: string) => {
-    if (authCode.length >= 10 && authCode.length <= 20) {
-      return true;
-    } else {
-      return false;
-    }
-  };
 
   const onChangeEmail = (email: string) => {
-    let emailIsValid = validateEmail(email);
-
-    if (!emailIsValid) {
-      alert("Email is not valid.");
-      return;
-    } else {
-      alert("Email is valid");
-      setLoginUser({ ...loginUser, email: email });
-    }
+    setShowEmailError(!isEmailValidate(email));
+    setLoginUser({ ...loginUser, email: email });
   };
 
   const onChangeAuthCode = (authCode: string) => {
-    let authCodeIsValid = validAuthCode(authCode);
-
-    if (!authCodeIsValid) {
-      alert("Password is not valid.");
-      return;
-    } else {
-      alert("Password is valid.");
-      setLoginUser({ ...loginUser, authCode: authCode });
-    }
+    setShowAuthCodeError(!isAuthCodeValidate(authCode));
+    setLoginUser({ ...loginUser, authCode: authCode });
   };
 
   return (
     <View style={styles.container}>
       <Text style={styles.text}>Login to your account:</Text>
-      <TextInput
-        style={styles.textinput}
-        onChangeText={onChangeEmail}
-        placeholder={"Enter your email"}
-      />
+      <TextInput style={styles.textinput} onChangeText={onChangeEmail} placeholder={"Enter your email"} />
+      {showEmailError && <Text>Email is not valid!</Text>}
       <TextInput
         style={styles.textinput}
         secureTextEntry={!showPassword}
         onChangeText={onChangeAuthCode}
         placeholder={"Enter your password"}
       />
+      {showAuthCodeError && <Text>Password is too short / too long!</Text>}
       <MaterialCommunityIcons
         name={showPassword ? "eye" : "eye-off"}
         size={24}
