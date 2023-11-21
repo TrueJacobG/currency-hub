@@ -11,6 +11,7 @@ public class JWTDecoder {
 
     public Authentication tokenToAuthentication(String token) {
         String[] parts = token.split("\\.");
+
         validToken(parts);
 
         JSONObject json = new JSONObject(new String(Base64.getUrlDecoder().decode(parts[1])));
