@@ -17,7 +17,6 @@ const BaseScreen = ({ navigation }: Props) => {
       <View>
         <Text>Email: {loggedUser.email}</Text>
       </View>
-      
     </View>
   );
 };
