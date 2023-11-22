@@ -5,6 +5,7 @@ import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.truejacobg.currencyhub.currency.dto.CurrencyDTO;
 import com.truejacobg.currencyhub.currency.dto.CurrencyDateDTO;
+import com.truejacobg.currencyhub.currency.dto.CurrencyDateResponseDTO;
 import com.truejacobg.currencyhub.currency.dto.CurrencyResponseDTO;
 import com.truejacobg.currencyhub.exception.CurrencyApiReadFail;
 import com.truejacobg.currencyhub.exception.CurrencyDataFetchException;
@@ -26,7 +27,7 @@ import java.util.List;
 public class CurrencyService {
     CurrencyRepository currencyRepository;
 
-    public CurrencyResponseDTO getCurrencyRates() {
+    public CurrencyResponseDTO getCurrencyRates(){
 
         String[] url = {"https://api.nbp.pl/api/exchangerates/tables/A", "https://api.nbp.pl/api/exchangerates/tables/B"};
         List<CurrencyDTO> currencyDTOS = new ArrayList<>();
@@ -60,10 +61,10 @@ public class CurrencyService {
                         }
                     }
                 } catch (Exception e) {
-                    throw new CurrencyDataFetchException("Currency data fetch fail");
+                    throw new CurrencyDataFetchException("Currency data fetch fail",HttpStatus.EXPECTATION_FAILED);
                 }
             } catch (Exception e) {
-                throw new CurrencyApiReadFail("Read data from API fail");
+                throw new CurrencyApiReadFail("Read data from API fail",HttpStatus.EXPECTATION_FAILED);
             }
 
         }
@@ -73,10 +74,10 @@ public class CurrencyService {
     }
 
 
-    public CurrencyResponseDTO getCurrencyRateByCode(String currencyCode) {
+    public CurrencyResponseDTO getCurrencyRateByCode(String currencyCode){
         List<CurrencyDTO> currencyDTOS = new ArrayList<>();
 
-        currencyRepository.findByCurrencyCode(currencyCode).orElseThrow(() -> new WrongCurrencyCodeException("Wrong currency code"));
+        currencyRepository.findByCurrencyCode(currencyCode).orElseThrow(() -> new WrongCurrencyCodeException("Wrong currency code",HttpStatus.BAD_GATEWAY));
         String table = currencyRepository.findDataByCurrencyCode(currencyCode).getCurrencyTable();
         try {
             URL obj = new URL("http://api.nbp.pl/api/exchangerates/rates/" + table + "/" + currencyCode + "/");
@@ -98,11 +99,11 @@ public class CurrencyService {
                 currencyDTOS.add(currencyDTO);
 
             } catch (Exception e) {
-                throw new CurrencyDataFetchException("Currency data fetch fail");
+                throw new CurrencyDataFetchException("Currency data fetch fail",HttpStatus.EXPECTATION_FAILED);
             }
 
         } catch (Exception e) {
-            throw new CurrencyApiReadFail("Read data from API fail");
+            throw new CurrencyApiReadFail("Read data from API fail",HttpStatus.EXPECTATION_FAILED);
         }
 
 
@@ -110,10 +111,10 @@ public class CurrencyService {
     }
 
 
-    public CurrencyResponseDTO getCurrencyRateByCodeInDate(String currencyCode, String from, String end) {
+    public CurrencyDateResponseDTO getCurrencyRateByCodeInDate(String currencyCode, String from, String end){
 
         List<CurrencyDateDTO> currencyDateDTOS = new ArrayList<>();
-        currencyRepository.findByCurrencyCode(currencyCode).orElseThrow(() -> new WrongCurrencyCodeException("Wrong currency code"));
+        currencyRepository.findByCurrencyCode(currencyCode).orElseThrow(() -> new WrongCurrencyCodeException("Wrong currency code",HttpStatus.BAD_GATEWAY));
         String table = currencyRepository.findDataByCurrencyCode(currencyCode).getCurrencyTable();
         try {
             //TODO: add validation of path date ( from/end )
@@ -143,14 +144,14 @@ public class CurrencyService {
 
                 }
             } catch (Exception e) {
-                throw new CurrencyDataFetchException("Currency data fetch failed");
+                throw new CurrencyDataFetchException("Currency data fetch failed",HttpStatus.EXPECTATION_FAILED);
             }
 
         } catch (Exception e) {
-            throw new CurrencyApiReadFail("");
+            throw new CurrencyApiReadFail("Currency api read fail",HttpStatus.EXPECTATION_FAILED);
         }
 
 
-        return new CurrencyResponseDTO("Currency fetch", currencyDateDTOS, HttpStatus.OK);
+        return new CurrencyDateResponseDTO("Currency fetch", currencyDateDTOS, HttpStatus.OK);
     }
 }

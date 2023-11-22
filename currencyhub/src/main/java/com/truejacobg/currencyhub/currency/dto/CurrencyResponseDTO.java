@@ -12,7 +12,7 @@ import java.util.List;
 @Data
 public class CurrencyResponseDTO {
     private String message;
-    private List list;
+    private List<CurrencyDTO> list;
     private HttpStatus status;
 
     public CurrencyResponseDTO(String message, HttpStatus status) {
