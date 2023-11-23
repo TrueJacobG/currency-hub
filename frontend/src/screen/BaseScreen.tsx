@@ -1,41 +1,33 @@
 import { NativeStackScreenProps } from "@react-navigation/native-stack";
 import { useAtom } from "jotai";
-import { StyleSheet, Text, View, FlatList } from "react-native";
+import React, { useEffect, useState } from "react";
+import { StyleSheet, Text, View } from "react-native";
+import CurrencyListComponent from "../components/currency/CurrencyListComponent";
 import { loggedUserAtom } from "../jotai/loggedUserAtom";
+import { CurrencyService } from "../services/CurrencyService";
+import { Currency } from "../type/Currency";
 import { ScreenNaviagtion } from "../type/ScreenNavigation";
 import { User } from "../type/User";
-import React, { useEffect, useState } from "react";
 
 type Props = NativeStackScreenProps<ScreenNaviagtion, "Home">;
 
 const BaseScreen = ({ navigation }: Props) => {
+  const currencyService = new CurrencyService();
+
   const [loggedUser, setLoggedUser] = useAtom<User>(loggedUserAtom);
 
-  const [data, setData] = useState([]);
+  const [currencies, setCurrencies] = useState<Currency[]>([]);
 
   useEffect(() => {
-    fetchData();
+    currencyService
+      .getAllCurrencies()
+      .then((data) => {
+        setCurrencies(data);
+      })
+      .catch((error) => {
+        console.error(error);
+      });
   }, []);
-
-  const fetchData = async () => {
-    try {
-      const response = await fetch(
-        "http://localhost:8080/api/v1/currency/rate"
-      );
-      const jsonData = await response.json();
-      setData(jsonData);
-    } catch (error) {
-      console.error("Error fetching data:", error);
-    }
-  };
-
-  const renderListItem = ({ item }) => (
-    <View style={{ padding: 10 }}>
-      <Text>{item.currencyCode}</Text>
-      <Text>{item.currencyName}</Text>
-      <Text>{item.mid}</Text>
-    </View>
-  );
 
   return (
     <View>
@@ -44,13 +36,7 @@ const BaseScreen = ({ navigation }: Props) => {
       <View>
         <Text>Email: {loggedUser.email}</Text>
       </View>
-      <View style={{ flex: 1, paddingTop: 20 }}>
-        <FlatList
-          data={data}
-          renderItem={renderListItem}
-          keyExtractor={(item) => item.currencyCode.toString()}
-        />
-      </View>
+      <CurrencyListComponent currencies={currencies} />
     </View>
   );
 };
