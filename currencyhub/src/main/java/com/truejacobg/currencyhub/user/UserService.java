@@ -1,6 +1,7 @@
 package com.truejacobg.currencyhub.user;
 
 import com.truejacobg.currencyhub.exception.UserWithThatEmailDoesNotExistException;
+import com.truejacobg.currencyhub.exception.UserWithThatNameOrEmailExistException;
 import com.truejacobg.currencyhub.user.dto.*;
 import com.truejacobg.currencyhub.user.entity.UserEntity;
 import lombok.AllArgsConstructor;
@@ -19,9 +20,9 @@ public class UserService {
 
     public CreateUserResponseDTO createUser(UserDTO userDTO) {
 
-        UserEntity userEntity = new UserEntity(null, userDTO.getFirstName(), userDTO.getName(), userDTO.getAuthCode(), userDTO.getSurname(), userDTO.getEmail(), LocalDateTime.now());
+        UserEntity userEntity = new UserEntity(null, userDTO.getFirstname(), userDTO.getName(), userDTO.getAuthCode(), userDTO.getSurname(), userDTO.getEmail(), LocalDateTime.now());
         if (userRepository.findByNameOrEmail(userEntity.getName(), userEntity.getEmail()).isPresent()) {
-            return new CreateUserResponseDTO("cant create user", HttpStatus.BAD_REQUEST);
+            throw new UserWithThatNameOrEmailExistException(String.format("User with name: %s or email: %s already exist!", userEntity.getName(), userEntity.getEmail()));
         } else {
             userRepository.save(userEntity);
             return new CreateUserResponseDTO("ok", HttpStatus.ACCEPTED);
@@ -36,7 +37,7 @@ public class UserService {
     public UpdateUserResponseDTO updateUser(UserDTO userDTO, String email) {
         UserEntity userEntity = userRepository.findByEmail(email).orElseThrow(() -> new UserWithThatEmailDoesNotExistException("There is no such user"));
 
-        userEntity.setFirstName(userDTO.getFirstName());
+        userEntity.setFirstName(userDTO.getFirstname());
         userEntity.setName(userDTO.getName());
         userEntity.setSurname(userDTO.getSurname());
         userEntity.setEmail(userDTO.getEmail());

@@ -8,7 +8,7 @@ type Props = {
 
 const CurrencyListComponent = ({ currencies }: Props) => {
   return (
-    <View style={{ flex: 1, paddingTop: 20 }}>
+    <View>
       <FlatList data={currencies} renderItem={CurrrencyElementComponent} keyExtractor={(item) => item.currencyCode.toString()} />
     </View>
   );

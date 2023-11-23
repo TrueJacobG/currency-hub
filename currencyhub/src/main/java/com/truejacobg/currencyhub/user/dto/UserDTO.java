@@ -17,7 +17,7 @@ public class UserDTO {
     // post tworzyć
     @Size(min = 3, max = 50, message = "firstName must be between 3 and 50 characters")
     @NotBlank
-    private String firstName;
+    private String firstname;
 
     @Size(min = 3, max = 50, message = "name must be between 2 and 50 characters")
     @NotBlank

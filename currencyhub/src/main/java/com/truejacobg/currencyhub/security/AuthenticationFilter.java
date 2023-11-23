@@ -36,13 +36,9 @@ public class AuthenticationFilter implements Filter {
         HttpServletRequest request = (HttpServletRequest) servletRequest;
         HttpServletResponse response = (HttpServletResponse) servletResponse;
 
-        // knowledge
-        // Predicate<Map.Entry<String, String>> checker = entry -> request.getRequestURI().startsWith(entry.getValue()) &&(request.getMethod().equals(entry.getKey().toUpperCase().split("\\.")[0]));
-        // boolean needToBeChecked = noAuthUris.request.entrySet().stream().anyMatch(checker);
+        boolean dontNeedToBeChecked = noAuthUris.request.entrySet().stream().anyMatch(entry -> request.getRequestURI().startsWith(entry.getValue()) && (request.getMethod().equals(entry.getKey().toUpperCase().split("\\.")[0])));
 
-        boolean needToBeChecked = noAuthUris.request.entrySet().stream().anyMatch(entry -> request.getRequestURI().startsWith(entry.getValue()) && (request.getMethod().equals(entry.getKey().toUpperCase().split("\\.")[0])));
-
-        if (needToBeChecked) {
+        if (!dontNeedToBeChecked) {
             String token = request.getHeader("Authorization");
 
             logger.info(token);
@@ -56,7 +52,6 @@ public class AuthenticationFilter implements Filter {
             String password = encoder.encode(userService.getUserPasswordByName(authentication.getName()));
 
             if (authentication.getPassword().equals(password)) {
-
                 logger.info(String.format("User [%s] has been authenticated", authentication.getName()));
             } else {
                 logger.warn(String.format("User [%s] has NOT been authenticated", authentication.getName()));

@@ -19,10 +19,12 @@ const BaseScreen = ({ navigation }: Props) => {
   const [currencies, setCurrencies] = useState<Currency[]>([]);
 
   useEffect(() => {
+    console.log("test");
     currencyService
       .getAllCurrencies()
       .then((data) => {
-        setCurrencies(data);
+        console.log(data);
+        setCurrencies(data.list);
       })
       .catch((error) => {
         console.error(error);
@@ -36,7 +38,9 @@ const BaseScreen = ({ navigation }: Props) => {
       <View>
         <Text>Email: {loggedUser.email}</Text>
       </View>
-      <CurrencyListComponent currencies={currencies} />
+      <View>
+        <CurrencyListComponent currencies={currencies} />
+      </View>
     </View>
   );
 };
