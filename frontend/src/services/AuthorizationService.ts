@@ -2,8 +2,8 @@ import { LoginUser } from "../type/LoginUser";
 import { User } from "../type/User";
 
 export class AuthorizationService {
-  registerUserLink: string = "http://192.168.0.18:8080/api/v1/user/";
-  loginUserLink: string = "http://192.168.0.18:8080/api/v1/user/";
+  registerUserLink: string = "http://172.20.10.3:8080/api/v1/user/";
+  loginUserLink: string = "http://172.20.10.3:8080/api/v1/user/";
 
   exampleToken: string =
     "Bearer eyJhbGciOiJIUzI1NiJ9.eyJuYW1lIjoidGVzdFUiLCJwYXNzd29yZCI6InRlc3QxMjMxMjMxMjMifQ.bHmBljA0uPuObIW2HfF9a4TTV1X_xvo7swSDwL6qywc";
@@ -52,6 +52,7 @@ export class AuthorizationService {
       })
       .catch((error) => {
         console.error(error);
+        console.log("ASDA");
         return error;
       });
   }
