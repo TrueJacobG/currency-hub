@@ -16,12 +16,12 @@ import java.time.LocalDateTime;
 @Data // ma w sobie potwierdzenie ze wszystko jest ustawione poprawnie
 public class UserEntity {
     @Id
-    private  String id;
-    private  String firstName;
-    private  String name;
-    private  String authCode;
-    private  String surname;
-    private  String email;
-    private  LocalDateTime creationDate;
+    private String id;
+    private String firstName;
+    private String name;
+    private String authCode;
+    private String surname;
+    private String email;
+    private LocalDateTime creationDate;
 
 }
