@@ -2,7 +2,7 @@ import { NativeStackScreenProps } from "@react-navigation/native-stack";
 import { useAtom } from "jotai";
 import { useState } from "react";
 import { Pressable, StyleSheet, Text, View } from "react-native";
-import LoginComponent from "../components/sign/login/LoginComponent";
+import LoginComponent from "../components/auth/LoginComponent";
 import { loggedUserAtom } from "../jotai/loggedUserAtom";
 import { AuthorizationService } from "../services/AuthorizationService";
 import { LoginUser } from "../type/LoginUser";
@@ -15,7 +15,10 @@ const LogScreen = ({ navigation }: Props) => {
 
   const [loggedUser, setLoggedUser] = useAtom(loggedUserAtom);
 
-  const [loginUser, setLoginUser] = useState<LoginUser>({ email: "", authCode: "" });
+  const [loginUser, setLoginUser] = useState<LoginUser>({
+    email: "",
+    authCode: "",
+  });
 
   const onLoginPress = async () => {
     if (typeof loginUser === "undefined") {
@@ -29,6 +32,7 @@ const LogScreen = ({ navigation }: Props) => {
 
     if (result.status == "OK") {
       setLoggedUser({ ...loggedUser, ...loginUser });
+      setLoginUser({ email: "", authCode: "" });
       navigation.navigate("Home");
     }
   };

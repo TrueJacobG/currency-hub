@@ -2,7 +2,7 @@ import { NativeStackScreenProps } from "@react-navigation/native-stack";
 import { useAtom } from "jotai";
 import { useState } from "react";
 import { Pressable, StyleSheet, Text, View } from "react-native";
-import SigninComponents from "../components/sign/login/SigninComponents";
+import SigninComponents from "../components/auth/SigninComponents";
 import { loggedUserAtom } from "../jotai/loggedUserAtom";
 import { AuthorizationService } from "../services/AuthorizationService";
 import { ScreenNaviagtion } from "../type/ScreenNavigation";
@@ -15,7 +15,14 @@ const SignScreen = ({ navigation }: Props) => {
 
   const [loggedUser, setLoggedUser] = useAtom(loggedUserAtom);
 
-  const [user, setUser] = useState<User>({ name: "", surname: "", email: "", authCode: "" });
+  const [user, setUser] = useState<User>({
+    name: "",
+    firstname: "",
+    surname: "",
+    nick: "",
+    email: "",
+    authCode: "",
+  });
 
   const onSignInPress = async () => {
     if (typeof user === "undefined") {
@@ -27,6 +34,14 @@ const SignScreen = ({ navigation }: Props) => {
 
     if (result.message === "ok" && result.status == "ACCEPTED") {
       setLoggedUser(user);
+      setUser({
+        name: "",
+        firstname: "",
+        surname: "",
+        nick: "",
+        email: "",
+        authCode: "",
+      });
       navigation.navigate("Home");
     }
   };
