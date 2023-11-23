@@ -5,7 +5,8 @@ spring:
       database: ""
 
 encoder:
-  salt: ""
+  salt:
+  secret-key:
 
 blocked:
   request:
