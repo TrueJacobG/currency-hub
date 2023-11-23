@@ -6,6 +6,7 @@ spring:
 
 encoder:
   salt: ""
+   secret-key:
 
 blocked:
   request:
