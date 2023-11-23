@@ -20,10 +20,9 @@ public class UserService {
     public CreateUserResponseDTO createUser(UserDTO userDTO) {
 
         UserEntity userEntity = new UserEntity(null, userDTO.getFirstName(), userDTO.getName(), userDTO.getAuthCode(), userDTO.getSurname(), userDTO.getEmail(), LocalDateTime.now());
-        if(userRepository.findByNameOrEmail(userEntity.getName(), userEntity.getEmail()).isPresent()){
+        if (userRepository.findByNameOrEmail(userEntity.getName(), userEntity.getEmail()).isPresent()) {
             return new CreateUserResponseDTO("cant create user", HttpStatus.BAD_REQUEST);
-        }
-        else{
+        } else {
             userRepository.save(userEntity);
             return new CreateUserResponseDTO("ok", HttpStatus.ACCEPTED);
         }

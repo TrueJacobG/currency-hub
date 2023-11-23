@@ -1,12 +1,12 @@
 import { MaterialCommunityIcons } from "@expo/vector-icons";
-import { useState } from "react";
+import { Dispatch, useState } from "react";
 import { StyleSheet, Text, TextInput, View } from "react-native";
 import { User } from "../../type/User";
 import { isAuthCodeValidate, isEmailValidate, isFirstnameValidate, isNameValidate, isSurnameValidate } from "../../utils/validationUtils";
 
 type Props = {
   user: User;
-  setUser: any;
+  setUser: Dispatch<User>;
 };
 
 const SigninComponents = ({ user, setUser }: Props) => {
