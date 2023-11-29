@@ -2,7 +2,13 @@ import { MaterialCommunityIcons } from "@expo/vector-icons";
 import { Dispatch, useState } from "react";
 import { StyleSheet, Text, TextInput, View } from "react-native";
 import { User } from "../../type/User";
-import { isAuthCodeValidate, isEmailValidate, isFirstnameValidate, isNameValidate, isSurnameValidate } from "../../utils/validationUtils";
+import {
+  isAuthCodeValidate,
+  isEmailValidate,
+  isFirstnameValidate,
+  isNameValidate,
+  isSurnameValidate,
+} from "../../utils/validationUtils";
 
 type Props = {
   user: User;
@@ -50,7 +56,9 @@ const SigninComponents = ({ user, setUser }: Props) => {
   };
 
   const onChangeAuthCode = (authCode: string) => {
-    setShowAuthCodeError(!isAuthCodeValidate(authCode) && password === repassword);
+    setShowAuthCodeError(
+      !isAuthCodeValidate(authCode) && password === repassword
+    );
     setUser({ ...user, authCode: authCode });
   };
 
@@ -68,13 +76,29 @@ const SigninComponents = ({ user, setUser }: Props) => {
     <View>
       <Text style={styles.text}>Welcome to CurrencyHub</Text>
       <Text style={styles.textintro}>Do you want to create an account?</Text>
-      <TextInput style={styles.textinput} onChangeText={onChangeName} placeholder={"Enter your name"} />
+      <TextInput
+        style={styles.textinput}
+        onChangeText={onChangeName}
+        placeholder={"Enter your name"}
+      />
       {showNameError && <Text>Name is not valid!</Text>}
-      <TextInput style={styles.textinput} onChangeText={onChangeFirstname} placeholder={"Enter your firstname"} />
+      <TextInput
+        style={styles.textinput}
+        onChangeText={onChangeFirstname}
+        placeholder={"Enter your firstname"}
+      />
       {showFirstNameError && <Text>Firstname is not valid!</Text>}
-      <TextInput style={styles.textinput} onChangeText={onChangeSurname} placeholder={"Enter your surname"} />
+      <TextInput
+        style={styles.textinput}
+        onChangeText={onChangeSurname}
+        placeholder={"Enter your surname"}
+      />
       {showSurNameError && <Text>Surname is not valid!</Text>}
-      <TextInput style={styles.textinput} onChangeText={onChangeEmail} placeholder={"Enter your email"} />
+      <TextInput
+        style={styles.textinput}
+        onChangeText={onChangeEmail}
+        placeholder={"Enter your email"}
+      />
       {showEmailError && <Text>Email is not valid!</Text>}
       <TextInput
         style={styles.textinput}

@@ -52,8 +52,13 @@ const SignScreen = ({ navigation }: Props) => {
       <Pressable style={styles.button} onPress={onSignInPress}>
         <Text style={[styles.textbut]}>Signin</Text>
       </Pressable>
-      <Text style={styles.textintro}>If you already have an account please login:</Text>
-      <Pressable style={() => [styles.button]} onPress={() => navigation.navigate("Log")}>
+      <Text style={styles.textintro}>
+        If you already have an account please login:
+      </Text>
+      <Pressable
+        style={() => [styles.button]}
+        onPress={() => navigation.navigate("Log")}
+      >
         <Text style={[styles.textbut]}>Login</Text>
       </Pressable>
     </View>
