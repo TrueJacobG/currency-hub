@@ -5,11 +5,13 @@ import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.SignatureAlgorithm;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.stereotype.Component;
 
 import java.time.Instant;
 import java.util.Date;
 
 @Configuration
+@Component
 public class JWTEncoder {
     @Value(value = "${encoder.secret-key}")
     private String secretKey;

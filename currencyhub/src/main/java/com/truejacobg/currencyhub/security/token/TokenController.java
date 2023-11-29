@@ -18,9 +18,7 @@ public class TokenController {
 
     @PostMapping("/")
     ResponseEntity<String> createToken(@RequestBody UserTokenDTO userTokenDTO) {
-
         String token = encoder.GenerateJWT(userTokenDTO);
-
         return ResponseEntity.ok(token);
     }
 }

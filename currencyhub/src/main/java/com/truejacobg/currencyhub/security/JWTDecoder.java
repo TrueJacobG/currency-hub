@@ -2,6 +2,7 @@ package com.truejacobg.currencyhub.security.jwt;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.truejacobg.currencyhub.security.dto.Authentication;
 import org.json.JSONObject;
 
 import java.util.Base64;
