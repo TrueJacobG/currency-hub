@@ -6,14 +6,12 @@ import org.springframework.data.mongodb.core.mapping.Document;
 
 import java.time.LocalDateTime;
 
-// reprezentacja danych z bazy, każde pole jest oddzielną kolumną, nie pokazujemy userowi, nie powinno wejsc do kontrolera
-
-@Document("user") // zeby baza danych wiedziala jak przemapowac obiekt
+@Document("user")
 @RequiredArgsConstructor
 @AllArgsConstructor
 @Getter
 @Setter
-@Data // ma w sobie potwierdzenie ze wszystko jest ustawione poprawnie
+@Data
 public class UserEntity {
     @Id
     private String id;

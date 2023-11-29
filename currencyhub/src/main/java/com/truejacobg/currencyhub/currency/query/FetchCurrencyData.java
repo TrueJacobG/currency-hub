@@ -18,7 +18,7 @@ public class FetchCurrencyData {
     public CurrencyResponseDTO fetchDataAndSaveToMongoDB() {
         currencyRepository.deleteAll();
         try {
-            try { // Table A
+            try {
                 String urlA = "https://api.nbp.pl/api/exchangerates/tables/A";
 
                 URL objA = new URL(urlA);
@@ -59,7 +59,7 @@ public class FetchCurrencyData {
                 e.printStackTrace();
                 return new CurrencyResponseDTO("Currency data fetch failed on A", HttpStatus.EXPECTATION_FAILED);
             }
-            try { // Table B
+            try {
                 String urlB = "https://api.nbp.pl/api/exchangerates/tables/B";
 
                 URL objB = new URL(urlB);

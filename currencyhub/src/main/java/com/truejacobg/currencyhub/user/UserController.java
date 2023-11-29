@@ -6,9 +6,6 @@ import lombok.AllArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
-// trzyma konkretny endpoint, zarzadzaja co sie kiedy ma zadziac, ktore metody
-// jaki typ zwracany itp. te klasy słóżą jaki link ma się zając czym. Kolejność metod staramy sie trzymać CRUDowo
-
 @CrossOrigin(origins = "http://localhost:8081")
 @AllArgsConstructor
 @RequestMapping(value = "/api/v1/user")
@@ -18,7 +15,6 @@ public class UserController {
 
     @PostMapping("/")
     ResponseEntity<CreateUserResponseDTO> createUser(@RequestBody @Valid UserDTO userDTO) {
-        // responseEntity -> menedżer odsyłań
         CreateUserResponseDTO response = userService.createUser(userDTO);
         return ResponseEntity.ok(response);
     }

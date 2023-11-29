@@ -16,7 +16,3 @@ public interface UserRepository extends MongoRepository<UserEntity, String> {
     Optional<UserEntity> findByNameOrEmail(String Name, String Email);
 
 }
-
-
-// miejsce na rzeczy do bazy, pobieramy, repo ogólnie
-// rzadko co sie tu dopisuje, są gotowe metody

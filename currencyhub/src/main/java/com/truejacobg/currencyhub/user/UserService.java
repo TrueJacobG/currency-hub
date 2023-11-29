@@ -9,11 +9,8 @@ import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDateTime;
-// prawdziwy backend metody walidacje, zabawa z bazą, prawdziwe mięso, tutaj bedzie cały kod
-// musi implementować repo, 90% będzie tutaj, autoryzacje, zabezpieczenia, uruchomienia, rzucanie błędów
-//
 
-@AllArgsConstructor // sprawia ze nie musimy pisac konstruktora na wszystkie pola
+@AllArgsConstructor
 @Service
 public class UserService {
     private UserRepository userRepository;

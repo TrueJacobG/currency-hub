@@ -7,14 +7,12 @@ import lombok.*;
 
 import java.time.LocalDateTime;
 
-// są to rzeczy które przychodzą lub odsyłamy naszym user'om
-@AllArgsConstructor // mogą przyjść puste rzeczy,
+@AllArgsConstructor
 @NoArgsConstructor
-@Setter // nie zbędniki w mongo
-@Getter // nie zbędniki w mongo
+@Setter
+@Getter
 @Data
 public class UserDTO {
-    // post tworzyć
     @Size(min = 3, max = 50, message = "firstName must be between 3 and 50 characters")
     @NotBlank
     private String firstname;
