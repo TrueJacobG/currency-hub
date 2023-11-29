@@ -7,7 +7,7 @@
     "android": "expo start --android",
     "ios": "expo start --ios",
     "web": "expo start --web",
-    "lint": "eslint ./src/**/*.{js,jsx,ts,tsx} App.tsx --no-error-on-unmatched-pattern"
+    "lint": "eslint ./src/**/*.{ts,tsx} App.tsx --no-error-on-unmatched-pattern"
   },
   "dependencies": {
     "@expo/vector-icons": "^13.0.0",
