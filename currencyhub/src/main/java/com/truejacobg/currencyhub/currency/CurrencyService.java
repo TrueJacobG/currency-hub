@@ -27,7 +27,7 @@ import java.util.List;
 public class CurrencyService {
     CurrencyRepository currencyRepository;
 
-    public CurrencyResponseDTO getCurrencyRates(){
+    public CurrencyResponseDTO getCurrencyRates() {
 
         String[] url = {"https://api.nbp.pl/api/exchangerates/tables/A", "https://api.nbp.pl/api/exchangerates/tables/B"};
         List<CurrencyDTO> currencyDTOS = new ArrayList<>();
@@ -35,20 +35,12 @@ public class CurrencyService {
             try {
 
                 URL obj = new URL(s);
-                HttpURLConnection connection = (HttpURLConnection) obj.openConnection();
-                BufferedReader in = new BufferedReader(
-                        new InputStreamReader(connection.getInputStream())
-                );
-                String inputLine;
-                StringBuffer response = new StringBuffer();
-                while ((inputLine = in.readLine()) != null) {
-                    response.append(inputLine);
-                }
-                in.close();
+                obj.openConnection();
+
                 try {
                     ObjectMapper objectMapper = new ObjectMapper();
 
-                    JsonNode jsonNode = objectMapper.readTree(response.toString());
+                    JsonNode jsonNode = objectMapper.readTree(obj);
 
                     for (JsonNode element : jsonNode) {
 
@@ -61,10 +53,10 @@ public class CurrencyService {
                         }
                     }
                 } catch (Exception e) {
-                    throw new CurrencyDataFetchException("Currency data fetch fail",HttpStatus.EXPECTATION_FAILED);
+                    throw new CurrencyDataFetchException("Currency data fetch fail", HttpStatus.EXPECTATION_FAILED);
                 }
             } catch (Exception e) {
-                throw new CurrencyApiReadFail("Read data from API fail",HttpStatus.EXPECTATION_FAILED);
+                throw new CurrencyApiReadFail("Read data from API fail", HttpStatus.EXPECTATION_FAILED);
             }
 
         }
@@ -74,36 +66,28 @@ public class CurrencyService {
     }
 
 
-    public CurrencyResponseDTO getCurrencyRateByCode(String currencyCode){
+    public CurrencyResponseDTO getCurrencyRateByCode(String currencyCode) {
         List<CurrencyDTO> currencyDTOS = new ArrayList<>();
 
-        currencyRepository.findByCurrencyCode(currencyCode).orElseThrow(() -> new WrongCurrencyCodeException("Wrong currency code",HttpStatus.BAD_GATEWAY));
-        String table = currencyRepository.findDataByCurrencyCode(currencyCode).getCurrencyTable();
+        currencyRepository.findByCurrencyCode(currencyCode).orElseThrow(() -> new WrongCurrencyCodeException("Wrong currency code", HttpStatus.NOT_FOUND));
         try {
-            URL obj = new URL("http://api.nbp.pl/api/exchangerates/rates/" + table + "/" + currencyCode + "/");
-            HttpURLConnection connection = (HttpURLConnection) obj.openConnection();
+            URL obj = new URL("http://api.nbp.pl/api/exchangerates/rates/" + currencyRepository.findDataByCurrencyCode(currencyCode).getCurrencyTable()
+                    + "/" + currencyCode + "/");
+            obj.openConnection();
 
-            BufferedReader in = new BufferedReader(
-                    new InputStreamReader(connection.getInputStream())
-            );
-            String inputLine;
-            StringBuffer response = new StringBuffer();
-            while ((inputLine = in.readLine()) != null) {
-                response.append(inputLine);
-            }
             try {
                 ObjectMapper objectMapper = new ObjectMapper();
 
                 CurrencyDTO currencyDTO = new CurrencyDTO(currencyRepository.findDataByCurrencyCode(currencyCode).getCurrencyCode(), currencyRepository.findDataByCurrencyCode(currencyCode).getCurrencyName(),
-                        currencyRepository.findDataByCurrencyCode(currencyCode).getCurrencyTable(), objectMapper.readTree(response.toString()).get("rates").get(0).get("mid").asDouble());
+                        currencyRepository.findDataByCurrencyCode(currencyCode).getCurrencyTable(), objectMapper.readTree(obj).get("rates").get(0).get("mid").asDouble());
                 currencyDTOS.add(currencyDTO);
 
             } catch (Exception e) {
-                throw new CurrencyDataFetchException("Currency data fetch fail",HttpStatus.EXPECTATION_FAILED);
+                throw new CurrencyDataFetchException("Currency data fetch fail", HttpStatus.EXPECTATION_FAILED);
             }
 
         } catch (Exception e) {
-            throw new CurrencyApiReadFail("Read data from API fail",HttpStatus.EXPECTATION_FAILED);
+            throw new CurrencyApiReadFail("Read data from API fail", HttpStatus.EXPECTATION_FAILED);
         }
 
 
@@ -111,29 +95,21 @@ public class CurrencyService {
     }
 
 
-    public CurrencyDateResponseDTO getCurrencyRateByCodeInDate(String currencyCode, String from, String end){
+    public CurrencyDateResponseDTO getCurrencyRateByCodeInDate(String currencyCode, String from, String end) {
 
         List<CurrencyDateDTO> currencyDateDTOS = new ArrayList<>();
-        currencyRepository.findByCurrencyCode(currencyCode).orElseThrow(() -> new WrongCurrencyCodeException("Wrong currency code",HttpStatus.BAD_GATEWAY));
-        String table = currencyRepository.findDataByCurrencyCode(currencyCode).getCurrencyTable();
+        currencyRepository.findByCurrencyCode(currencyCode).orElseThrow(() -> new WrongCurrencyCodeException("Wrong currency code", HttpStatus.NOT_FOUND));
         try {
             //TODO: add validation of path date ( from/end )
             //TODO: add check api response status code before fetch data
-            URL obj = new URL("http://api.nbp.pl/api/exchangerates/rates/" + table + "/" + currencyCode + "/" + from + "/" + end + "/");
-            HttpURLConnection connection = (HttpURLConnection) obj.openConnection();
-            BufferedReader in = new BufferedReader(
-                    new InputStreamReader(connection.getInputStream())
-            );
-            String inputLine;
-            StringBuffer response = new StringBuffer();
-            while ((inputLine = in.readLine()) != null) {
-                response.append(inputLine);
-            }
+            URL obj = new URL("http://api.nbp.pl/api/exchangerates/rates/" + currencyRepository.findDataByCurrencyCode(currencyCode).getCurrencyTable() +
+                    "/" + currencyCode + "/" + from + "/" + end + "/");
+            obj.openConnection();
 
             try {
                 ObjectMapper objectMapper = new ObjectMapper();
 
-                JsonNode jsonNode = objectMapper.readTree(response.toString()).get("rates");
+                JsonNode jsonNode = objectMapper.readTree(obj).get("rates");
 
                 for (JsonNode element : jsonNode) {
 
@@ -144,11 +120,11 @@ public class CurrencyService {
 
                 }
             } catch (Exception e) {
-                throw new CurrencyDataFetchException("Currency data fetch failed",HttpStatus.EXPECTATION_FAILED);
+                throw new CurrencyDataFetchException("Currency data fetch failed", HttpStatus.EXPECTATION_FAILED);
             }
 
         } catch (Exception e) {
-            throw new CurrencyApiReadFail("Currency api read fail",HttpStatus.EXPECTATION_FAILED);
+            throw new CurrencyApiReadFail("Currency api read fail", HttpStatus.EXPECTATION_FAILED);
         }
 
 
