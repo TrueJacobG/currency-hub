@@ -9,7 +9,7 @@ type Props = {
   setUser: Dispatch<User>;
 };
 
-const SigninComponents = ({ user, setUser }: Props) => {
+const SigninComponent = ({ user, setUser }: Props) => {
   const [password, setPassword] = useState("");
   const [repassword, setRepassword] = useState("");
 
@@ -50,7 +50,7 @@ const SigninComponents = ({ user, setUser }: Props) => {
   };
 
   const onChangeAuthCode = (authCode: string) => {
-    setShowAuthCodeError(!isAuthCodeValidate(authCode) && password === repassword);
+    setShowAuthCodeError(!isAuthCodeValidate(authCode));
     setUser({ ...user, authCode: authCode });
   };
 
@@ -69,13 +69,13 @@ const SigninComponents = ({ user, setUser }: Props) => {
       <Text style={styles.text}>Welcome to CurrencyHub</Text>
       <Text style={styles.textintro}>Do you want to create an account?</Text>
       <TextInput style={styles.textinput} onChangeText={onChangeName} placeholder={"Enter your name"} />
-      {showNameError && <Text>Name is not valid!</Text>}
+      {showNameError && <Text style={styles.textError}>Name is not valid!</Text>}
       <TextInput style={styles.textinput} onChangeText={onChangeFirstname} placeholder={"Enter your firstname"} />
-      {showFirstNameError && <Text>Firstname is not valid!</Text>}
+      {showFirstNameError && <Text style={styles.textError}>Firstname is not valid!</Text>}
       <TextInput style={styles.textinput} onChangeText={onChangeSurname} placeholder={"Enter your surname"} />
-      {showSurNameError && <Text>Surname is not valid!</Text>}
+      {showSurNameError && <Text style={styles.textError}>Surname is not valid!</Text>}
       <TextInput style={styles.textinput} onChangeText={onChangeEmail} placeholder={"Enter your email"} />
-      {showEmailError && <Text>Email is not valid!</Text>}
+      {showEmailError && <Text style={styles.textError}>Email is not valid!</Text>}
       <TextInput
         style={styles.textinput}
         secureTextEntry={!showPassword}
@@ -89,7 +89,7 @@ const SigninComponents = ({ user, setUser }: Props) => {
         style={styles.icon}
         onPress={toggleShowPassword}
       />
-      {showAuthCodeError && <Text>Password is not valid!</Text>}
+      {showAuthCodeError && <Text style={styles.textError}>Password is not valid!</Text>}
       <TextInput
         style={styles.textinput}
         secureTextEntry={!showRePassword}
@@ -103,7 +103,7 @@ const SigninComponents = ({ user, setUser }: Props) => {
         style={styles.icon}
         onPress={toggleShowRePassword}
       />
-      {showAuthCodeError && <Text>Password is not valid!</Text>}
+      {showAuthCodeError && <Text style={styles.textError}>Password is not valid!</Text>}
     </View>
   );
 };
@@ -137,6 +137,12 @@ const styles = StyleSheet.create({
     paddingBottom: 10,
     paddingTop: 10,
   },
+  textError: {
+    fontSize: 10,
+    color: "#FF0000",
+    textAlign: "left",
+    marginLeft: 10
+  }
 });
 
-export default SigninComponents;
+export default SigninComponent;

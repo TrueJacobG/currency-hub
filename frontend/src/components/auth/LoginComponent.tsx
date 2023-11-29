@@ -33,7 +33,7 @@ const LoginComponent = ({ loginUser, setLoginUser }: Props) => {
     <View style={styles.container}>
       <Text style={styles.text}>Login to your account:</Text>
       <TextInput style={styles.textinput} onChangeText={onChangeEmail} placeholder={"Enter your email"} />
-      {showEmailError && <Text>Email is not valid!</Text>}
+      {showEmailError && <Text style={styles.textError}>Email is not valid!</Text>}
       <TextInput
         style={styles.textinput}
         secureTextEntry={!showPassword}
@@ -79,6 +79,11 @@ const styles = StyleSheet.create({
     textAlign: "center",
     marginTop: 30,
   },
+  textError:{
+    color: "#FF0000",
+    textAlign: "left",
+    marginLeft: 10
+  }
 });
 
 export default LoginComponent;
