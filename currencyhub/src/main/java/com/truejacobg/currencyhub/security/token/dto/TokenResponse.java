@@ -1,2 +1,12 @@
-package com.truejacobg.currencyhub.security.token.dto;public class TokenResponse {
+package com.truejacobg.currencyhub.security.token.dto;
+
+import lombok.*;
+
+@AllArgsConstructor
+@NoArgsConstructor
+@Data
+@Getter
+@Setter
+public class TokenResponse {
+    private String token;
 }

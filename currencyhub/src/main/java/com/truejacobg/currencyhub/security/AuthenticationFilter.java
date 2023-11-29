@@ -1,9 +1,9 @@
 package com.truejacobg.currencyhub.security;
 
 import com.truejacobg.currencyhub.exception.AuthorizationException;
+import com.truejacobg.currencyhub.exception.TokenDoesNotExistException;
 import com.truejacobg.currencyhub.security.dto.NoAuthForFilterDTO;
-import com.truejacobg.currencyhub.security.jwt.Authentication;
-import com.truejacobg.currencyhub.security.jwt.JWTDecoder;
+import com.truejacobg.currencyhub.security.dto.Authentication;
 import com.truejacobg.currencyhub.user.UserService;
 import jakarta.servlet.*;
 import jakarta.servlet.http.HttpServletRequest;
@@ -13,12 +13,14 @@ import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.springframework.boot.context.properties.EnableConfigurationProperties;
 import org.springframework.stereotype.Component;
+import org.springframework.stereotype.Service;
 
 import java.io.IOException;
 
 @AllArgsConstructor
 @EnableConfigurationProperties
 @Component
+@Service
 public class AuthenticationFilter implements Filter {
 
     private static Logger logger = LogManager.getLogger(AuthenticationFilter.class.getName());
@@ -40,6 +42,10 @@ public class AuthenticationFilter implements Filter {
 
         if (!dontNeedToBeChecked) {
             String token = request.getHeader("Authorization");
+
+            if (token == null) {
+                throw new TokenDoesNotExistException("Token in authorization header is empty!");
+            }
 
             logger.info(token);
 

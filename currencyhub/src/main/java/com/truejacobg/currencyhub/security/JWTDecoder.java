@@ -1,12 +1,14 @@
-package com.truejacobg.currencyhub.security.jwt;
+package com.truejacobg.currencyhub.security;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.truejacobg.currencyhub.security.dto.Authentication;
 import org.json.JSONObject;
+import org.springframework.stereotype.Component;
 
 import java.util.Base64;
 
+@Component
 public class JWTDecoder {
     private final ObjectMapper objectMapper = new ObjectMapper();
 

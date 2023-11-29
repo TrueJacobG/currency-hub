@@ -1,3 +1,4 @@
+import AsyncStorage from "@react-native-async-storage/async-storage";
 import { NativeStackScreenProps } from "@react-navigation/native-stack";
 import { useAtom } from "jotai";
 import React, { useEffect, useState } from "react";
@@ -19,16 +20,23 @@ const BaseScreen = ({ navigation }: Props) => {
   const [currencies, setCurrencies] = useState<Currency[]>([]);
 
   useEffect(() => {
-    console.log("test");
     currencyService
       .getAllCurrencies()
       .then((data) => {
-        console.log(data);
         setCurrencies(data.list);
       })
       .catch((error) => {
         console.error(error);
       });
+  }, []);
+
+  const getData = async () => {
+    let data = await AsyncStorage.getItem("token");
+    console.log(data);
+  };
+
+  useEffect(() => {
+    getData();
   }, []);
 
   return (

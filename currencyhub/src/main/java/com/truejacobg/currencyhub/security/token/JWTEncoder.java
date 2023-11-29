@@ -1,27 +1,29 @@
-package com.truejacobg.currencyhub.security.jwt;
+package com.truejacobg.currencyhub.security.token;
 
-import com.truejacobg.currencyhub.security.dto.UserTokenDTO;
+import com.truejacobg.currencyhub.security.token.dto.TokenRegisterDTO;
 import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.SignatureAlgorithm;
+import lombok.AllArgsConstructor;
+import lombok.NoArgsConstructor;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Configuration;
-import org.springframework.stereotype.Component;
 
 import java.time.Instant;
 import java.util.Date;
 
 @Configuration
-@Component
+@AllArgsConstructor
+@NoArgsConstructor
 public class JWTEncoder {
     @Value(value = "${encoder.secret-key}")
     private String secretKey;
 
-    public String GenerateJWT(UserTokenDTO userTokenDTO) {
+    public String generateJWT(TokenRegisterDTO tokenDTO) {
         String jwt = Jwts.builder()
                 .setHeaderParam("alg", "HS256")
                 .setIssuedAt(Date.from(Instant.now()))
-                .claim("name", userTokenDTO.name)
-                .claim("authCode", userTokenDTO.authCode)
+                .claim("name", tokenDTO.name)
+                .claim("authCode", tokenDTO.authCode)
                 .signWith(SignatureAlgorithm.HS256, secretKey)
                 .compact();
 

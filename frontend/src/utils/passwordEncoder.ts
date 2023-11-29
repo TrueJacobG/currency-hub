@@ -6,9 +6,9 @@ async function passwordEncoder(password: string) {
 
   bcrypt.hash(password, salt2, (error, hash) => {
     if (error) {
-      console.log(error);
+      console.error(error);
     } else {
-      console.log(hash);
+      console.error(hash);
     }
   });
 }

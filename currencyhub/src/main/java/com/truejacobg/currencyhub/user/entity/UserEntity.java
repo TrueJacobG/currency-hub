@@ -15,10 +15,10 @@ import java.time.LocalDateTime;
 public class UserEntity {
     @Id
     private String id;
-    private String firstName;
     private String name;
-    private String authCode;
+    private String firstName;
     private String surname;
+    private String authCode;
     private String email;
     private LocalDateTime creationDate;
 

@@ -7,7 +7,7 @@ import lombok.*;
 @Setter
 @Getter
 @Data
-public class TokenLoginDTO {
+public class TokenRegisterDTO {
     public String name;
     public String authCode;
 }

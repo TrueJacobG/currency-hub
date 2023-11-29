@@ -28,8 +28,6 @@ const LogScreen = ({ navigation }: Props) => {
 
     const result = await authService.loginUser(loginUser);
 
-    console.log(result);
-
     if (result.status == "OK") {
       setLoggedUser({ ...loggedUser, ...loginUser });
       setLoginUser({ email: "", authCode: "" });

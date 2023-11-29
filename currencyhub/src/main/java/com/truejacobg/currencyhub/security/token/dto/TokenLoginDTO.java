@@ -1,4 +1,4 @@
-package com.truejacobg.currencyhub.security.dto;
+package com.truejacobg.currencyhub.security.token.dto;
 
 import lombok.*;
 
@@ -7,7 +7,7 @@ import lombok.*;
 @Setter
 @Getter
 @Data
-public class UserTokenDTO {
-    public String name;
+public class TokenLoginDTO {
+    public String email;
     public String authCode;
 }

@@ -1,4 +1,4 @@
-package com.truejacobg.currencyhub.security.jwt;
+package com.truejacobg.currencyhub.security.dto;
 
 import lombok.*;
 

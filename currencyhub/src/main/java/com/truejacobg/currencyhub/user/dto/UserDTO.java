@@ -13,13 +13,13 @@ import java.time.LocalDateTime;
 @Getter
 @Data
 public class UserDTO {
-    @Size(min = 3, max = 50, message = "firstName must be between 3 and 50 characters")
-    @NotBlank
-    private String firstname;
-
     @Size(min = 3, max = 50, message = "name must be between 2 and 50 characters")
     @NotBlank
     private String name;
+
+    @Size(min = 3, max = 50, message = "firstName must be between 3 and 50 characters")
+    @NotBlank
+    private String firstname;
 
     @Size(min = 2, max = 50, message = "surname must be between 2 and 50 characters")
     @NotBlank
