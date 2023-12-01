@@ -6,7 +6,7 @@ import { User } from "../type/User";
 
 export class AuthorizationService {
 
-  universalLink: string = "http://192.168.50.171"
+  universalLink: string = "http://192.168.11.212"
 
   registerUserLink: string = this.universalLink + ":8080/api/v1/user/";
   loginUserLink: string = this.universalLink + ":8080/api/v1/user/";

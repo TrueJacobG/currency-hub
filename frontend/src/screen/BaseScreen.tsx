@@ -9,6 +9,7 @@ import { CurrencyService } from "../services/CurrencyService";
 import { Currency } from "../type/Currency";
 import { ScreenNaviagtion } from "../type/ScreenNavigation";
 import { User } from "../type/User";
+import MenuComponent from "../components/menu/MenuComponent";
 
 type Props = NativeStackScreenProps<ScreenNaviagtion, "Home">;
 
@@ -39,15 +40,22 @@ const BaseScreen = ({ navigation }: Props) => {
     getData();
   }, []);
 
+
+  //TODO::HERE ADD MENU
   return (
     <View>
-      <Text style={styles.textintro}>Welcome to CurrencyHub!</Text>
-      <Text style={styles.text}>This is not your money any more</Text>
       <View>
-        <Text>Email: {loggedUser.email}</Text>
+        <Text style={styles.textintro}>Welcome to CurrencyHub!</Text>
+        <Text style={styles.text}>This is not your money any more</Text>
+        <View>
+          <Text>Email: {loggedUser.email}</Text>
+        </View>
+        <View>
+          <CurrencyListComponent currencies={currencies} />
+        </View>
       </View>
-      <View>
-        <CurrencyListComponent currencies={currencies} />
+      <View style={styles.bottomView}>
+        <MenuComponent />
       </View>
     </View>
   );
@@ -71,5 +79,9 @@ const styles = StyleSheet.create({
     textAlign: "center",
     fontSize: 10,
     marginBottom: 40,
+  },
+  bottomView: {
+    alignItems: 'center',
+    marginTop: 'auto'
   },
 });
