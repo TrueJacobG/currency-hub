@@ -10,15 +10,16 @@ import com.truejacobg.currencyhub.currency.dto.CurrencyResponseDTO;
 import com.truejacobg.currencyhub.exception.CurrencyApiReadFail;
 import com.truejacobg.currencyhub.exception.CurrencyDataFetchException;
 import com.truejacobg.currencyhub.exception.WrongCurrencyCodeException;
+import com.truejacobg.currencyhub.exception.WrongDateException;
 import lombok.AllArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 
-import java.io.BufferedReader;
-import java.io.InputStreamReader;
-import java.net.HttpURLConnection;
 import java.net.URL;
+import java.text.SimpleDateFormat;
+import java.time.LocalDate;
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.List;
 
 
@@ -95,13 +96,16 @@ public class CurrencyService {
     }
 
 
-    public CurrencyDateResponseDTO getCurrencyRateByCodeInDate(String currencyCode, String from, String end) {
+    public CurrencyDateResponseDTO getCurrencyRateByCodeInDate(String currencyCode, LocalDate from, LocalDate end) {
+
+        currencyRepository.findByCurrencyCode(currencyCode).orElseThrow(() -> new WrongCurrencyCodeException("Wrong currency code", HttpStatus.NOT_FOUND));
+
+        if (from.isAfter(end))
+            throw new WrongDateException("Date from must be before end", HttpStatus.EXPECTATION_FAILED);
 
         List<CurrencyDateDTO> currencyDateDTOS = new ArrayList<>();
-        currencyRepository.findByCurrencyCode(currencyCode).orElseThrow(() -> new WrongCurrencyCodeException("Wrong currency code", HttpStatus.NOT_FOUND));
+
         try {
-            //TODO: add validation of path date ( from/end )
-            //TODO: add check api response status code before fetch data
             URL obj = new URL("http://api.nbp.pl/api/exchangerates/rates/" + currencyRepository.findDataByCurrencyCode(currencyCode).getCurrencyTable() +
                     "/" + currencyCode + "/" + from + "/" + end + "/");
             obj.openConnection();
@@ -130,4 +134,39 @@ public class CurrencyService {
 
         return new CurrencyDateResponseDTO("Currency fetch", currencyDateDTOS, HttpStatus.OK);
     }
+
+    public CurrencyDateResponseDTO getCurrencyRateCurrentWeek(String currencyCode) {
+        currencyRepository.findByCurrencyCode(currencyCode).orElseThrow(() -> new WrongCurrencyCodeException("Wrong currency code", HttpStatus.NOT_FOUND));
+        Calendar calendar = Calendar.getInstance();
+        SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
+        LocalDate end = LocalDate.parse(dateFormat.format(calendar.getTime()));
+        calendar.add(Calendar.DAY_OF_YEAR, -7);
+        LocalDate from = LocalDate.parse(dateFormat.format(calendar.getTime()));
+
+        return getCurrencyRateByCodeInDate(currencyCode, from, end);
+    }
+
+    public CurrencyDateResponseDTO getCurrencyRateCurrentMonth(String currencyCode) {
+        currencyRepository.findByCurrencyCode(currencyCode).orElseThrow(() -> new WrongCurrencyCodeException("Wrong currency code", HttpStatus.NOT_FOUND));
+        Calendar calendar = Calendar.getInstance();
+        SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
+        LocalDate end = LocalDate.parse(dateFormat.format(calendar.getTime()));
+        calendar.add(Calendar.MONTH, -1);
+        LocalDate from = LocalDate.parse(dateFormat.format(calendar.getTime()));
+
+        return getCurrencyRateByCodeInDate(currencyCode, from, end);
+    }
+
+    public CurrencyDateResponseDTO getCurrencyRateCurrentYear(String currencyCode) {
+        currencyRepository.findByCurrencyCode(currencyCode).orElseThrow(() -> new WrongCurrencyCodeException("Wrong currency code", HttpStatus.NOT_FOUND));
+        Calendar calendar = Calendar.getInstance();
+        SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
+        LocalDate end = LocalDate.parse(dateFormat.format(calendar.getTime()));
+        calendar.add(Calendar.YEAR, -1);
+        LocalDate from = LocalDate.parse(dateFormat.format(calendar.getTime()));
+
+        return getCurrencyRateByCodeInDate(currencyCode, from, end);
+    }
 }
+
+
