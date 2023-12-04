@@ -35,19 +35,19 @@ public class CurrencyController {
         return ResponseEntity.ok(responseDTO);
     }
 
-    @GetMapping("/rate/{currencyCode}/week")
+    @GetMapping("/rate/week/{currencyCode}")
     ResponseEntity<CurrencyDateResponseDTO> getCurrencyRateCurrentWeek(@PathVariable String currencyCode) {
         CurrencyDateResponseDTO responseDTO = currencyService.getCurrencyRateCurrentWeek(currencyCode);
         return ResponseEntity.ok(responseDTO);
     }
 
-    @GetMapping("/rate/{currencyCode}/month")
+    @GetMapping("/rate/month/{currencyCode}")
     ResponseEntity<CurrencyDateResponseDTO> getCurrencyRateCurrentMonth(@PathVariable String currencyCode) {
         CurrencyDateResponseDTO responseDTO = currencyService.getCurrencyRateCurrentMonth(currencyCode);
         return ResponseEntity.ok(responseDTO);
     }
 
-    @GetMapping("/rate/{currencyCode}/year")
+    @GetMapping("/rate/year/{currencyCode}")
     ResponseEntity<CurrencyDateResponseDTO> getCurrencyRateCurrentYear(@PathVariable String currencyCode) {
         CurrencyDateResponseDTO responseDTO = currencyService.getCurrencyRateCurrentYear(currencyCode);
         return ResponseEntity.ok(responseDTO);
