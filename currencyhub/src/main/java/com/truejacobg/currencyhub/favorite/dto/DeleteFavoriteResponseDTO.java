@@ -14,7 +14,8 @@ public class DeleteFavoriteResponseDTO {
 
     private String message;
     private HttpStatus status;
-    public DeleteFavoriteResponseDTO(String message, HttpStatus status){
+
+    public DeleteFavoriteResponseDTO(String message, HttpStatus status) {
         this.message = message;
         this.status = status;
 

@@ -9,7 +9,7 @@ import org.springframework.web.bind.annotation.*;
 
 @CrossOrigin(origins = "http://localhost:8081")
 @AllArgsConstructor
-@RequestMapping(value = "/api/v1/currency")
+@RequestMapping(value = "/api/v1/favorite")
 @RestController
 public class FavoriteController {
 

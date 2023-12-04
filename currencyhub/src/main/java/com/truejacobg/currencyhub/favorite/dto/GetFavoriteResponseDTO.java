@@ -16,7 +16,8 @@ public class GetFavoriteResponseDTO {
     private String message;
     private List<FavoriteEntity> list;
     private HttpStatus status;
-    public GetFavoriteResponseDTO(String message, List<FavoriteEntity> favoriteCurrencies, HttpStatus status){
+
+    public GetFavoriteResponseDTO(String message, List<FavoriteEntity> favoriteCurrencies, HttpStatus status) {
         this.message = message;
         this.status = status;
         this.list = favoriteCurrencies;
