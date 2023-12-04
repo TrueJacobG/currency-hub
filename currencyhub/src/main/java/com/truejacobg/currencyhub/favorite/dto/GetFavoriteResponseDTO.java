@@ -6,7 +6,7 @@ import org.springframework.http.HttpStatus;
 
 import java.util.List;
 
-
+@AllArgsConstructor
 @NoArgsConstructor
 @Setter
 @Getter
@@ -17,11 +17,4 @@ public class GetFavoriteResponseDTO {
     private List<FavoriteEntity> list;
     private HttpStatus status;
 
-    public GetFavoriteResponseDTO(String message, List<FavoriteEntity> favoriteCurrencies, HttpStatus status) {
-        this.message = message;
-        this.status = status;
-        this.list = favoriteCurrencies;
-
-
-    }
 }

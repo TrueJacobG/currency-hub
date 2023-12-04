@@ -4,3 +4,14 @@ spring:
       uri: ""
       database: ""
 
+encoder:
+  salt: ""
+  secret-key: ""
+
+blocked:
+  request:
+    get:
+      - "/api/v1/user"
+    post:
+      - "/api/v1/user"
+      - "/api/v1/auth"

@@ -6,7 +6,7 @@ import org.springframework.http.HttpStatus;
 
 import java.util.List;
 
-@AllArgsConstructor
+
 @NoArgsConstructor
 @Setter
 @Getter
@@ -14,13 +14,10 @@ import java.util.List;
 public class CreateFavoriteResponseDTO {
 
     private String message;
-    private List<CurrencyDTO> list;
     private HttpStatus status;
 
     public CreateFavoriteResponseDTO(String message, HttpStatus status) {
         this.message = message;
         this.status = status;
-
-
     }
 }

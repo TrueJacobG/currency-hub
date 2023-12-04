@@ -3,6 +3,8 @@ package com.truejacobg.currencyhub.favorite.entity;
 import lombok.*;
 import org.springframework.data.mongodb.core.mapping.Document;
 
+import java.time.LocalDate;
+
 @Document("favorite")
 @AllArgsConstructor
 @NoArgsConstructor
@@ -12,5 +14,5 @@ import org.springframework.data.mongodb.core.mapping.Document;
 public class FavoriteEntity {
     private String currencyCode;
     private String name;
-    private String date;
+    private LocalDate date;
 }
