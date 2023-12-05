@@ -20,7 +20,7 @@ public class FavoriteController {
     @PostMapping("/{currencyCode}")
     ResponseEntity<CreateFavoriteResponseDTO> addFavoriteCurrency(@PathVariable String currencyCode, HttpServletRequest servletRequest) {
         CreateFavoriteResponseDTO createFavoriteResponseDTO = favoriteService.addFavoriteCurrency(currencyCode, servletRequest);
-        System.out.println(servletRequest);
+
         return ResponseEntity.ok(createFavoriteResponseDTO);
     }
 

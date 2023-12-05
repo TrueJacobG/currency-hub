@@ -26,7 +26,8 @@ public class AuthenticationFilter implements Filter {
     private static Logger logger = LogManager.getLogger(AuthenticationFilter.class.getName());
 
     private final UserService userService;
-    private final JWTDecoder jwtDecoder = new JWTDecoder();
+    private ServletRequest servletRequest;
+    private final JWTDecoder jwtDecoder = new JWTDecoder(servletRequest);
 
     private final Encoder encoder;
 
