@@ -28,7 +28,7 @@ public class UserService {
 
     public GetUserResponseDTO getUser(String email) {
         UserEntity userEntity = userRepository.findByEmail(email).orElseThrow(() -> new UserWithThatEmailDoesNotExistException(String.format("User with email: %s does not exist!", email)));
-        UserDTO userDTO = new UserDTO(userEntity.getName(), userEntity.getFirstName(), userEntity.getSurname(), null, userEntity.getEmail(), null);
+        UserDTO userDTO = new UserDTO(userEntity.getName(), userEntity.getFirstName(), userEntity.getSurname(), null, userEntity.getEmail(), userEntity.getCreationDate());
         return new GetUserResponseDTO(userDTO, "has been found", HttpStatus.OK);
     }
 
