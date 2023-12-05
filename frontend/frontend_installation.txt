@@ -10,4 +10,4 @@
     - or just run it on your android device
     - (recommended) android studio -> setttings -> find on start-up -> disable reopen last project
 7. npm install
-8. npx expo
+8. npm run start

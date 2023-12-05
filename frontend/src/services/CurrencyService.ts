@@ -1,5 +1,5 @@
 export class CurrencyService {
-  getAllCurrenciesLink: string = "http://172.20.10.3:8080/api/v1/currency/rate";
+  getAllCurrenciesLink: string = "http://10.102.0.185:8080/api/v1/currency/rate";
 
   exampleToken: string =
     "Bearer eyJhbGciOiJIUzI1NiJ9.eyJuYW1lIjoidGVzdFUiLCJwYXNzd29yZCI6InRlc3QxMjMxMjMxMjMifQ.bHmBljA0uPuObIW2HfF9a4TTV1X_xvo7swSDwL6qywc";

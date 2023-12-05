@@ -3,10 +3,10 @@ import { LoginUser } from "../type/LoginUser";
 import { User } from "../type/User";
 
 export class AuthorizationService {
-  registerUserLink: string = "http://172.20.10.3:8080/api/v1/user/";
-  loginUserLink: string = "http://172.20.10.3:8080/api/v1/user/";
-  tokenRegisterLink: string = "http://172.20.10.3:8080/api/v1/auth/register";
-  tokenLoginLink: string = "http://172.20.10.3:8080/api/v1/auth/login";
+  registerUserLink: string = "http://10.102.0.185:8080/api/v1/user/";
+  loginUserLink: string = "http://10.102.0.185:8080/api/v1/user/";
+  tokenRegisterLink: string = "http://10.102.0.185:8080/api/v1/auth/register";
+  tokenLoginLink: string = "http://10.102.0.185:8080/api/v1/auth/login";
 
   exampleToken: string =
     "Bearer eyJhbGciOiJIUzI1NiJ9.eyJuYW1lIjoidGVzdFUiLCJwYXNzd29yZCI6InRlc3QxMjMxMjMxMjMifQ.bHmBljA0uPuObIW2HfF9a4TTV1X_xvo7swSDwL6qywc";
