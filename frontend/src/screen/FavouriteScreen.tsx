@@ -3,19 +3,18 @@ import { NativeStackScreenProps } from "@react-navigation/native-stack";
 import { useAtom } from "jotai";
 import React, { useEffect, useState } from "react";
 import { StyleSheet, Text, View } from "react-native";
-import CurrencyElementComponent from "../components/currency/CurrencyElementComponent";
 import CurrencyListComponent from "../components/currency/CurrencyListComponent";
+import MenuComponent from "../components/menu/MenuComponent";
 import { loggedUserAtom } from "../jotai/loggedUserAtom";
-import { CurrencyService } from "../services/CurrencyService";
+import { FavouriteService } from "../services/FavouriteService";
 import { Currency } from "../type/Currency";
 import { ScreenNaviagtion } from "../type/ScreenNavigation";
 import { User } from "../type/User";
-import MenuComponent from "../components/menu/MenuComponent";
 
-type Props = NativeStackScreenProps<ScreenNaviagtion, "Home">;
+type Props = NativeStackScreenProps<ScreenNaviagtion, "Favourite">;
 
-const BaseScreen = ({ navigation }: Props) => {
-  const currencyService = new CurrencyService();
+const FavouriteScreen = ({ navigation }: Props) => {
+  const favouriteService = new FavouriteService();
 
   const [loggedUser, setLoggedUser] = useAtom<User>(loggedUserAtom);
 
@@ -23,8 +22,8 @@ const BaseScreen = ({ navigation }: Props) => {
   const [selectedCurrency, setSelectedCurrency] = useState<Currency | null>(null);
 
   useEffect(() => {
-    currencyService
-      .getAllCurrencies()
+    favouriteService
+      .getUserFavourites()
       .then((data) => {
         setCurrencies(data.list);
       })
@@ -35,7 +34,7 @@ const BaseScreen = ({ navigation }: Props) => {
 
   const getData = async () => {
     let data = await AsyncStorage.getItem("token");
-    console.log(data);
+    console.log("WORKING " + data);
   };
 
   useEffect(() => {
@@ -51,19 +50,24 @@ const BaseScreen = ({ navigation }: Props) => {
   };
 
   return (
-    <View style={styles.container}>
-      <Text style={styles.textintro}>Welcome to CurrencyHub!</Text>
-      <Text style={styles.text}>This is not your money anymore</Text>
+    <View>
       <View>
-        <Text>Email: {loggedUser.email}</Text>
+        <Text style={styles.textintro}>Welcome to ypur favourites!</Text>
+        <View>
+          <Text>Email: {loggedUser.email}</Text>
+        </View>
+        <View>
+          <CurrencyListComponent currencies={currencies} onCurrencyPress={handleCurrencyPress} />
+        </View>
       </View>
-      <CurrencyListComponent currencies={currencies} onCurrencyPress={handleCurrencyPress} />
-      {selectedCurrency && <CurrencyElementComponent currency={selectedCurrency} onCloseModal={handleModalClose} />}
+      <View style={styles.bottomView}>
+        <MenuComponent />
+      </View>
     </View>
   );
 };
 
-export default BaseScreen;
+export default FavouriteScreen;
 
 const styles = StyleSheet.create({
   container: {
@@ -83,7 +87,7 @@ const styles = StyleSheet.create({
     marginBottom: 40,
   },
   bottomView: {
-    alignItems: 'center',
-    marginTop: 'auto'
+    alignItems: "center",
+    marginTop: "auto",
   },
 });
