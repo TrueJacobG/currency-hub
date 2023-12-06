@@ -20,7 +20,9 @@ const BaseScreen = ({ navigation }: Props) => {
   const [loggedUser, setLoggedUser] = useAtom<User>(loggedUserAtom);
 
   const [currencies, setCurrencies] = useState<Currency[]>([]);
-  const [selectedCurrency, setSelectedCurrency] = useState<Currency | null>(null);
+  const [selectedCurrency, setSelectedCurrency] = useState<Currency | null>(
+    null
+  );
 
   useEffect(() => {
     currencyService
@@ -51,15 +53,27 @@ const BaseScreen = ({ navigation }: Props) => {
   };
 
   return (
-    <View style={styles.container}>
-      <Text style={styles.textintro}>Welcome to CurrencyHub!</Text>
-      <Text style={styles.text}>This is not your money anymore</Text>
-      <View>
-        <Text>Email: {loggedUser.email}</Text>
+      <View style={styles.container}>
+        <Text style={styles.textintro}>Welcome to CurrencyHub!</Text>
+        <Text style={styles.text}>This is not your money anymore</Text>
+        <View>
+          <Text>Email: {loggedUser.email}</Text>
+        </View>
+        <CurrencyListComponent
+          currencies={currencies}
+          onCurrencyPress={handleCurrencyPress}
+        />
+        {selectedCurrency && (
+          <CurrencyElementComponent
+            currency={selectedCurrency}
+            onCloseModal={handleModalClose}
+          />
+        )}
+        <View style={styles.bottomView}>
+          <MenuComponent/>
+        </View>
       </View>
-      <CurrencyListComponent currencies={currencies} onCurrencyPress={handleCurrencyPress} />
-      {selectedCurrency && <CurrencyElementComponent currency={selectedCurrency} onCloseModal={handleModalClose} />}
-    </View>
+      
   );
 };
 
@@ -83,7 +97,7 @@ const styles = StyleSheet.create({
     marginBottom: 40,
   },
   bottomView: {
-    alignItems: 'center',
-    marginTop: 'auto'
+    alignItems: "center",
+    marginTop: "auto",
   },
 });
