@@ -1,11 +1,15 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { Button, Modal, StyleSheet, Text, TouchableOpacity, View } from "react-native";
+import { ChartData } from "react-native-chart-kit/dist/HelperTypes";
+import { CurrencyService } from "../../services/CurrencyService";
 import { Currency } from "../../type/Currency";
 import LineChartComponent from "./LineChartComponent";
 
-type Props = { item: Currency; onCloseModal: () => void };
+type Props = { currency: Currency; onCloseModal: () => void };
 
-const CurrencyElementComponent = ({ item, onCloseModal }: Props) => {
+const CurrencyElementComponent = ({ currency, onCloseModal }: Props) => {
+  const currencyService = new CurrencyService();
+
   const [isModalVisible, setModalVisible] = useState(false);
   const [selectedTimeRange, setSelectedTimeRange] = useState("Week");
 
@@ -14,12 +18,20 @@ const CurrencyElementComponent = ({ item, onCloseModal }: Props) => {
     onCloseModal();
   };
 
+  const [chartData, setChartData] = useState<ChartData>({ labels: [], datasets: [{ data: [] }] });
+
+  useEffect(() => {
+    currencyService.getCurrencyDataWeekly(currency.currencyCode).then((data) => {
+      setChartData(data);
+    });
+  }, [selectedTimeRange]);
+
   return (
     <View style={styles.currencyContainer}>
       <TouchableOpacity onPress={toggleModal}>
-        <Text>{item.currencyCode}</Text>
-        <Text>{item.currencyName}</Text>
-        <Text>{item.mid}</Text>
+        <Text>{currency.currencyCode}</Text>
+        <Text>{currency.currencyName}</Text>
+        <Text>{currency.mid}</Text>
       </TouchableOpacity>
 
       <Modal animationType="slide" transparent={true} visible={isModalVisible}>
@@ -30,7 +42,7 @@ const CurrencyElementComponent = ({ item, onCloseModal }: Props) => {
               <Button title="Month" onPress={() => setSelectedTimeRange("Month")} />
               <Button title="Year" onPress={() => setSelectedTimeRange("Year")} />
             </View>
-            <LineChartComponent currencyCode={item.currencyCode} timeRange={selectedTimeRange} onCloseModal={toggleModal} />
+            <LineChartComponent chartData={chartData} />
             <View style={styles.buttonContainer}>
               <Button title="Follow" onPress={() => {}} />
               <Button title="Close Modal" onPress={toggleModal} />

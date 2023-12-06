@@ -57,7 +57,7 @@ const BaseScreen = ({ navigation }: Props) => {
         <Text>Email: {loggedUser.email}</Text>
       </View>
       <CurrencyListComponent currencies={currencies} onCurrencyPress={handleCurrencyPress} />
-      {selectedCurrency && <CurrencyElementComponent item={selectedCurrency} onCloseModal={handleModalClose} />}
+      {selectedCurrency && <CurrencyElementComponent currency={selectedCurrency} onCloseModal={handleModalClose} />}
     </View>
   );
 };

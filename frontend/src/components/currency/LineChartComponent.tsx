@@ -1,23 +1,11 @@
 import React from "react";
-import { View, StyleSheet, Dimensions } from "react-native";
-import { LineChart } from 'react-native-chart-kit'
-import { ChartData } from 'react-native-chart-kit/dist/HelperTypes';
-import { getChartData } from "../../services/ChartDataProvider";
+import { Dimensions, StyleSheet, View } from "react-native";
+import { LineChart } from "react-native-chart-kit";
+import { ChartData } from "react-native-chart-kit/dist/HelperTypes";
 
-type Props = { currencyCode: string; timeRange: string; onCloseModal: () => void };
+type Props = { chartData: ChartData };
 
-const LineChartComponent = ({ currencyCode, timeRange, onCloseModal }: Props) => {
-  const [chartData, setChartData] = React.useState<ChartData>({ labels: [], datasets: [{ data: [] }] });
-
-  React.useEffect(() => {
-    const fetchData = async () => {
-      const data = await getChartData(currencyCode, timeRange);
-      setChartData(data);
-    };
-
-    fetchData();
-  }, [currencyCode, timeRange]);
-
+const LineChartComponent = ({ chartData }: Props) => {
   return (
     <View style={styles.chartContainer}>
       <LineChart

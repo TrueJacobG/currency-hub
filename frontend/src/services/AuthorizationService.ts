@@ -3,12 +3,15 @@ import { LoginUser } from "../type/LoginUser";
 import { User } from "../type/User";
 
 export class AuthorizationService {
-  universalLink: string = "http://192.168.50.171";
+  universalLink: string = "http://172.20.10.2";
 
   registerUserLink: string = this.universalLink + ":8080/api/v1/user/";
   loginUserLink: string = this.universalLink + ":8080/api/v1/user/";
   tokenRegisterLink: string = this.universalLink + ":8080/api/v1/auth/register";
   tokenLoginLink: string = this.universalLink + ":8080/api/v1/auth/login";
+
+  exampleToken: string =
+    "Bearer eyJhbGciOiJIUzI1NiJ9.eyJuYW1lIjoidGVzdFUiLCJwYXNzd29yZCI6InRlc3QxMjMxMjMxMjMifQ.bHmBljA0uPuObIW2HfF9a4TTV1X_xvo7swSDwL6qywc";
 
   async getTokenRegister(name: string, authCode: string) {
     return await fetch(this.tokenRegisterLink, {
