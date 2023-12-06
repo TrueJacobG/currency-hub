@@ -10,7 +10,7 @@ import org.springframework.web.bind.annotation.*;
 
 @CrossOrigin(origins = "http://localhost:8081")
 @AllArgsConstructor
-@RequestMapping(value = "/api/v1/favorite")
+@RequestMapping(value = "/api/v1/favourite")
 @RestController
 public class FavoriteController {
 
