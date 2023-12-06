@@ -19,6 +19,7 @@ const FavouriteScreen = ({ navigation }: Props) => {
   const [loggedUser, setLoggedUser] = useAtom<User>(loggedUserAtom);
 
   const [currencies, setCurrencies] = useState<Currency[]>([]);
+  const [selectedCurrency, setSelectedCurrency] = useState<Currency | null>(null);
 
   useEffect(() => {
     favouriteService
@@ -40,6 +41,14 @@ const FavouriteScreen = ({ navigation }: Props) => {
     getData();
   }, []);
 
+  const handleCurrencyPress = (currency: Currency) => {
+    setSelectedCurrency(currency);
+  };
+
+  const handleModalClose = () => {
+    setSelectedCurrency(null);
+  };
+
   return (
     <View>
       <View>
@@ -48,7 +57,7 @@ const FavouriteScreen = ({ navigation }: Props) => {
           <Text>Email: {loggedUser.email}</Text>
         </View>
         <View>
-          <CurrencyListComponent currencies={currencies} />
+          <CurrencyListComponent currencies={currencies} onCurrencyPress={handleCurrencyPress} />
         </View>
       </View>
       <View style={styles.bottomView}>
