@@ -1,7 +1,7 @@
 import React from "react";
 import { FlatList, View } from "react-native";
-import CurrencyElementComponent from "./CurrencyElementComponent";
 import { Currency } from "../../type/Currency";
+import CurrencyElementComponent from "./CurrencyElementComponent";
 
 type Props = {
   currencies: Currency[];
@@ -13,9 +13,7 @@ const CurrencyListComponent = ({ currencies, onCurrencyPress }: Props) => {
     <View>
       <FlatList
         data={currencies}
-        renderItem={({ item }) => (
-          <CurrencyElementComponent item={item} onCloseModal={() => {}} />
-        )}
+        renderItem={({ item }) => <CurrencyElementComponent item={item} onCloseModal={() => {}} />}
         keyExtractor={(item) => item.currencyCode.toString()}
       />
     </View>

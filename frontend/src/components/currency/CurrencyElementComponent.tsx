@@ -1,8 +1,7 @@
 import React, { useState } from "react";
-import { Text, View, Modal, TouchableOpacity, StyleSheet, Button } from "react-native";
-import LineChartComponent from "./LineChartComponent";
+import { Button, Modal, StyleSheet, Text, TouchableOpacity, View } from "react-native";
 import { Currency } from "../../type/Currency";
-import { getChartData } from "../../services/ChartDataProvider";
+import LineChartComponent from "./LineChartComponent";
 
 type Props = { item: Currency; onCloseModal: () => void };
 

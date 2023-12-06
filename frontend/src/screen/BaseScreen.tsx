@@ -3,8 +3,8 @@ import { NativeStackScreenProps } from "@react-navigation/native-stack";
 import { useAtom } from "jotai";
 import React, { useEffect, useState } from "react";
 import { StyleSheet, Text, View } from "react-native";
-import CurrencyListComponent from "../components/currency/CurrencyListComponent";
 import CurrencyElementComponent from "../components/currency/CurrencyElementComponent";
+import CurrencyListComponent from "../components/currency/CurrencyListComponent";
 import { loggedUserAtom } from "../jotai/loggedUserAtom";
 import { CurrencyService } from "../services/CurrencyService";
 import { Currency } from "../type/Currency";
@@ -57,12 +57,7 @@ const BaseScreen = ({ navigation }: Props) => {
         <Text>Email: {loggedUser.email}</Text>
       </View>
       <CurrencyListComponent currencies={currencies} onCurrencyPress={handleCurrencyPress} />
-      {selectedCurrency && (
-        <CurrencyElementComponent
-          item={selectedCurrency}
-          onCloseModal={handleModalClose}
-        />
-      )}
+      {selectedCurrency && <CurrencyElementComponent item={selectedCurrency} onCloseModal={handleModalClose} />}
     </View>
   );
 };
