@@ -3,6 +3,7 @@ import { NativeStackScreenProps } from "@react-navigation/native-stack";
 import { useAtom } from "jotai";
 import React, { useEffect, useState } from "react";
 import { StyleSheet, Text, View } from "react-native";
+import CurrencyElementComponent from "../components/currency/CurrencyElementComponent";
 import CurrencyListComponent from "../components/currency/CurrencyListComponent";
 import { loggedUserAtom } from "../jotai/loggedUserAtom";
 import { CurrencyService } from "../services/CurrencyService";
@@ -18,6 +19,7 @@ const BaseScreen = ({ navigation }: Props) => {
   const [loggedUser, setLoggedUser] = useAtom<User>(loggedUserAtom);
 
   const [currencies, setCurrencies] = useState<Currency[]>([]);
+  const [selectedCurrency, setSelectedCurrency] = useState<Currency | null>(null);
 
   useEffect(() => {
     currencyService
@@ -39,16 +41,23 @@ const BaseScreen = ({ navigation }: Props) => {
     getData();
   }, []);
 
+  const handleCurrencyPress = (currency: Currency) => {
+    setSelectedCurrency(currency);
+  };
+
+  const handleModalClose = () => {
+    setSelectedCurrency(null);
+  };
+
   return (
-    <View>
+    <View style={styles.container}>
       <Text style={styles.textintro}>Welcome to CurrencyHub!</Text>
-      <Text style={styles.text}>This is not your money any more</Text>
+      <Text style={styles.text}>This is not your money anymore</Text>
       <View>
         <Text>Email: {loggedUser.email}</Text>
       </View>
-      <View>
-        <CurrencyListComponent currencies={currencies} />
-      </View>
+      <CurrencyListComponent currencies={currencies} onCurrencyPress={handleCurrencyPress} />
+      {selectedCurrency && <CurrencyElementComponent currency={selectedCurrency} onCloseModal={handleModalClose} />}
     </View>
   );
 };

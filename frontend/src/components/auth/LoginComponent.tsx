@@ -79,11 +79,11 @@ const styles = StyleSheet.create({
     textAlign: "center",
     marginTop: 30,
   },
-  textError:{
+  textError: {
     color: "#FF0000",
     textAlign: "left",
-    marginLeft: 10
-  }
+    marginLeft: 10,
+  },
 });
 
 export default LoginComponent;
