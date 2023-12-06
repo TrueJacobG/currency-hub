@@ -2,11 +2,8 @@ import AsyncStorage from "@react-native-async-storage/async-storage";
 import { LoginUser } from "../type/LoginUser";
 import { User } from "../type/User";
 
-
-
 export class AuthorizationService {
-
-  universalLink: string = "http://192.168.50.171"
+  universalLink: string = "http://192.168.0.18";
 
   registerUserLink: string = this.universalLink + ":8080/api/v1/user/";
   loginUserLink: string = this.universalLink + ":8080/api/v1/user/";

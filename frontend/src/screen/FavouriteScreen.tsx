@@ -4,82 +4,81 @@ import { useAtom } from "jotai";
 import React, { useEffect, useState } from "react";
 import { StyleSheet, Text, View } from "react-native";
 import CurrencyListComponent from "../components/currency/CurrencyListComponent";
+import MenuComponent from "../components/menu/MenuComponent";
 import { loggedUserAtom } from "../jotai/loggedUserAtom";
 import { CurrencyService } from "../services/CurrencyService";
 import { Currency } from "../type/Currency";
 import { ScreenNaviagtion } from "../type/ScreenNavigation";
 import { User } from "../type/User";
-import MenuComponent from "../components/menu/MenuComponent";
 
-type Props = NativeStackScreenProps<ScreenNaviagtion, "Fav">;
+type Props = NativeStackScreenProps<ScreenNaviagtion, "Favourite">;
 
-const FavScreen = ({ navigation }: Props) => {
-    const currencyService = new CurrencyService();
+const FavouriteScreen = ({ navigation }: Props) => {
+  const currencyService = new CurrencyService();
 
-    const [loggedUser, setLoggedUser] = useAtom<User>(loggedUserAtom);
+  const [loggedUser, setLoggedUser] = useAtom<User>(loggedUserAtom);
 
-    const [currencies, setCurrencies] = useState<Currency[]>([]);
+  const [currencies, setCurrencies] = useState<Currency[]>([]);
 
-    useEffect(() => {
-        currencyService
-            .getAllCurrencies()
-            .then((data) => {
-                setCurrencies(data.list);
-            })
-            .catch((error) => {
-                console.error(error);
-            });
-    }, []);
+  useEffect(() => {
+    currencyService
+      .getAllCurrencies()
+      .then((data) => {
+        setCurrencies(data.list);
+      })
+      .catch((error) => {
+        console.error(error);
+      });
+  }, []);
 
-    const getData = async () => {
-        let data = await AsyncStorage.getItem("token");
-        console.log("WORKING " + data);
-    };
+  const getData = async () => {
+    let data = await AsyncStorage.getItem("token");
+    console.log("WORKING " + data);
+  };
 
-    useEffect(() => {
-        getData();
-    }, []);
+  useEffect(() => {
+    getData();
+  }, []);
 
-
-    return (
+  return (
+    <View>
+      <View>
+        <Text style={styles.textintro}>Welcome to ypur favourites!</Text>
         <View>
-            <View>
-                <Text style={styles.textintro}>Welcome to ypur favourites!</Text>
-                <View>
-                    <Text>Email: {loggedUser.email}</Text>
-                </View>
-                <View>
-                    <CurrencyListComponent currencies={currencies} />
-                </View>
-            </View>
-            <View style={styles.bottomView}>
-                <MenuComponent />
-            </View>
+          <Text>Email: {loggedUser.email}</Text>
         </View>
-    );
+        <View>
+          <CurrencyListComponent currencies={currencies} />
+        </View>
+      </View>
+      <View style={styles.bottomView}>
+        <MenuComponent />
+      </View>
+    </View>
+  );
 };
 
-export default FavScreen;
+export default FavouriteScreen;
 
 const styles = StyleSheet.create({
-    container: {
-        flex: 1,
-        backgroundColor: "#fff",
-        alignItems: "center",
-        justifyContent: "center",
-    },
-    textintro: {
-        textAlign: "center",
-        fontSize: 40,
-        marginTop: 20,
-    },
-    text: {
-        textAlign: "center",
-        fontSize: 10,
-        marginBottom: 40,
-    },
-    bottomView: {
-        alignItems: 'center',
-        marginTop: 'auto'
-    },
+  container: {
+    flex: 1,
+    backgroundColor: "#fff",
+    alignItems: "center",
+    justifyContent: "center",
+  },
+  textintro: {
+    textAlign: "center",
+    fontSize: 40,
+    marginTop: 20,
+  },
+  text: {
+    textAlign: "center",
+    fontSize: 10,
+    marginBottom: 40,
+  },
+  bottomView: {
+    alignItems: "center",
+    marginTop: "auto",
+  },
 });

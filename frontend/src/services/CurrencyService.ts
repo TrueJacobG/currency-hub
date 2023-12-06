@@ -1,5 +1,5 @@
 export class CurrencyService {
-  universalLink: string = "http://192.168.50.171"
+  universalLink: string = "http://192.168.0.18";
   getAllCurrenciesLink: string = this.universalLink + ":8080/api/v1/currency/rate";
 
   exampleToken: string =
