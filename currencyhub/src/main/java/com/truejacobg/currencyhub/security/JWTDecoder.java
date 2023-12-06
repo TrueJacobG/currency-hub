@@ -3,6 +3,8 @@ package com.truejacobg.currencyhub.security;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.truejacobg.currencyhub.security.dto.Authentication;
+import jakarta.servlet.ServletRequest;
+import jakarta.servlet.http.HttpServletRequest;
 import org.json.JSONObject;
 import org.springframework.stereotype.Component;
 
@@ -11,6 +13,11 @@ import java.util.Base64;
 @Component
 public class JWTDecoder {
     private final ObjectMapper objectMapper = new ObjectMapper();
+    private final ServletRequest servletRequest;
+
+    public JWTDecoder(ServletRequest servletRequest) {
+        this.servletRequest = servletRequest;
+    }
 
     public Authentication tokenToAuthentication(String token) {
         String[] parts = token.split("\\.");
@@ -37,4 +44,13 @@ public class JWTDecoder {
             throw new IllegalArgumentException("Invalid Token format");
         }
     }
+
+    public String getNameFromToken(HttpServletRequest servletRequest) {
+        final JWTDecoder jwtDecoder = new JWTDecoder(servletRequest);
+        String token = servletRequest.getHeader("Authorization");
+        Authentication user = jwtDecoder.tokenToAuthentication(token);
+        return user.toString();
+    }
+
+
 }
