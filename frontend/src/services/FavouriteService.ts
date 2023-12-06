@@ -1,4 +1,4 @@
-export class CurrencyService {
+export class FavouriteService {
   universalLink: string = "http://192.168.0.18";
   getUserFavouritesLink: string = this.universalLink + ":8080/api/v1/favourite/";
 

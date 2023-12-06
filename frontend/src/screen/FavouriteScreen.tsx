@@ -6,7 +6,7 @@ import { StyleSheet, Text, View } from "react-native";
 import CurrencyListComponent from "../components/currency/CurrencyListComponent";
 import MenuComponent from "../components/menu/MenuComponent";
 import { loggedUserAtom } from "../jotai/loggedUserAtom";
-import { CurrencyService } from "../services/CurrencyService";
+import { FavouriteService } from "../services/FavouriteService";
 import { Currency } from "../type/Currency";
 import { ScreenNaviagtion } from "../type/ScreenNavigation";
 import { User } from "../type/User";
@@ -14,15 +14,15 @@ import { User } from "../type/User";
 type Props = NativeStackScreenProps<ScreenNaviagtion, "Favourite">;
 
 const FavouriteScreen = ({ navigation }: Props) => {
-  const currencyService = new CurrencyService();
+  const favouriteService = new FavouriteService();
 
   const [loggedUser, setLoggedUser] = useAtom<User>(loggedUserAtom);
 
   const [currencies, setCurrencies] = useState<Currency[]>([]);
 
   useEffect(() => {
-    currencyService
-      .getAllCurrencies()
+    favouriteService
+      .getUserFavourites()
       .then((data) => {
         setCurrencies(data.list);
       })
