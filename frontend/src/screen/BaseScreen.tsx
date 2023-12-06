@@ -41,7 +41,6 @@ const BaseScreen = ({ navigation }: Props) => {
   }, []);
 
 
-  //TODO::HERE ADD MENU
   return (
     <View>
       <View>
