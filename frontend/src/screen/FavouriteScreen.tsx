@@ -52,7 +52,7 @@ const FavouriteScreen = ({ navigation }: Props) => {
   return (
     <View>
       <View>
-        <Text style={styles.textintro}>Welcome to ypur favourites!</Text>
+        <Text style={styles.textintro}>Welcome to your favourites!</Text>
         <View>
           <Text>Email: {loggedUser.email}</Text>
         </View>
