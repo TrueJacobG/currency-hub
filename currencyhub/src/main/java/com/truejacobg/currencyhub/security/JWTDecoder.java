@@ -49,7 +49,7 @@ public class JWTDecoder {
         final JWTDecoder jwtDecoder = new JWTDecoder(servletRequest);
         String token = servletRequest.getHeader("Authorization");
         Authentication user = jwtDecoder.tokenToAuthentication(token);
-        return user.toString();
+        return user.getName();
     }
 
 
