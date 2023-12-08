@@ -1,6 +1,8 @@
 package com.truejacobg.currencyhub.currency;
 
 import com.truejacobg.currencyhub.currency.dto.CurrencyDateResponseDTO;
+import com.truejacobg.currencyhub.currency.dto.CurrencyPointerDTO;
+import com.truejacobg.currencyhub.currency.dto.CurrencyPointerResponseDTO;
 import com.truejacobg.currencyhub.currency.dto.CurrencyResponseDTO;
 import lombok.AllArgsConstructor;
 import org.springframework.format.annotation.DateTimeFormat;
@@ -18,8 +20,8 @@ public class CurrencyController {
     private CurrencyService currencyService;
 
     @GetMapping("/rate")
-    ResponseEntity<CurrencyResponseDTO> getCurrencyRates() {
-        CurrencyResponseDTO responseDTO = currencyService.getCurrencyRates();
+    ResponseEntity<CurrencyPointerResponseDTO> getCurrencyRates() {
+        CurrencyPointerResponseDTO responseDTO = currencyService.getCurrencyRates();
         return ResponseEntity.ok(responseDTO);
     }
 
