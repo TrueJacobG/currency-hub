@@ -45,7 +45,8 @@ public class AuthenticationFilter implements Filter {
             String token = request.getHeader("Authorization");
 
             if (token == null) {
-                throw new TokenDoesNotExistException("Token in authorization header is empty!");
+                response.sendError(HttpServletResponse.SC_UNAUTHORIZED, "The token is empty.");
+                return;
             }
 
             logger.info(token);

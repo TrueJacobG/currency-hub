@@ -3,67 +3,43 @@ import { NativeStackScreenProps } from "@react-navigation/native-stack";
 import { useAtom } from "jotai";
 import React, { useEffect, useState } from "react";
 import { StyleSheet, Text, View } from "react-native";
-import CurrencyListComponent from "../components/currency/CurrencyListComponent";
 import MenuComponent from "../components/menu/MenuComponent";
 import { loggedUserAtom } from "../jotai/loggedUserAtom";
-import { FavouriteService } from "../services/FavouriteService";
-import { Currency } from "../type/Currency";
+import { WalletService } from "../services/WalletService";
 import { ScreenNaviagtion } from "../type/ScreenNavigation";
 import { User } from "../type/User";
 
-type Props = NativeStackScreenProps<ScreenNaviagtion, "Favourite">;
+type Props = NativeStackScreenProps<ScreenNaviagtion, "Wallet">;
 
-const FavouriteScreen = ({ navigation }: Props) => {
-  const favouriteService = new FavouriteService();
+const WalletScreen = ({ navigation }: Props) => {
+  const walletService = new WalletService();
 
   const [loggedUser, setLoggedUser] = useAtom<User>(loggedUserAtom);
 
-  const [currencies, setCurrencies] = useState<Currency[]>([]);
-  const [selectedCurrency, setSelectedCurrency] = useState<Currency | null>(
-    null
-  );
-
   useEffect(() => {
-    favouriteService
-      .getUserFavourites()
-      .then((data) => {
-        setCurrencies(data.list);
-      })
-      .catch((error) => {
-        console.error(error);
-      });
+    walletService.getUserWallet().catch((error) => {
+      console.error(error);
+    });
   }, []);
 
   const getData = async () => {
     let data = await AsyncStorage.getItem("token");
-    console.log("WORKING " + data);
   };
 
   useEffect(() => {
     getData();
   }, []);
 
-  const handleCurrencyPress = (currency: Currency) => {
-    setSelectedCurrency(currency);
-  };
-
-  const handleModalClose = () => {
-    setSelectedCurrency(null);
-  };
-
   return (
     <View>
       <View>
-        <Text style={styles.textintro}>Welcome to your favourites!</Text>
+        <Text style={styles.textintro}>Welcome to your wallet!</Text>
         <View>
           <Text>Email: {loggedUser.email}</Text>
         </View>
-        <View>
-          <CurrencyListComponent
-            currencies={currencies}
-            onCurrencyPress={handleCurrencyPress}
-          />
-        </View>
+      </View>
+      <View>
+        <Text>WALLET HERE</Text>
       </View>
       <View style={styles.bottomView}>
         <MenuComponent />
@@ -72,7 +48,7 @@ const FavouriteScreen = ({ navigation }: Props) => {
   );
 };
 
-export default FavouriteScreen;
+export default WalletScreen;
 
 const styles = StyleSheet.create({
   container: {

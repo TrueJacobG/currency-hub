@@ -41,8 +41,13 @@ const LogScreen = ({ navigation }: Props) => {
       <Pressable style={() => [styles.button]} onPress={onLoginPress}>
         <Text style={[styles.text]}>Login</Text>
       </Pressable>
-      <Text style={styles.textintro}>If you do not have an account please register</Text>
-      <Pressable style={() => [styles.button]} onPress={() => navigation.navigate("Sign")}>
+      <Text style={styles.textintro}>
+        If you do not have an account please register
+      </Text>
+      <Pressable
+        style={() => [styles.button]}
+        onPress={() => navigation.navigate("Sign")}
+      >
         <Text style={[styles.text]}>Register</Text>
       </Pressable>
     </View>

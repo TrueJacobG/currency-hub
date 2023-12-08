@@ -53,27 +53,27 @@ const BaseScreen = ({ navigation }: Props) => {
   };
 
   return (
-      <View style={styles.container}>
-        <Text style={styles.textintro}>Welcome to CurrencyHub!</Text>
-        <Text style={styles.text}>This is not your money anymore</Text>
-        <View>
-          <Text>Email: {loggedUser.email}</Text>
-        </View>
-        <CurrencyListComponent
-          currencies={currencies}
-          onCurrencyPress={handleCurrencyPress}
-        />
-        {selectedCurrency && (
-          <CurrencyElementComponent
-            currency={selectedCurrency}
-            onCloseModal={handleModalClose}
-          />
-        )}
-        <View style={styles.bottomView}>
-          <MenuComponent/>
-        </View>
+    <View style={styles.container}>
+      <Text style={styles.textintro}>Welcome to CurrencyHub!</Text>
+      <Text style={styles.text}>This is not your money anymore</Text>
+      <View>
+        <Text>Email: {loggedUser.email}</Text>
+        <Text>{}</Text>
       </View>
-      
+      <CurrencyListComponent
+        currencies={currencies}
+        onCurrencyPress={handleCurrencyPress}
+      />
+      {selectedCurrency && (
+        <CurrencyElementComponent
+          currency={selectedCurrency}
+          onCloseModal={handleModalClose}
+        />
+      )}
+      <View style={styles.bottomView}>
+        <MenuComponent />
+      </View>
+    </View>
   );
 };
 

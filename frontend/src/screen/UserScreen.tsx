@@ -3,66 +3,41 @@ import { NativeStackScreenProps } from "@react-navigation/native-stack";
 import { useAtom } from "jotai";
 import React, { useEffect, useState } from "react";
 import { StyleSheet, Text, View } from "react-native";
-import CurrencyListComponent from "../components/currency/CurrencyListComponent";
 import MenuComponent from "../components/menu/MenuComponent";
 import { loggedUserAtom } from "../jotai/loggedUserAtom";
-import { FavouriteService } from "../services/FavouriteService";
-import { Currency } from "../type/Currency";
 import { ScreenNaviagtion } from "../type/ScreenNavigation";
 import { User } from "../type/User";
+import { UserService } from "../services/UserService";
 
-type Props = NativeStackScreenProps<ScreenNaviagtion, "Favourite">;
+type Props = NativeStackScreenProps<ScreenNaviagtion, "User">;
 
-const FavouriteScreen = ({ navigation }: Props) => {
-  const favouriteService = new FavouriteService();
+const UserScreen = ({ navigation }: Props) => {
+  const userService = new UserService();
 
   const [loggedUser, setLoggedUser] = useAtom<User>(loggedUserAtom);
 
-  const [currencies, setCurrencies] = useState<Currency[]>([]);
-  const [selectedCurrency, setSelectedCurrency] = useState<Currency | null>(
-    null
-  );
-
   useEffect(() => {
-    favouriteService
-      .getUserFavourites()
-      .then((data) => {
-        setCurrencies(data.list);
-      })
-      .catch((error) => {
-        console.error(error);
-      });
+    userService.getUserInfo().catch((error) => {
+      console.error(error);
+    });
   }, []);
 
   const getData = async () => {
     let data = await AsyncStorage.getItem("token");
-    console.log("WORKING " + data);
+    console.log("WORKING PROFILE SCREEN");
   };
 
   useEffect(() => {
     getData();
   }, []);
 
-  const handleCurrencyPress = (currency: Currency) => {
-    setSelectedCurrency(currency);
-  };
-
-  const handleModalClose = () => {
-    setSelectedCurrency(null);
-  };
-
   return (
     <View>
       <View>
-        <Text style={styles.textintro}>Welcome to your favourites!</Text>
+        <Text style={styles.textintro}>Welcome to your profile!</Text>
         <View>
           <Text>Email: {loggedUser.email}</Text>
-        </View>
-        <View>
-          <CurrencyListComponent
-            currencies={currencies}
-            onCurrencyPress={handleCurrencyPress}
-          />
+          <Text>Password: {loggedUser.authCode}</Text>
         </View>
       </View>
       <View style={styles.bottomView}>
@@ -72,7 +47,7 @@ const FavouriteScreen = ({ navigation }: Props) => {
   );
 };
 
-export default FavouriteScreen;
+export default UserScreen;
 
 const styles = StyleSheet.create({
   container: {

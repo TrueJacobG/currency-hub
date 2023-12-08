@@ -7,9 +7,9 @@ const MenuComponent = () => {
     <View style={styles.container}>
       <Button title="All" onPress={() => navigation.navigate("Home")}></Button>
       <Button title="Fav" onPress={() => navigation.navigate("Favourite")}></Button>
-      <Button title="Button 3"></Button>
-      <Button title="Button 4"></Button>
-      <Button title="Button 5"></Button>
+      <Button title="Wallet" onPress={() => navigation.navigate("Wallet")}></Button>
+      <Button title="Alerts" onPress={() => navigation.navigate("Alert")}></Button>
+      <Button title="Profile" onPress={() => navigation.navigate("User")}></Button>
     </View>
   );
 };
