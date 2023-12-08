@@ -68,7 +68,7 @@ public class CurrencyService {
 
                             pointerUP = !(midLast >= midCurrent);
 
-                            CurrencyPointerDTO currencyPointerDTO = new CurrencyPointerDTO(rate.get("code").asText(), rate.get("currency").asText(), element.get("table").asText(), rate.get("mid").floatValue(), pointerUP);
+                            CurrencyPointerDTO currencyPointerDTO = new CurrencyPointerDTO(rate.get("code").asText(), rate.get("currency").asText(), element.get("table").asText(), rate.get("mid").asDouble(), pointerUP);
                             currencyPointerDTOS.add(currencyPointerDTO);
                         }
                     }
@@ -99,7 +99,7 @@ public class CurrencyService {
                 ObjectMapper objectMapper = new ObjectMapper();
 
                 CurrencyDTO currencyDTO = new CurrencyDTO(currencyRepository.findDataByCurrencyCode(currencyCode).getCurrencyCode(), currencyRepository.findDataByCurrencyCode(currencyCode).getCurrencyName(),
-                        currencyRepository.findDataByCurrencyCode(currencyCode).getCurrencyTable(), objectMapper.readTree(obj).get("rates").get(0).get("mid").floatValue());
+                        currencyRepository.findDataByCurrencyCode(currencyCode).getCurrencyTable(), objectMapper.readTree(obj).get("rates").get(0).get("mid").asDouble());
                 currencyDTOS.add(currencyDTO);
 
             } catch (Exception e) {
@@ -137,7 +137,7 @@ public class CurrencyService {
                 for (JsonNode element : jsonNode) {
 
                     CurrencyDateDTO currencyDateDTO = new CurrencyDateDTO(currencyRepository.findDataByCurrencyCode(currencyCode).getCurrencyCode(), currencyRepository.findDataByCurrencyCode(currencyCode).getCurrencyName(),
-                            currencyRepository.findDataByCurrencyCode(currencyCode).getCurrencyTable(), element.get("mid").floatValue(), element.get("effectiveDate").asText());
+                            currencyRepository.findDataByCurrencyCode(currencyCode).getCurrencyTable(), element.get("mid").asDouble(), element.get("effectiveDate").asText());
 
                     currencyDateDTOS.add(currencyDateDTO);
 

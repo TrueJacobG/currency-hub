@@ -11,6 +11,6 @@ public class CurrencyPointerDTO {
         private String currencyCode;
         private String currencyName;
         private String currencyTable;
-        private Float mid;
+        private Double mid;
         private Boolean pointerUP;
 }
