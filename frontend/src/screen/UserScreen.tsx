@@ -12,65 +12,62 @@ import { UserService } from "../services/UserService";
 type Props = NativeStackScreenProps<ScreenNaviagtion, "User">;
 
 const UserScreen = ({ navigation }: Props) => {
-    const userService = new UserService();
+  const userService = new UserService();
 
-    const [loggedUser, setLoggedUser] = useAtom<User>(loggedUserAtom);
+  const [loggedUser, setLoggedUser] = useAtom<User>(loggedUserAtom);
 
-    useEffect(() => {
-        userService
-            .getUserInfo()
-            .catch((error) => {
-                console.error(error);
-            });
-    }, []);
+  useEffect(() => {
+    userService.getUserInfo().catch((error) => {
+      console.error(error);
+    });
+  }, []);
 
-    const getData = async () => {
-        let data = await AsyncStorage.getItem("token");
-        console.log("WORKING PROFILE SCREEN");
-    };
+  const getData = async () => {
+    let data = await AsyncStorage.getItem("token");
+    console.log("WORKING PROFILE SCREEN");
+  };
 
-    useEffect(() => {
-        getData();
-    }, []);
+  useEffect(() => {
+    getData();
+  }, []);
 
-
-    return (
+  return (
+    <View>
+      <View>
+        <Text style={styles.textintro}>Welcome to your profile!</Text>
         <View>
-            <View>
-                <Text style={styles.textintro}>Welcome to your profile!</Text>
-                <View>
-                    <Text>Email: {loggedUser.email}</Text>
-                    <Text>Password: {loggedUser.authCode}</Text>
-                </View>
-            </View>
-            <View style={styles.bottomView}>
-                <MenuComponent />
-            </View>
+          <Text>Email: {loggedUser.email}</Text>
+          <Text>Password: {loggedUser.authCode}</Text>
         </View>
-    );
+      </View>
+      <View style={styles.bottomView}>
+        <MenuComponent />
+      </View>
+    </View>
+  );
 };
 
 export default UserScreen;
 
 const styles = StyleSheet.create({
-    container: {
-        flex: 1,
-        backgroundColor: "#fff",
-        alignItems: "center",
-        justifyContent: "center",
-    },
-    textintro: {
-        textAlign: "center",
-        fontSize: 40,
-        marginTop: 20,
-    },
-    text: {
-        textAlign: "center",
-        fontSize: 10,
-        marginBottom: 40,
-    },
-    bottomView: {
-        alignItems: "center",
-        marginTop: "auto",
-    },
+  container: {
+    flex: 1,
+    backgroundColor: "#fff",
+    alignItems: "center",
+    justifyContent: "center",
+  },
+  textintro: {
+    textAlign: "center",
+    fontSize: 40,
+    marginTop: 20,
+  },
+  text: {
+    textAlign: "center",
+    fontSize: 10,
+    marginBottom: 40,
+  },
+  bottomView: {
+    alignItems: "center",
+    marginTop: "auto",
+  },
 });

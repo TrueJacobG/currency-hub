@@ -12,68 +12,64 @@ import { User } from "../type/User";
 type Props = NativeStackScreenProps<ScreenNaviagtion, "Alert">;
 
 const AlertScreen = ({ navigation }: Props) => {
-    const alertService = new AlertService();
+  const alertService = new AlertService();
 
-    const [loggedUser, setLoggedUser] = useAtom<User>(loggedUserAtom);
+  const [loggedUser, setLoggedUser] = useAtom<User>(loggedUserAtom);
 
+  useEffect(() => {
+    alertService.getUserAlerts().catch((error) => {
+      console.error(error);
+    });
+  }, []);
 
-    useEffect(() => {
-        alertService
-            .getUserAlerts()
-            .catch((error) => {
-                console.error(error);
-            });
-    }, []);
+  const getData = async () => {
+    let data = await AsyncStorage.getItem("token");
+    console.log("WORKING ALERT SCREEN");
+  };
 
-    const getData = async () => {
-        let data = await AsyncStorage.getItem("token");
-        console.log("WORKING ALERT SCREEN");
-    };
+  useEffect(() => {
+    getData();
+  }, []);
 
-    useEffect(() => {
-        getData();
-    }, []);
-
-
-    return (
+  return (
+    <View>
+      <View>
+        <Text style={styles.textintro}>Welcome to your alerts!</Text>
         <View>
-            <View>
-                <Text style={styles.textintro}>Welcome to your alerts!</Text>
-                <View>
-                    <Text>Email: {loggedUser.email}</Text>
-                </View>
-            </View>
-            <View>
-                <Text>ALERT HERE</Text>
-            </View>
-            <View style={styles.bottomView}>
-                <MenuComponent />
-            </View>
+          <Text>Email: {loggedUser.email}</Text>
         </View>
-    );
+      </View>
+      <View>
+        <Text>ALERT HERE</Text>
+      </View>
+      <View style={styles.bottomView}>
+        <MenuComponent />
+      </View>
+    </View>
+  );
 };
 
 export default AlertScreen;
 
 const styles = StyleSheet.create({
-    container: {
-        flex: 1,
-        backgroundColor: "#fff",
-        alignItems: "center",
-        justifyContent: "center",
-    },
-    textintro: {
-        textAlign: "center",
-        fontSize: 40,
-        marginTop: 20,
-    },
-    text: {
-        textAlign: "center",
-        fontSize: 10,
-        marginBottom: 40,
-    },
-    bottomView: {
-        alignItems: "center",
-        marginTop: "auto",
-    },
+  container: {
+    flex: 1,
+    backgroundColor: "#fff",
+    alignItems: "center",
+    justifyContent: "center",
+  },
+  textintro: {
+    textAlign: "center",
+    fontSize: 40,
+    marginTop: 20,
+  },
+  text: {
+    textAlign: "center",
+    fontSize: 10,
+    marginBottom: 40,
+  },
+  bottomView: {
+    alignItems: "center",
+    marginTop: "auto",
+  },
 });

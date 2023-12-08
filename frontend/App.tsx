@@ -9,24 +9,9 @@ import WalletScreen from "./src/screen/WalletScreen";
 import AlertScreen from "./src/screen/AlertScreen";
 import UserScreen from "./src/screen/UserScreen";
 
-import * as Network from "expo-network";
-import { useState } from "react";
-import AsyncStorage from "@react-native-async-storage/async-storage";
-
 const Stack = createNativeStackNavigator<ScreenNaviagtion>();
 
 const App = () => {
-  const [ipAdress, setIpAdress] = useState(String);
-
-  const getIpAdress = async () => {
-    const ip = await Network.getIpAddressAsync();
-    console.log(ip);
-    AsyncStorage.setItem("ipAdress", ip);
-    setIpAdress(ip);
-  }
-
-  getIpAdress();
-
   return (
     <NavigationContainer>
       <Stack.Navigator>

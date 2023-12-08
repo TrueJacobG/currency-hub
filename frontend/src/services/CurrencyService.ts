@@ -1,18 +1,18 @@
 import { ChartData } from "react-native-chart-kit/dist/HelperTypes";
 import { CurrencyChart } from "../type/CurrencyChart";
-import { REACT_APP_UNIVERSAL_LINK } from "@env"
+import { REACT_APP_UNIVERSAL_LINK } from "@env";
 
 export class CurrencyService {
   universalLink: string = REACT_APP_UNIVERSAL_LINK;
-  getAllCurrenciesLink: string = this.universalLink + ":8080/api/v1/currency/rate";
-  getCurrencyDataWeeklyLink: string = this.universalLink + ":8080/api/v1/currency/rate/week/";
+  getAllCurrenciesLink: string =
+    this.universalLink + ":8080/api/v1/currency/rate";
+  getCurrencyDataWeeklyLink: string =
+    this.universalLink + ":8080/api/v1/currency/rate/week/";
 
   exampleToken: string =
     "Bearer eyJhbGciOiJIUzI1NiJ9.eyJuYW1lIjoidGVzdFUiLCJwYXNzd29yZCI6InRlc3QxMjMxMjMxMjMifQ.bHmBljA0uPuObIW2HfF9a4TTV1X_xvo7swSDwL6qywc";
 
   async getAllCurrencies() {
-    console.log("WORKING?");
-    
     return await fetch(this.getAllCurrenciesLink, {
       method: "GET",
       headers: {

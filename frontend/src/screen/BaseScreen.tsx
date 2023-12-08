@@ -58,7 +58,7 @@ const BaseScreen = ({ navigation }: Props) => {
       <Text style={styles.text}>This is not your money anymore</Text>
       <View>
         <Text>Email: {loggedUser.email}</Text>
-        <Text>{ }</Text>
+        <Text>{}</Text>
       </View>
       <CurrencyListComponent
         currencies={currencies}
@@ -74,7 +74,6 @@ const BaseScreen = ({ navigation }: Props) => {
         <MenuComponent />
       </View>
     </View>
-
   );
 };
 

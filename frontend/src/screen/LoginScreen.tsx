@@ -7,7 +7,6 @@ import { loggedUserAtom } from "../jotai/loggedUserAtom";
 import { AuthorizationService } from "../services/AuthorizationService";
 import { LoginUser } from "../type/LoginUser";
 import { ScreenNaviagtion } from "../type/ScreenNavigation";
-import AsyncStorage from "@react-native-async-storage/async-storage";
 
 type Props = NativeStackScreenProps<ScreenNaviagtion, "Log">;
 
@@ -22,8 +21,6 @@ const LogScreen = ({ navigation }: Props) => {
   });
 
   const onLoginPress = async () => {
-
-
     if (typeof loginUser === "undefined") {
       console.error("LoginUser is undefined!");
       return;
@@ -44,8 +41,13 @@ const LogScreen = ({ navigation }: Props) => {
       <Pressable style={() => [styles.button]} onPress={onLoginPress}>
         <Text style={[styles.text]}>Login</Text>
       </Pressable>
-      <Text style={styles.textintro}>If you do not have an account please register</Text>
-      <Pressable style={() => [styles.button]} onPress={() => navigation.navigate("Sign")}>
+      <Text style={styles.textintro}>
+        If you do not have an account please register
+      </Text>
+      <Pressable
+        style={() => [styles.button]}
+        onPress={() => navigation.navigate("Sign")}
+      >
         <Text style={[styles.text]}>Register</Text>
       </Pressable>
     </View>
