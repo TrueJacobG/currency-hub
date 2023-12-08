@@ -13,7 +13,7 @@ public class CurrencyDTO {
     private String currencyCode;
     private String currencyName;
     private String currencyTable;
-    private Double mid;
+    private Float mid;
 
 
 }

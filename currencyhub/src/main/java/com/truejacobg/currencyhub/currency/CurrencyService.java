@@ -3,10 +3,7 @@ package com.truejacobg.currencyhub.currency;
 
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
-import com.truejacobg.currencyhub.currency.dto.CurrencyDTO;
-import com.truejacobg.currencyhub.currency.dto.CurrencyDateDTO;
-import com.truejacobg.currencyhub.currency.dto.CurrencyDateResponseDTO;
-import com.truejacobg.currencyhub.currency.dto.CurrencyResponseDTO;
+import com.truejacobg.currencyhub.currency.dto.*;
 import com.truejacobg.currencyhub.exception.CurrencyApiReadFail;
 import com.truejacobg.currencyhub.exception.CurrencyDataFetchException;
 import com.truejacobg.currencyhub.exception.WrongCurrencyCodeException;
@@ -28,10 +25,10 @@ import java.util.List;
 public class CurrencyService {
     CurrencyRepository currencyRepository;
 
-    public CurrencyResponseDTO getCurrencyRates() {
+    public CurrencyPointerResponseDTO getCurrencyRates() {
 
         String[] url = {"https://api.nbp.pl/api/exchangerates/tables/A", "https://api.nbp.pl/api/exchangerates/tables/B"};
-        List<CurrencyDTO> currencyDTOS = new ArrayList<>();
+        List<CurrencyPointerDTO> currencyPointerDTOS = new ArrayList<>();
         for (String s : url) {
             try {
 
@@ -48,9 +45,31 @@ public class CurrencyService {
                         JsonNode ratesArray = element.get("rates");
 
                         for (JsonNode rate : ratesArray) {
+                            URL getPointerURL = new URL("http://api.nbp.pl/api/exchangerates/rates/" + element.get("table").asText() +
+                                    "/" + rate.get("code").asText() + "/last/2/");
 
-                            CurrencyDTO currencyDTO = new CurrencyDTO(rate.get("code").asText(), rate.get("currency").asText(), element.get("table").asText(), rate.get("mid").asDouble());
-                            currencyDTOS.add(currencyDTO);
+                            getPointerURL.openConnection();
+
+                            JsonNode getPointerJsonNodeRate = objectMapper.readTree(getPointerURL).get("rates");
+
+                            double midLast = 0;
+                            double midCurrent = 0;
+
+                            for (JsonNode jRate : getPointerJsonNodeRate) {
+                                if (midLast == 0) {
+                                    midLast = jRate.get("mid").asDouble();
+                                } else {
+                                    midCurrent = jRate.get("mid").asDouble();
+                                }
+                            }
+                            //TODO: get mid value always in format X.YZVC
+
+                            boolean pointerUP;
+
+                            pointerUP = !(midLast >= midCurrent);
+
+                            CurrencyPointerDTO currencyPointerDTO = new CurrencyPointerDTO(rate.get("code").asText(), rate.get("currency").asText(), element.get("table").asText(), rate.get("mid").floatValue(), pointerUP);
+                            currencyPointerDTOS.add(currencyPointerDTO);
                         }
                     }
                 } catch (Exception e) {
@@ -63,7 +82,7 @@ public class CurrencyService {
         }
 
 
-        return new CurrencyResponseDTO("Currency rates fetch", currencyDTOS, HttpStatus.OK);
+        return new CurrencyPointerResponseDTO("Currency rates fetch", currencyPointerDTOS, HttpStatus.OK);
     }
 
 
@@ -80,7 +99,7 @@ public class CurrencyService {
                 ObjectMapper objectMapper = new ObjectMapper();
 
                 CurrencyDTO currencyDTO = new CurrencyDTO(currencyRepository.findDataByCurrencyCode(currencyCode).getCurrencyCode(), currencyRepository.findDataByCurrencyCode(currencyCode).getCurrencyName(),
-                        currencyRepository.findDataByCurrencyCode(currencyCode).getCurrencyTable(), objectMapper.readTree(obj).get("rates").get(0).get("mid").asDouble());
+                        currencyRepository.findDataByCurrencyCode(currencyCode).getCurrencyTable(), objectMapper.readTree(obj).get("rates").get(0).get("mid").floatValue());
                 currencyDTOS.add(currencyDTO);
 
             } catch (Exception e) {
@@ -118,7 +137,7 @@ public class CurrencyService {
                 for (JsonNode element : jsonNode) {
 
                     CurrencyDateDTO currencyDateDTO = new CurrencyDateDTO(currencyRepository.findDataByCurrencyCode(currencyCode).getCurrencyCode(), currencyRepository.findDataByCurrencyCode(currencyCode).getCurrencyName(),
-                            currencyRepository.findDataByCurrencyCode(currencyCode).getCurrencyTable(), element.get("mid").asDouble(), element.get("effectiveDate").asText());
+                            currencyRepository.findDataByCurrencyCode(currencyCode).getCurrencyTable(), element.get("mid").floatValue(), element.get("effectiveDate").asText());
 
                     currencyDateDTOS.add(currencyDateDTO);
 

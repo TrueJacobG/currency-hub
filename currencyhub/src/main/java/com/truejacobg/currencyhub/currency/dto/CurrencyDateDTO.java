@@ -9,6 +9,6 @@ public class CurrencyDateDTO {
     private String currencyCode;
     private String currencyName;
     private String currencyTable;
-    private Double mid;
+    private Float mid;
     private String effectiveDate;
 }
