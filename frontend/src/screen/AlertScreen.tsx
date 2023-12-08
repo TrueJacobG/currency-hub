@@ -44,7 +44,7 @@ const AlertScreen = ({ navigation }: Props) => {
                 </View>
             </View>
             <View>
-                <Text>ALERT HEREEEEEEEEEEEEEEEEEEEE</Text>
+                <Text>ALERT HERE</Text>
             </View>
             <View style={styles.bottomView}>
                 <MenuComponent />

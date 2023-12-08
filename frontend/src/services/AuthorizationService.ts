@@ -3,7 +3,7 @@ import { LoginUser } from "../type/LoginUser";
 import { User } from "../type/User";
 
 export class AuthorizationService {
-  universalLink: string = "http://172.20.10.2";
+  universalLink: string = "http://192.168.50.171";
 
   registerUserLink: string = this.universalLink + ":8080/api/v1/user/";
   loginUserLink: string = this.universalLink + ":8080/api/v1/user/";

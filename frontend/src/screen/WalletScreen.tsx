@@ -26,7 +26,6 @@ const WalletScreen = ({ navigation }: Props) => {
 
     const getData = async () => {
         let data = await AsyncStorage.getItem("token");
-        console.log("WORKING WALLET SCREEN");
     };
 
     useEffect(() => {
@@ -41,6 +40,9 @@ const WalletScreen = ({ navigation }: Props) => {
                 <View>
                     <Text>Email: {loggedUser.email}</Text>
                 </View>
+            </View>
+            <View>
+                <Text>WALLET HERE</Text>
             </View>
             <View style={styles.bottomView}>
                 <MenuComponent />

@@ -1,5 +1,5 @@
 export class FavouriteService {
-  universalLink: string = "http://172.20.10.2";
+  universalLink: string = "http://192.168.11.212";
   getUserFavouritesLink: string = this.universalLink + ":8080/api/v1/favourite/";
 
   exampleToken: string =

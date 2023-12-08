@@ -1,5 +1,5 @@
 export class AlertService {
-    universalLink: string = "http://172.20.10.2";
+    universalLink: string = "http://192.168.50.171";
     getUserAlertsLink: string = this.universalLink + ":8080/api/v1/alerts/";
 
     exampleToken: string =

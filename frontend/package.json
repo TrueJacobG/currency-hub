@@ -29,7 +29,8 @@
     "react-native-screens": "~3.22.0",
     "react-native-svg": "13.9.0",
     "react-native-web": "~0.19.6",
-    "react-router-native": "^6.20.0"
+    "react-router-native": "^6.20.0",
+    "expo-network": "~5.4.0"
   },
   "devDependencies": {
     "@babel/core": "^7.20.0",

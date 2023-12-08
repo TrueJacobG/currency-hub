@@ -2,7 +2,7 @@ import { ChartData } from "react-native-chart-kit/dist/HelperTypes";
 import { CurrencyChart } from "../type/CurrencyChart";
 
 export class CurrencyService {
-  universalLink: string = "http://172.20.10.2";
+  universalLink: string = "http://192.168.50.171";
   getAllCurrenciesLink: string = this.universalLink + ":8080/api/v1/currency/rate";
   getCurrencyDataWeeklyLink: string = this.universalLink + ":8080/api/v1/currency/rate/week/";
 

@@ -40,6 +40,7 @@ const UserScreen = ({ navigation }: Props) => {
                 <Text style={styles.textintro}>Welcome to your profile!</Text>
                 <View>
                     <Text>Email: {loggedUser.email}</Text>
+                    <Text>Password: {loggedUser.authCode}</Text>
                 </View>
             </View>
             <View style={styles.bottomView}>

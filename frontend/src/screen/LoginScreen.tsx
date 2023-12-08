@@ -7,6 +7,7 @@ import { loggedUserAtom } from "../jotai/loggedUserAtom";
 import { AuthorizationService } from "../services/AuthorizationService";
 import { LoginUser } from "../type/LoginUser";
 import { ScreenNaviagtion } from "../type/ScreenNavigation";
+import AsyncStorage from "@react-native-async-storage/async-storage";
 
 type Props = NativeStackScreenProps<ScreenNaviagtion, "Log">;
 
@@ -21,6 +22,8 @@ const LogScreen = ({ navigation }: Props) => {
   });
 
   const onLoginPress = async () => {
+
+
     if (typeof loginUser === "undefined") {
       console.error("LoginUser is undefined!");
       return;
