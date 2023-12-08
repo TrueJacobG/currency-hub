@@ -1,5 +1,7 @@
+import { REACT_APP_UNIVERSAL_LINK } from "@env"
+
 export class AlertService {
-    universalLink: string = "http://192.168.50.171";
+    universalLink: string = REACT_APP_UNIVERSAL_LINK;
     getUserAlertsLink: string = this.universalLink + ":8080/api/v1/alerts/";
 
     exampleToken: string =

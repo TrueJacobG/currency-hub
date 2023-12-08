@@ -1,5 +1,7 @@
+import { REACT_APP_UNIVERSAL_LINK } from "@env"
+
 export class UserService {
-    universalLink: string = "http://172.20.10.2";
+    universalLink: string = REACT_APP_UNIVERSAL_LINK;
     getUserInfoLink: string = this.universalLink + ":8080/api/v1/user/";
 
     exampleToken: string =

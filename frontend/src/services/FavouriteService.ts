@@ -1,5 +1,7 @@
+import { REACT_APP_UNIVERSAL_LINK } from "@env"
+
 export class FavouriteService {
-  universalLink: string = "http://192.168.11.212";
+  universalLink: string = REACT_APP_UNIVERSAL_LINK;
   getUserFavouritesLink: string = this.universalLink + ":8080/api/v1/favourite/";
 
   exampleToken: string =

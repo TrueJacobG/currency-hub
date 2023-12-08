@@ -1,5 +1,6 @@
+import { REACT_APP_UNIVERSAL_LINK } from "@env"
 export class WalletService {
-    universalLink: string = "http://172.20.10.2";
+    universalLink: string = REACT_APP_UNIVERSAL_LINK;
     getUserWalletLink: string = this.universalLink + ":8080/api/v1/wallet/";
 
     exampleToken: string =
