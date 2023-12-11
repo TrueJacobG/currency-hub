@@ -12,3 +12,4 @@
 7. npm install
 8. npm run start
 9. change REACT_APP_UNIERSAL_LINK in .env to expo ip adress
+10. run npm
