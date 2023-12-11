@@ -17,7 +17,6 @@ export class CurrencyService {
     "Bearer eyJhbGciOiJIUzI1NiJ9.eyJuYW1lIjoidGVzdFUiLCJwYXNzd29yZCI6InRlc3QxMjMxMjMxMjMifQ.bHmBljA0uPuObIW2HfF9a4TTV1X_xvo7swSDwL6qywc";
 
   async getAllCurrencies() {
-    console.log(this.universalLink);
     return await fetch(this.getAllCurrenciesLink, {
       method: "GET",
       headers: {
