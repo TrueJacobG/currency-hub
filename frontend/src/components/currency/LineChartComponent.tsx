@@ -18,7 +18,7 @@ const LineChartComponent = ({ chartData }: Props) => {
           backgroundColor: "#fff",
           backgroundGradientFrom: "#fff",
           backgroundGradientTo: "#fff",
-          decimalPlaces: 2,
+          decimalPlaces: 4,
           color: (opacity = 1) => `rgba(0, 0, 0, ${opacity})`,
           labelColor: (opacity = 1) => `rgba(0, 0, 0, ${opacity})`,
           style: {
@@ -30,8 +30,8 @@ const LineChartComponent = ({ chartData }: Props) => {
             stroke: "#ffa726",
           },
         }}
-        bezier
-        style={{ marginVertical: 8, borderRadius: 10 }}
+        bezier = {false}
+        style={{ marginVertical: 8, borderRadius: 5 }}
       />
     </View>
   );

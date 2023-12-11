@@ -1,5 +1,12 @@
 import React, { useEffect, useState } from "react";
-import { Button, Modal, StyleSheet, Text, TouchableOpacity, View } from "react-native";
+import {
+  Button,
+  Modal,
+  StyleSheet,
+  Text,
+  TouchableOpacity,
+  View,
+} from "react-native";
 import { ChartData } from "react-native-chart-kit/dist/HelperTypes";
 import { CurrencyService } from "../../services/CurrencyService";
 import { Currency } from "../../type/Currency";
@@ -18,12 +25,42 @@ const CurrencyElementComponent = ({ currency, onCloseModal }: Props) => {
     onCloseModal();
   };
 
-  const [chartData, setChartData] = useState<ChartData>({ labels: [], datasets: [{ data: [] }] });
+  const [chartData, setChartData] = useState<ChartData>({
+    labels: [],
+    datasets: [{ data: [] }],
+  });
 
   useEffect(() => {
-    currencyService.getCurrencyDataWeekly(currency.currencyCode).then((data) => {
-      setChartData(data);
-    });
+    switch (selectedTimeRange) {
+      case "Week":
+        currencyService
+          .getCurrencyDataWeekly(currency.currencyCode)
+          .then((data) => {
+            setChartData(data);
+          });
+        break;
+      case "Month":
+        currencyService
+          .getCurrencyDataMonthly(currency.currencyCode)
+          .then((data) => {
+            setChartData(data);
+          });
+        break;
+      case "Year":
+        currencyService
+          .getCurrencyDataYearly(currency.currencyCode)
+          .then((data) => {
+            setChartData(data);
+          });
+        break;
+      default:
+        currencyService
+          .getCurrencyDataWeekly(currency.currencyCode)
+          .then((data) => {
+            setChartData(data);
+          });
+        break;
+    }
   }, [selectedTimeRange]);
 
   return (
@@ -38,9 +75,18 @@ const CurrencyElementComponent = ({ currency, onCloseModal }: Props) => {
         <View style={styles.modalContainer}>
           <View style={styles.modalContent}>
             <View style={styles.choiceButtons}>
-              <Button title="Week" onPress={() => setSelectedTimeRange("Week")} />
-              <Button title="Month" onPress={() => setSelectedTimeRange("Month")} />
-              <Button title="Year" onPress={() => setSelectedTimeRange("Year")} />
+              <Button
+                title="Week"
+                onPress={() => setSelectedTimeRange("Week")}
+              />
+              <Button
+                title="Month"
+                onPress={() => setSelectedTimeRange("Month")}
+              />
+              <Button
+                title="Year"
+                onPress={() => setSelectedTimeRange("Year")}
+              />
             </View>
             <LineChartComponent chartData={chartData} />
             <View style={styles.buttonContainer}>
@@ -71,7 +117,7 @@ const styles = StyleSheet.create({
   },
   modalContent: {
     width: "100%",
-    height: "75%",
+    height: "77%",
     backgroundColor: "white",
     padding: 20,
     borderRadius: 10,
@@ -79,7 +125,7 @@ const styles = StyleSheet.create({
   buttonContainer: {
     flexDirection: "row",
     justifyContent: "space-between",
-    marginTop: 16,
+    marginTop: 5,
   },
   choiceButtons: {
     flexDirection: "row-reverse",

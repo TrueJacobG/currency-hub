@@ -77,6 +77,7 @@ export class AuthorizationService {
 
   async loginUser(user: LoginUser) {
     console.log(this.universalLink);
+    console.log(this.loginUserLink);
     return await fetch(this.loginUserLink + user.email, {
       method: "GET",
       headers: {
