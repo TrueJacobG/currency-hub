@@ -24,7 +24,6 @@ const AlertScreen = ({ navigation }: Props) => {
 
   const getData = async () => {
     let data = await AsyncStorage.getItem("token");
-    console.log("WORKING ALERT SCREEN");
   };
 
   useEffect(() => {

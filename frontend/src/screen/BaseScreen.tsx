@@ -1,16 +1,15 @@
-import AsyncStorage from "@react-native-async-storage/async-storage";
 import { NativeStackScreenProps } from "@react-navigation/native-stack";
 import { useAtom } from "jotai";
 import React, { useEffect, useState } from "react";
 import { StyleSheet, Text, View } from "react-native";
 import CurrencyElementComponent from "../components/currency/CurrencyElementComponent";
 import CurrencyListComponent from "../components/currency/CurrencyListComponent";
+import MenuComponent from "../components/menu/MenuComponent";
 import { loggedUserAtom } from "../jotai/loggedUserAtom";
 import { CurrencyService } from "../services/CurrencyService";
 import { Currency } from "../type/Currency";
 import { ScreenNaviagtion } from "../type/ScreenNavigation";
 import { User } from "../type/User";
-import MenuComponent from "../components/menu/MenuComponent";
 
 type Props = NativeStackScreenProps<ScreenNaviagtion, "Home">;
 
@@ -20,9 +19,7 @@ const BaseScreen = ({ navigation }: Props) => {
   const [loggedUser, setLoggedUser] = useAtom<User>(loggedUserAtom);
 
   const [currencies, setCurrencies] = useState<Currency[]>([]);
-  const [selectedCurrency, setSelectedCurrency] = useState<Currency | null>(
-    null
-  );
+  const [selectedCurrency, setSelectedCurrency] = useState<Currency | null>(null);
 
   useEffect(() => {
     currencyService
@@ -35,14 +32,7 @@ const BaseScreen = ({ navigation }: Props) => {
       });
   }, []);
 
-  const getData = async () => {
-    let data = await AsyncStorage.getItem("token");
-    console.log(data);
-  };
-
-  useEffect(() => {
-    getData();
-  }, []);
+  useEffect(() => {}, []);
 
   const handleCurrencyPress = (currency: Currency) => {
     setSelectedCurrency(currency);
@@ -60,16 +50,8 @@ const BaseScreen = ({ navigation }: Props) => {
         <Text>Email: {loggedUser.email}</Text>
         <Text>{}</Text>
       </View>
-      <CurrencyListComponent
-        currencies={currencies}
-        onCurrencyPress={handleCurrencyPress}
-      />
-      {selectedCurrency && (
-        <CurrencyElementComponent
-          currency={selectedCurrency}
-          onCloseModal={handleModalClose}
-        />
-      )}
+      <CurrencyListComponent currencies={currencies} onCurrencyPress={handleCurrencyPress} />
+      {selectedCurrency && <CurrencyElementComponent currency={selectedCurrency} onCloseModal={handleModalClose} />}
       <View style={styles.bottomView}>
         <MenuComponent />
       </View>

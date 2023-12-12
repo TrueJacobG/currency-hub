@@ -34,13 +34,8 @@ const FavouriteScreen = ({ navigation }: Props) => {
       });
   }, []);
 
-  const getData = async () => {
-    let data = await AsyncStorage.getItem("token");
-    console.log("WORKING " + data);
-  };
 
   useEffect(() => {
-    getData();
   }, []);
 
   const handleCurrencyPress = (currency: Currency) => {

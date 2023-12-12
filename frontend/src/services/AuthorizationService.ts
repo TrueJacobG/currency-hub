@@ -1,7 +1,7 @@
+import { REACT_APP_UNIVERSAL_LINK } from "@env";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import { LoginUser } from "../type/LoginUser";
 import { User } from "../type/User";
-import { REACT_APP_UNIVERSAL_LINK } from "@env";
 
 export class AuthorizationService {
   universalLink: string = REACT_APP_UNIVERSAL_LINK;
@@ -76,7 +76,6 @@ export class AuthorizationService {
   }
 
   async loginUser(user: LoginUser) {
-    console.log(this.universalLink);
     return await fetch(this.loginUserLink + user.email, {
       method: "GET",
       headers: {

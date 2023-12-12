@@ -1,6 +1,5 @@
 package com.truejacobg.currencyhub.security;
 
-import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.truejacobg.currencyhub.security.dto.Authentication;
 import jakarta.servlet.ServletRequest;
@@ -22,14 +21,16 @@ public class JWTDecoder {
     public Authentication tokenToAuthentication(String token) {
         String[] parts = token.split("\\.");
 
+        System.out.println(token);
+
         validToken(parts);
 
         JSONObject json = new JSONObject(new String(Base64.getUrlDecoder().decode(parts[1])));
-        Authentication authentication;
 
+        Authentication authentication;
         try {
-            authentication = objectMapper.readValue(String.valueOf(json), Authentication.class);
-        } catch (JsonProcessingException e) {
+            authentication = new Authentication(json.get("name").toString(), json.get("password").toString());
+        } catch (Exception e) {
             // TODO!
             // correct exception handling
             // for global exception handling

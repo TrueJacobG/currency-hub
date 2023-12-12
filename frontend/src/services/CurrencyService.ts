@@ -1,27 +1,27 @@
+import { REACT_APP_UNIVERSAL_LINK } from "@env";
 import { ChartData } from "react-native-chart-kit/dist/HelperTypes";
 import { CurrencyChart } from "../type/CurrencyChart";
-import { REACT_APP_UNIVERSAL_LINK } from "@env";
+import { TokenService } from "./TokenService";
 
 export class CurrencyService {
   universalLink: string = REACT_APP_UNIVERSAL_LINK;
-  getAllCurrenciesLink: string =
-    this.universalLink + ":8080/api/v1/currency/rate";
-  getCurrencyDataWeeklyLink: string =
-    this.universalLink + ":8080/api/v1/currency/rate/week/";
-  getCurrencyDataMonthlyLink: string =
-    this.universalLink + ":8080/api/v1/currency/rate/month/";
-  getCurrencyDataYearlyLink: string =
-    this.universalLink + ":8080/api/v1/currency/rate/year/";
+  getAllCurrenciesLink: string = this.universalLink + ":8080/api/v1/currency/rate";
+  getCurrencyDataWeeklyLink: string = this.universalLink + ":8080/api/v1/currency/rate/week/";
+  getCurrencyDataMonthlyLink: string = this.universalLink + ":8080/api/v1/currency/rate/month/";
+  getCurrencyDataYearlyLink: string = this.universalLink + ":8080/api/v1/currency/rate/year/";
 
-  exampleToken: string =
-    "Bearer eyJhbGciOiJIUzI1NiJ9.eyJuYW1lIjoidGVzdFUiLCJwYXNzd29yZCI6InRlc3QxMjMxMjMxMjMifQ.bHmBljA0uPuObIW2HfF9a4TTV1X_xvo7swSDwL6qywc";
+  tokenService = new TokenService();
 
   async getAllCurrencies() {
+    let token = await this.tokenService.getToken().then((t) => {
+      return t;
+    });
+
     return await fetch(this.getAllCurrenciesLink, {
       method: "GET",
       headers: {
         "Content-Type": "application/json",
-        Authorization: this.exampleToken,
+        Authorization: "Bearer " + token,
       },
     })
       .then((response) => response.json())
@@ -33,8 +33,6 @@ export class CurrencyService {
         return error;
       });
   }
-
-  // { labels: [], datasets: [{ data: [] }] }
 
   convertData(data: CurrencyChart[]) {
     const labels: string[] = [];
@@ -54,11 +52,15 @@ export class CurrencyService {
   }
 
   async getCurrencyDataWeekly(currencyCode: string): Promise<ChartData> {
+    let token = await this.tokenService.getToken().then((t) => {
+      return t;
+    });
+
     return await fetch(this.getCurrencyDataWeeklyLink + currencyCode, {
       method: "GET",
       headers: {
         "Content-Type": "application/json",
-        Authorization: this.exampleToken,
+        Authorization: "Bearer " + token,
       },
     })
       .then((response) => response.json())
@@ -73,11 +75,15 @@ export class CurrencyService {
   }
 
   async getCurrencyDataMonthly(currencyCode: string): Promise<ChartData> {
+    let token = await this.tokenService.getToken().then((t) => {
+      return t;
+    });
+
     return await fetch(this.getCurrencyDataMonthlyLink + currencyCode, {
       method: "GET",
       headers: {
         "Content-Type": "application/json",
-        Authorization: this.exampleToken,
+        Authorization: "Bearer " + token,
       },
     })
       .then((response) => response.json())
@@ -92,11 +98,15 @@ export class CurrencyService {
   }
 
   async getCurrencyDataYearly(currencyCode: string): Promise<ChartData> {
+    let token = await this.tokenService.getToken().then((t) => {
+      return t;
+    });
+
     return await fetch(this.getCurrencyDataYearlyLink + currencyCode, {
       method: "GET",
       headers: {
         "Content-Type": "application/json",
-        Authorization: this.exampleToken,
+        Authorization: "Bearer " + token,
       },
     })
       .then((response) => response.json())
