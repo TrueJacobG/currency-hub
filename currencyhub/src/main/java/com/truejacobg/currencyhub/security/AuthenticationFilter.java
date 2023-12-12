@@ -1,10 +1,11 @@
 package com.truejacobg.currencyhub.security;
 
 import com.truejacobg.currencyhub.exception.AuthorizationException;
-import com.truejacobg.currencyhub.exception.TokenDoesNotExistException;
-import com.truejacobg.currencyhub.security.dto.NoAuthForFilterDTO;
 import com.truejacobg.currencyhub.security.dto.Authentication;
+import com.truejacobg.currencyhub.security.dto.NoAuthForFilterDTO;
+import com.truejacobg.currencyhub.user.UserRepository;
 import com.truejacobg.currencyhub.user.UserService;
+import com.truejacobg.currencyhub.user.entity.UserEntity;
 import jakarta.servlet.*;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
@@ -26,6 +27,7 @@ public class AuthenticationFilter implements Filter {
     private static Logger logger = LogManager.getLogger(AuthenticationFilter.class.getName());
 
     private final UserService userService;
+    private final UserRepository userRepository;
     private ServletRequest servletRequest;
     private final JWTDecoder jwtDecoder = new JWTDecoder(servletRequest);
 
@@ -56,8 +58,11 @@ public class AuthenticationFilter implements Filter {
             logger.info(authentication.getPassword());
             logger.info(authentication.getName());
 
-            authentication.setPassword(encoder.encode(authentication.getPassword()));
-            String password = encoder.encode(userService.getUserPasswordByName(authentication.getName()));
+            // TODO
+            // when register user, add with hashed password
+            // authentication.setPassword(encoder.encode(authentication.getPassword()));
+            // String password = encoder.encode(userService.getUserPasswordByName(authentication.getName()));
+            String password = userRepository.findByName(authentication.getName()).orElse(new UserEntity()).getAuthCode();
 
             if (authentication.getPassword().equals(password)) {
                 logger.info(String.format("User [%s] has been authenticated", authentication.getName()));

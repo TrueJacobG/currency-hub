@@ -22,8 +22,8 @@ public class JWTEncoder {
         String jwt = Jwts.builder()
                 .setHeaderParam("alg", "HS256")
                 .setIssuedAt(Date.from(Instant.now()))
-                .claim("name", tokenDTO.name)
-                .claim("authCode", tokenDTO.authCode)
+                .claim("name", tokenDTO.getName())
+                .claim("password", tokenDTO.getAuthCode())
                 .signWith(SignatureAlgorithm.HS256, secretKey)
                 .compact();
 

@@ -1,13 +1,12 @@
-import AsyncStorage from "@react-native-async-storage/async-storage";
 import { NativeStackScreenProps } from "@react-navigation/native-stack";
 import { useAtom } from "jotai";
-import React, { useEffect, useState } from "react";
+import React, { useEffect } from "react";
 import { StyleSheet, Text, View } from "react-native";
 import MenuComponent from "../components/menu/MenuComponent";
 import { loggedUserAtom } from "../jotai/loggedUserAtom";
+import { UserService } from "../services/UserService";
 import { ScreenNaviagtion } from "../type/ScreenNavigation";
 import { User } from "../type/User";
-import { UserService } from "../services/UserService";
 
 type Props = NativeStackScreenProps<ScreenNaviagtion, "User">;
 
@@ -16,20 +15,7 @@ const UserScreen = ({ navigation }: Props) => {
 
   const [loggedUser, setLoggedUser] = useAtom<User>(loggedUserAtom);
 
-  useEffect(() => {
-    userService.getUserInfo().catch((error) => {
-      console.error(error);
-    });
-  }, []);
-
-  const getData = async () => {
-    let data = await AsyncStorage.getItem("token");
-    console.log("WORKING PROFILE SCREEN");
-  };
-
-  useEffect(() => {
-    getData();
-  }, []);
+  useEffect(() => {}, []);
 
   return (
     <View>

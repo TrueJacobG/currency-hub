@@ -1,18 +1,22 @@
 import { REACT_APP_UNIVERSAL_LINK } from "@env";
+import { TokenService } from "./TokenService";
 
 export class WalletService {
   universalLink: string = REACT_APP_UNIVERSAL_LINK;
   getUserWalletLink: string = this.universalLink + ":8080/api/v1/wallet/";
 
-  exampleToken: string =
-    "Bearer eyJhbGciOiJIUzI1NiJ9.eyJuYW1lIjoidGVzdFUiLCJwYXNzd29yZCI6InRlc3QxMjMxMjMxMjMifQ.bHmBljA0uPuObIW2HfF9a4TTV1X_xvo7swSDwL6qywc";
+  tokenService = new TokenService();
 
   async getUserWallet() {
+    let token = await this.tokenService.getToken().then((t) => {
+      return t;
+    });
+
     return await fetch(this.getUserWalletLink, {
       method: "GET",
       headers: {
         "Content-Type": "application/json",
-        Authorization: this.exampleToken,
+        Authorization: "Bearer " + token,
       },
     })
       .then((response) => response.json())
