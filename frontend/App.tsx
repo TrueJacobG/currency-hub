@@ -1,6 +1,5 @@
-import { NavigationContainer } from "@react-navigation/native";
-import { createNativeStackNavigator } from "@react-navigation/native-stack";
-import { ScreenNaviagtion } from "./src/type/ScreenNavigation";
+import React from "react";
+import { NativeRouter as Router, Route, Routes } from "react-router-native";
 import SigninScreen from "./src/screen/SigninScreen";
 import LoginScreen from "./src/screen/LoginScreen";
 import BaseScreen from "./src/screen/BaseScreen";
@@ -9,21 +8,19 @@ import WalletScreen from "./src/screen/WalletScreen";
 import AlertScreen from "./src/screen/AlertScreen";
 import UserScreen from "./src/screen/UserScreen";
 
-const Stack = createNativeStackNavigator<ScreenNaviagtion>();
-
 const App = () => {
   return (
-    <NavigationContainer>
-      <Stack.Navigator>
-        <Stack.Screen name="Sign" component={SigninScreen} />
-        <Stack.Screen name="Log" component={LoginScreen} />
-        <Stack.Screen name="Home" component={BaseScreen} />
-        <Stack.Screen name="Favourite" component={FavouriteScreen} />
-        <Stack.Screen name="Wallet" component={WalletScreen} />
-        <Stack.Screen name="Alert" component={AlertScreen} />
-        <Stack.Screen name="User" component={UserScreen} />
-      </Stack.Navigator>
-    </NavigationContainer>
+    <Router>
+      <Routes>
+        <Route path="/" element={<SigninScreen />} />
+        <Route path="login" element={<LoginScreen />} />
+        <Route path="home" element={<BaseScreen />} />
+        <Route path="favourite" element={<FavouriteScreen />} />
+        <Route path="wallet" element={<WalletScreen />} />
+        <Route path="alert" element={<AlertScreen />} />
+        <Route path="user" element={<UserScreen />} />
+      </Routes>
+    </Router>
   );
 };
 

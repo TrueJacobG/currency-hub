@@ -1,17 +1,14 @@
 import AsyncStorage from "@react-native-async-storage/async-storage";
-import { NativeStackScreenProps } from "@react-navigation/native-stack";
-import { useAtom } from "jotai";
-import React, { useEffect, useState } from "react";
-import { StyleSheet, Text, View } from "react-native";
+import { Link } from "react-router-native";
+import { View, Text, StyleSheet } from "react-native";
 import MenuComponent from "../components/menu/MenuComponent";
 import { loggedUserAtom } from "../jotai/loggedUserAtom";
 import { WalletService } from "../services/WalletService";
-import { ScreenNaviagtion } from "../type/ScreenNavigation";
 import { User } from "../type/User";
+import { useAtom } from "jotai";
+import { useEffect } from "react";
 
-type Props = NativeStackScreenProps<ScreenNaviagtion, "Wallet">;
-
-const WalletScreen = ({ navigation }: Props) => {
+const WalletScreen = () => {
   const walletService = new WalletService();
 
   const [loggedUser, setLoggedUser] = useAtom<User>(loggedUserAtom);

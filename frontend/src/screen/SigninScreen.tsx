@@ -1,19 +1,13 @@
-import { NativeStackScreenProps } from "@react-navigation/native-stack";
-import { useAtom } from "jotai";
-import { useState } from "react";
+import React, { useState } from "react";
 import { Pressable, StyleSheet, Text, View } from "react-native";
 import SigninComponent from "../components/auth/SigninComponent";
-import { loggedUserAtom } from "../jotai/loggedUserAtom";
 import { AuthorizationService } from "../services/AuthorizationService";
-import { ScreenNaviagtion } from "../type/ScreenNavigation";
 import { User } from "../type/User";
+import { Routes, Route, useNavigate } from "react-router-native";
 
-type Props = NativeStackScreenProps<ScreenNaviagtion, "Sign">;
-
-const SignScreen = ({ navigation }: Props) => {
+const SignScreen = () => {
   const authService = new AuthorizationService();
-
-  const [loggedUser, setLoggedUser] = useAtom(loggedUserAtom);
+  const navigate = useNavigate(); // użyj useNavigate do nawigacji
 
   const [user, setUser] = useState<User>({
     name: "",
@@ -32,8 +26,7 @@ const SignScreen = ({ navigation }: Props) => {
 
     const result = await authService.registerUser(user);
 
-    if (result.message === "ok" && result.status == "ACCEPTED") {
-      setLoggedUser(user);
+    if (result.message === "ok" && result.status === "ACCEPTED") {
       setUser({
         name: "",
         firstname: "",
@@ -42,7 +35,8 @@ const SignScreen = ({ navigation }: Props) => {
         email: "",
         authCode: "",
       });
-      navigation.navigate("Home");
+      // Używamy navigate do nawigacji
+      navigate("/home");
     }
   };
 
@@ -55,9 +49,10 @@ const SignScreen = ({ navigation }: Props) => {
       <Text style={styles.textintro}>
         If you already have an account please login:
       </Text>
+      {/* Używamy navigate do nawigacji */}
       <Pressable
         style={() => [styles.button]}
-        onPress={() => navigation.navigate("Log")}
+        onPress={() => navigate("/login")}
       >
         <Text style={[styles.textbut]}>Login</Text>
       </Pressable>
