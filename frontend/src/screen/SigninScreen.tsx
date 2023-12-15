@@ -7,7 +7,7 @@ import { Routes, Route, useNavigate } from "react-router-native";
 
 const SignScreen = () => {
   const authService = new AuthorizationService();
-  const navigate = useNavigate(); // użyj useNavigate do nawigacji
+  const navigate = useNavigate();
 
   const [user, setUser] = useState<User>({
     name: "",
@@ -35,7 +35,6 @@ const SignScreen = () => {
         email: "",
         authCode: "",
       });
-      // Używamy navigate do nawigacji
       navigate("/home");
     }
   };
@@ -49,7 +48,6 @@ const SignScreen = () => {
       <Text style={styles.textintro}>
         If you already have an account please login:
       </Text>
-      {/* Używamy navigate do nawigacji */}
       <Pressable
         style={() => [styles.button]}
         onPress={() => navigate("/login")}

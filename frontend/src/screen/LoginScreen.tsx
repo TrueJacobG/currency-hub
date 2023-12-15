@@ -15,7 +15,6 @@ const LogScreen = () => {
   });
 
   const onLoginPress = async () => {
-    console.log("penis");
     if (typeof loginUser === "undefined") {
       console.error("LoginUser is undefined!");
       return;
