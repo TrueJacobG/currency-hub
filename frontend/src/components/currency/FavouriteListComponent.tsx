@@ -8,7 +8,7 @@ type Props = {
   onCurrencyPress: (currency: Currency) => void;
 };
 
-const CurrencyListComponent = ({ currencies, onCurrencyPress }: Props) => {
+const FavouriteListComponent = ({ currencies, onCurrencyPress }: Props) => {
   return (
     <View>
       <FlatList
@@ -22,4 +22,4 @@ const CurrencyListComponent = ({ currencies, onCurrencyPress }: Props) => {
   );
 };
 
-export default CurrencyListComponent;
+export default FavouriteListComponent;

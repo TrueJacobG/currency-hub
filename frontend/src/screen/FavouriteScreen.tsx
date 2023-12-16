@@ -3,7 +3,7 @@ import { NativeStackScreenProps } from "@react-navigation/native-stack";
 import { useAtom } from "jotai";
 import React, { useEffect, useState } from "react";
 import { StyleSheet, Text, View } from "react-native";
-import CurrencyListComponent from "../components/currency/CurrencyListComponent";
+import FavouriteListComponent from "../components/currency/FavouriteListComponent";
 import MenuComponent from "../components/menu/MenuComponent";
 import { loggedUserAtom } from "../jotai/loggedUserAtom";
 import { FavouriteService } from "../services/FavouriteService";
@@ -34,9 +34,7 @@ const FavouriteScreen = ({ navigation }: Props) => {
       });
   }, []);
 
-
-  useEffect(() => {
-  }, []);
+  useEffect(() => {}, []);
 
   const handleCurrencyPress = (currency: Currency) => {
     setSelectedCurrency(currency);
@@ -54,7 +52,7 @@ const FavouriteScreen = ({ navigation }: Props) => {
           <Text>Email: {loggedUser.email}</Text>
         </View>
         <View>
-          <CurrencyListComponent
+          <FavouriteListComponent
             currencies={currencies}
             onCurrencyPress={handleCurrencyPress}
           />
