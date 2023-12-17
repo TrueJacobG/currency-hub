@@ -33,7 +33,9 @@
     "react-native-screens": "~3.22.0",
     "react-native-svg": "13.9.0",
     "react-native-web": "~0.19.6",
-    "react-router-native": "^6.20.0"
+    "react-router": "^6.21.0",
+    "react-router-dom": "^6.21.0",
+    "react-router-native": "^6.21.0"
   },
   "devDependencies": {
     "@types/bcryptjs": "^2.4.5",
