@@ -1,25 +1,41 @@
 import React from "react";
-import { FlatList, View } from "react-native";
+import { StyleSheet, Button, FlatList, View } from "react-native";
 import { Currency } from "../../type/Currency";
-import CurrencyElementComponent from "./CurrencyElementComponent";
+import FavouriteElementComponent from "./FavouriteElementComponent";
 
 type Props = {
   currencies: Currency[];
   onCurrencyPress: (currency: Currency) => void;
+  onButtonPress: string;
 };
 
-const FavouriteListComponent = ({ currencies, onCurrencyPress }: Props) => {
+const FavouriteListComponent = ({
+  currencies,
+  onCurrencyPress,
+  onButtonPress,
+}: Props) => {
   return (
     <View>
       <FlatList
         data={currencies}
         renderItem={({ item }) => (
-          <CurrencyElementComponent currency={item} onCloseModal={() => {}} />
+          <FavouriteElementComponent
+            currency={item}
+            onCloseModal={() => {}}
+            onButtonPress={onButtonPress}
+          ></FavouriteElementComponent>
         )}
         keyExtractor={(item) => item.currencyCode.toString()}
-      />
+      ></FlatList>
     </View>
   );
 };
 
 export default FavouriteListComponent;
+
+const styles = StyleSheet.create({
+  container: {
+    flexDirection: "row",
+    marginRight: 0,
+  },
+});

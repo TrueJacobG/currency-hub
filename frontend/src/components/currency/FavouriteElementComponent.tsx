@@ -9,15 +9,25 @@ import {
 } from "react-native";
 import { ChartData } from "react-native-chart-kit/dist/HelperTypes";
 import { CurrencyService } from "../../services/CurrencyService";
-import { FavouriteService } from "../../services/FavouriteService";
 import { Currency } from "../../type/Currency";
 import LineChartComponent from "./LineChartComponent";
+import { FavouriteService } from "../../services/FavouriteService";
+import { useNavigation } from "@react-navigation/native";
 
-type Props = { currency: Currency; onCloseModal: () => void };
+type Props = {
+  currency: Currency;
+  onCloseModal: () => void;
+  onButtonPress: string;
+};
 
-const CurrencyElementComponent = ({ currency, onCloseModal }: Props) => {
+const FavouriteElementComponent = ({
+  currency,
+  onCloseModal,
+  onButtonPress,
+}: Props) => {
   const currencyService = new CurrencyService();
   const favouriteService = new FavouriteService();
+  const navigation = useNavigation();
 
   const [isModalVisible, setModalVisible] = useState(false);
   const [selectedTimeRange, setSelectedTimeRange] = useState("Week");
@@ -31,12 +41,6 @@ const CurrencyElementComponent = ({ currency, onCloseModal }: Props) => {
     labels: [],
     datasets: [{ data: [] }],
   });
-
-  const addFavourite = async (currencyCode: string) => {
-    favouriteService.AddUserFavourite(currencyCode).catch((error) => {
-      console.error(error);
-    });
-  };
 
   useEffect(() => {
     switch (selectedTimeRange) {
@@ -71,6 +75,25 @@ const CurrencyElementComponent = ({ currency, onCloseModal }: Props) => {
     }
   }, [selectedTimeRange]);
 
+  const favouriteAddDelete = async (currencyCode: string) => {
+    switch (onButtonPress) {
+      case "Add":
+        favouriteService.AddUserFavourite(currencyCode).catch((error) => {
+          console.error(error);
+        });
+        break;
+      case "Delete":
+        favouriteService
+          .DeleteUserFavourite(currency.currencyCode)
+          .catch((error) => {
+            console.error(error);
+          });
+        break;
+      default:
+        console.error("Add or Delete");
+    }
+  };
+
   return (
     <View style={styles.currencyContainer}>
       <TouchableOpacity onPress={toggleModal}>
@@ -78,6 +101,12 @@ const CurrencyElementComponent = ({ currency, onCloseModal }: Props) => {
         <Text>{currency.currencyName}</Text>
         <Text>{currency.mid}</Text>
       </TouchableOpacity>
+      <Button
+        title={onButtonPress}
+        onPress={() => {
+          favouriteAddDelete(currency.currencyCode);
+        }}
+      ></Button>
 
       <Modal animationType="slide" transparent={true} visible={isModalVisible}>
         <View style={styles.modalContainer}>
@@ -101,7 +130,7 @@ const CurrencyElementComponent = ({ currency, onCloseModal }: Props) => {
               <Button
                 title="Follow"
                 onPress={() => {
-                  addFavourite(currency.currencyCode);
+                  favouriteAddDelete(currency.currencyCode);
                 }}
               />
               <Button title="Close Modal" onPress={toggleModal} />
@@ -147,4 +176,4 @@ const styles = StyleSheet.create({
   },
 });
 
-export default CurrencyElementComponent;
+export default FavouriteElementComponent;

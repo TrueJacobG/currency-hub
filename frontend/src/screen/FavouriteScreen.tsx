@@ -10,14 +10,17 @@ import { FavouriteService } from "../services/FavouriteService";
 import { Currency } from "../type/Currency";
 import { ScreenNaviagtion } from "../type/ScreenNavigation";
 import { User } from "../type/User";
+import { CurrencyService } from "../services/CurrencyService";
 
 type Props = NativeStackScreenProps<ScreenNaviagtion, "Favourite">;
 
 const FavouriteScreen = ({ navigation }: Props) => {
   const favouriteService = new FavouriteService();
+  const currencyService = new CurrencyService();
 
   const [loggedUser, setLoggedUser] = useAtom<User>(loggedUserAtom);
 
+  const [favourites, setFavourites] = useState<Currency[]>([]);
   const [currencies, setCurrencies] = useState<Currency[]>([]);
   const [selectedCurrency, setSelectedCurrency] = useState<Currency | null>(
     null
@@ -26,6 +29,14 @@ const FavouriteScreen = ({ navigation }: Props) => {
   useEffect(() => {
     favouriteService
       .getUserFavourites()
+      .then((data) => {
+        setFavourites(data.list);
+      })
+      .catch((error) => {
+        console.error(error);
+      });
+    currencyService
+      .getAllCurrencies()
       .then((data) => {
         setCurrencies(data.list);
       })
@@ -51,10 +62,16 @@ const FavouriteScreen = ({ navigation }: Props) => {
         <View>
           <Text>Email: {loggedUser.email}</Text>
         </View>
-        <View>
+        <View style={styles.listView}>
+          <FavouriteListComponent
+            currencies={favourites}
+            onCurrencyPress={handleCurrencyPress}
+            onButtonPress="Delete"
+          />
           <FavouriteListComponent
             currencies={currencies}
             onCurrencyPress={handleCurrencyPress}
+            onButtonPress="Add"
           />
         </View>
       </View>
@@ -87,5 +104,8 @@ const styles = StyleSheet.create({
   bottomView: {
     alignItems: "center",
     marginTop: "auto",
+  },
+  listView: {
+    gap: 50,
   },
 });

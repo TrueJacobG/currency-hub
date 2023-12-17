@@ -21,6 +21,8 @@ public class FavoriteController {
     ResponseEntity<CreateFavoriteResponseDTO> addFavoriteCurrency(@PathVariable String currencyCode, HttpServletRequest servletRequest) {
         CreateFavoriteResponseDTO createFavoriteResponseDTO = favoriteService.addFavoriteCurrency(currencyCode, servletRequest);
 
+        //TODO:: USUN TO
+        System.out.println("DODANO [" + currencyCode + "]");
         return ResponseEntity.ok(createFavoriteResponseDTO);
     }
 

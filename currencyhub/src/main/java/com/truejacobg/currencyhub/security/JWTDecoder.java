@@ -21,7 +21,7 @@ public class JWTDecoder {
     public Authentication tokenToAuthentication(String token) {
         String[] parts = token.split("\\.");
 
-        System.out.println(token);
+        //System.out.println(token);
 
         validToken(parts);
 
