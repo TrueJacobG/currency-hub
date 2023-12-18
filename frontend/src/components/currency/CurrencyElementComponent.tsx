@@ -12,6 +12,7 @@ import { ChartData } from "react-native-chart-kit/dist/HelperTypes";
 import { CurrencyService } from "../../services/CurrencyService";
 import { Currency } from "../../type/Currency";
 import LineChartComponent from "./LineChartComponent";
+import { MaterialCommunityIcons } from "@expo/vector-icons";
 
 type Props = { currency: Currency; onCloseModal: () => void };
 
@@ -66,13 +67,14 @@ const CurrencyElementComponent = ({ currency, onCloseModal }: Props) => {
 
   const renderArrow = () => {
     if (currency.pointerUP !== undefined) {
+      const iconName = currency.pointerUP ? "trending-up" : "trending-down";
+      const iconColor = currency.pointerUP ? "green" : "red";
+  
       return (
-        <Image
-          source={
-            currency.pointerUP
-              ? require("../../../assets/greenArrowUp.png")
-              : require("../../../assets/redArrowDown.png")
-          }
+        <MaterialCommunityIcons
+          name={iconName}
+          size={40}
+          color={iconColor}
           style={styles.arrowIcon}
         />
       );
@@ -87,14 +89,7 @@ const CurrencyElementComponent = ({ currency, onCloseModal }: Props) => {
         <Text>{currency.currencyName}</Text>
         <Text>{currency.mid}</Text>
       </TouchableOpacity>
-      <Image
-          source={
-            currency.pointerUP
-              ? require("../../../assets/greenArrowUp.png")
-              : require("../../../assets/redArrowDown.png")
-          }
-          style={styles.arrowIcon}
-        />
+      {renderArrow()}
 
       <Modal animationType="slide" transparent={true} visible={isModalVisible}>
         <View style={styles.modalContainer}>

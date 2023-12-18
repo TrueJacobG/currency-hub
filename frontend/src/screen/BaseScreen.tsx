@@ -1,5 +1,5 @@
-import React, { useEffect, useState } from "react";
-import { StyleSheet, Text, View } from "react-native";
+import React, { useEffect, useRef, useState } from "react";
+import { ScrollView, StyleSheet, Text, View } from "react-native";
 import { Link } from "react-router-native";
 import CurrencyElementComponent from "../components/currency/CurrencyElementComponent";
 import CurrencyListComponent from "../components/currency/CurrencyListComponent";
@@ -18,7 +18,11 @@ const BaseScreen = () => {
   console.log(loggedUser.email);
 
   const [currencies, setCurrencies] = useState<Currency[]>([]);
-  const [selectedCurrency, setSelectedCurrency] = useState<Currency | null>(null);
+  const [selectedCurrency, setSelectedCurrency] = useState<Currency | null>(
+    null
+  );
+
+  const scrollViewRef = useRef<ScrollView>(null);
 
   useEffect(() => {
     currencyService
@@ -49,8 +53,21 @@ const BaseScreen = () => {
         <Text>Email: {loggedUser.email}</Text>
         <Text>{}</Text>
       </View>
-      <CurrencyListComponent currencies={currencies} onCurrencyPress={handleCurrencyPress} />
-      {selectedCurrency && <CurrencyElementComponent currency={selectedCurrency} onCloseModal={handleModalClose} />}
+      <ScrollView
+        onContentSizeChange={() => scrollViewRef.current?.scrollToEnd()}
+        ref={scrollViewRef}
+      >
+        <CurrencyListComponent
+          currencies={currencies}
+          onCurrencyPress={handleCurrencyPress}
+        />
+        {selectedCurrency && (
+          <CurrencyElementComponent
+            currency={selectedCurrency}
+            onCloseModal={handleModalClose}
+          />
+        )}
+      </ScrollView>
       <View style={styles.bottomView}>
         <MenuComponent />
       </View>
