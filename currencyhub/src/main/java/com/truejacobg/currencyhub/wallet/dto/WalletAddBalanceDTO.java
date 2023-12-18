@@ -8,5 +8,5 @@ import lombok.*;
 @Setter
 @Data
 public class WalletAddBalanceDTO {
-    private double value;
+    private Double value;
 }

@@ -28,10 +28,10 @@ import java.util.Map;
 @AllArgsConstructor
 public class WalletService {
 
-    WalletRepository walletRepository;
-    WalletCurrencyExchangeRepository walletCurrencyExchangeRepository;
-    CurrencyService currencyService;
-    CurrencyRepository currencyRepository;
+    private WalletRepository walletRepository;
+    private WalletCurrencyExchangeRepository walletCurrencyExchangeRepository;
+    private CurrencyService currencyService;
+    private CurrencyRepository currencyRepository;
 
     public WalletResponseDTO addBalance(WalletAddBalanceDTO value, HttpServletRequest servletRequest) {
         JWTDecoder jwtDecoder = new JWTDecoder(servletRequest);
