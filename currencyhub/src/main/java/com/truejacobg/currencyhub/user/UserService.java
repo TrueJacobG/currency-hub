@@ -17,7 +17,7 @@ public class UserService {
 
     public CreateUserResponseDTO createUser(UserDTO userDTO) {
 
-        UserEntity userEntity = new UserEntity(null, userDTO.getFirstname(), userDTO.getName(), userDTO.getAuthCode(), userDTO.getSurname(), userDTO.getEmail(), LocalDateTime.now());
+        UserEntity userEntity = new UserEntity(null, userDTO.getName(),userDTO.getFirstname(), userDTO.getSurname(), userDTO.getAuthCode(), userDTO.getEmail(), LocalDateTime.now());
         if (userRepository.findByNameOrEmail(userEntity.getName(), userEntity.getEmail()).isPresent()) {
             throw new UserWithThatNameOrEmailExistException(String.format("User with name: %s or email: %s already exist!", userEntity.getName(), userEntity.getEmail()));
         } else {

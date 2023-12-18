@@ -3,7 +3,7 @@ import { TokenService } from "./TokenService";
 
 export class FavouriteService {
   universalLink: string = REACT_APP_UNIVERSAL_LINK;
-  getUserFavouritesLink: string = this.universalLink + ":8080/api/v1/favourite/";
+  userFavouritesLink: string = this.universalLink + ":8080/api/v1/favourite/";
 
   tokenService = new TokenService();
 
@@ -12,8 +12,56 @@ export class FavouriteService {
       return t;
     });
 
-    return await fetch(this.getUserFavouritesLink, {
+    return await fetch(this.userFavouritesLink, {
       method: "GET",
+      headers: {
+        "Content-Type": "application/json",
+        Authorization: "Bearer " + token,
+      },
+    })
+      .then((response) => response.json())
+      .then((data) => {
+        return data;
+      })
+      .catch((error) => {
+        console.error(error);
+        return error;
+      });
+  }
+
+  async deleteUserFavourite(currencyCode: string) {
+    this.userFavouritesLink += currencyCode;
+
+    let token = await this.tokenService.getToken().then((t) => {
+      return t;
+    });
+
+    return await fetch(this.userFavouritesLink, {
+      method: "DELETE",
+      headers: {
+        "Content-Type": "application/json",
+        Authorization: "Bearer " + token,
+      },
+    })
+      .then((response) => response.json())
+      .then((data) => {
+        return data;
+      })
+      .catch((error) => {
+        console.error(error);
+        return error;
+      });
+  }
+
+  async addUserFavourite(currencyCode: string) {
+    this.userFavouritesLink += currencyCode;
+
+    let token = await this.tokenService.getToken().then((t) => {
+      return t;
+    });
+
+    return await fetch(this.userFavouritesLink, {
+      method: "POST",
       headers: {
         "Content-Type": "application/json",
         Authorization: "Bearer " + token,

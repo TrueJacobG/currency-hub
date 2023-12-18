@@ -51,12 +51,9 @@ public class AuthenticationFilter implements Filter {
                 return;
             }
 
-            logger.info(token);
 
             Authentication authentication = jwtDecoder.tokenToAuthentication(token);
 
-            logger.info(authentication.getPassword());
-            logger.info(authentication.getName());
 
             // TODO
             // when register user, add with hashed password

@@ -13,7 +13,9 @@ const CurrencyListComponent = ({ currencies, onCurrencyPress }: Props) => {
     <View>
       <FlatList
         data={currencies}
-        renderItem={({ item }) => <CurrencyElementComponent currency={item} onCloseModal={() => {}} />}
+        renderItem={({ item }) => (
+          <CurrencyElementComponent currency={item} onCloseModal={() => {}} />
+        )}
         keyExtractor={(item) => item.currencyCode.toString()}
       />
     </View>

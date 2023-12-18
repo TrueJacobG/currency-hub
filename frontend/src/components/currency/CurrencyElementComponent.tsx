@@ -9,6 +9,7 @@ import {
 } from "react-native";
 import { ChartData } from "react-native-chart-kit/dist/HelperTypes";
 import { CurrencyService } from "../../services/CurrencyService";
+import { FavouriteService } from "../../services/FavouriteService";
 import { Currency } from "../../type/Currency";
 import LineChartComponent from "./LineChartComponent";
 
@@ -16,6 +17,7 @@ type Props = { currency: Currency; onCloseModal: () => void };
 
 const CurrencyElementComponent = ({ currency, onCloseModal }: Props) => {
   const currencyService = new CurrencyService();
+  const favouriteService = new FavouriteService();
 
   const [isModalVisible, setModalVisible] = useState(false);
   const [selectedTimeRange, setSelectedTimeRange] = useState("Week");
@@ -29,6 +31,12 @@ const CurrencyElementComponent = ({ currency, onCloseModal }: Props) => {
     labels: [],
     datasets: [{ data: [] }],
   });
+
+  const addFavourite = async (currencyCode: string) => {
+    favouriteService.addUserFavourite(currencyCode).catch((error) => {
+      console.error(error);
+    });
+  };
 
   useEffect(() => {
     switch (selectedTimeRange) {
@@ -90,7 +98,12 @@ const CurrencyElementComponent = ({ currency, onCloseModal }: Props) => {
             </View>
             <LineChartComponent chartData={chartData} />
             <View style={styles.buttonContainer}>
-              <Button title="Follow" onPress={() => {}} />
+              <Button
+                title="Follow"
+                onPress={() => {
+                  addFavourite(currency.currencyCode);
+                }}
+              />
               <Button title="Close Modal" onPress={toggleModal} />
             </View>
           </View>
