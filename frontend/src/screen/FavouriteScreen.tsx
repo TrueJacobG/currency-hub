@@ -1,6 +1,6 @@
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import { Link } from "react-router-native";
-import { View, Text, StyleSheet, useEffect, useState } from "react-native";
+import { View, Text, StyleSheet } from "react-native";
 import FavouriteListComponent from "../components/currency/FavouriteListComponent";
 import MenuComponent from "../components/menu/MenuComponent";
 import { loggedUserAtom } from "../jotai/loggedUserAtom";
@@ -9,6 +9,7 @@ import { CurrencyService } from "../services/CurrencyService";
 import { Currency } from "../type/Currency";
 import { User } from "../type/User";
 import { useAtom } from "jotai";
+import { useEffect, useState } from "react";
 
 const FavouriteScreen = () => {
   const favouriteService = new FavouriteService();
@@ -18,9 +19,6 @@ const FavouriteScreen = () => {
 
   const [favourites, setFavourites] = useState<Currency[]>([]);
   const [currencies, setCurrencies] = useState<Currency[]>([]);
-  const [selectedCurrency, setSelectedCurrency] = useState<Currency | null>(
-    null
-  );
 
   useEffect(() => {
     favouriteService
@@ -41,18 +39,6 @@ const FavouriteScreen = () => {
       });
   }, []);
 
-
-  useEffect(() => {
-  }, []);
-
-  const handleCurrencyPress = (currency: Currency) => {
-    setSelectedCurrency(currency);
-  };
-
-  const handleModalClose = () => {
-    setSelectedCurrency(null);
-  };
-
   return (
     <View>
       <View>
@@ -63,15 +49,10 @@ const FavouriteScreen = () => {
         <View>
           <FavouriteListComponent
             currencies={favourites}
-            onCurrencyPress={handleCurrencyPress}
             onButtonPress="Delete"
           />
           <View style={styles.space}></View>
-          <FavouriteListComponent
-            currencies={currencies}
-            onCurrencyPress={handleCurrencyPress}
-            onButtonPress="Add"
-          />
+          <FavouriteListComponent currencies={currencies} onButtonPress="Add" />
         </View>
       </View>
       <View style={styles.bottomView}>

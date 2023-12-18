@@ -1,12 +1,5 @@
 import React, { useState } from "react";
-import {
-  Image,
-  Button,
-  StyleSheet,
-  Text,
-  TouchableOpacity,
-  View,
-} from "react-native";
+import { Image, StyleSheet, Text, TouchableOpacity, View } from "react-native";
 import { CurrencyService } from "../../services/CurrencyService";
 import { Currency } from "../../type/Currency";
 import { FavouriteService } from "../../services/FavouriteService";
@@ -14,14 +7,11 @@ import { useNavigation } from "@react-navigation/native";
 
 type Props = {
   currency: Currency;
-  onCloseModal: () => void;
   onButtonPress: string;
 };
 
 const FavouriteElementComponent = ({ currency, onButtonPress }: Props) => {
-  const currencyService = new CurrencyService();
   const favouriteService = new FavouriteService();
-  const navigation = useNavigation();
   const heartImageLink = require("../../../assets/heart.png");
   const noHeartImageLink = require("../../../assets/noHeart.png");
 

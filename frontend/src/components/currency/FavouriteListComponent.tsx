@@ -5,15 +5,10 @@ import FavouriteElementComponent from "./FavouriteElementComponent";
 
 type Props = {
   currencies: Currency[];
-  onCurrencyPress: (currency: Currency) => void;
   onButtonPress: string;
 };
 
-const FavouriteListComponent = ({
-  currencies,
-  onCurrencyPress,
-  onButtonPress,
-}: Props) => {
+const FavouriteListComponent = ({ currencies, onButtonPress }: Props) => {
   return (
     <View>
       <FlatList
@@ -21,7 +16,6 @@ const FavouriteListComponent = ({
         renderItem={({ item }) => (
           <FavouriteElementComponent
             currency={item}
-            onCloseModal={() => {}}
             onButtonPress={onButtonPress}
           ></FavouriteElementComponent>
         )}
