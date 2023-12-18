@@ -1,7 +1,6 @@
-import { NativeStackScreenProps } from "@react-navigation/native-stack";
-import { useAtom } from "jotai";
 import React, { useEffect, useState } from "react";
 import { StyleSheet, Text, View } from "react-native";
+import { Link } from "react-router-native";
 import CurrencyElementComponent from "../components/currency/CurrencyElementComponent";
 import CurrencyListComponent from "../components/currency/CurrencyListComponent";
 import MenuComponent from "../components/menu/MenuComponent";
@@ -10,13 +9,13 @@ import { CurrencyService } from "../services/CurrencyService";
 import { Currency } from "../type/Currency";
 import { ScreenNaviagtion } from "../type/ScreenNavigation";
 import { User } from "../type/User";
+import { useAtom } from "jotai";
 
-type Props = NativeStackScreenProps<ScreenNaviagtion, "Home">;
-
-const BaseScreen = ({ navigation }: Props) => {
+const BaseScreen = () => {
   const currencyService = new CurrencyService();
 
   const [loggedUser, setLoggedUser] = useAtom<User>(loggedUserAtom);
+  console.log(loggedUser.email);
 
   const [currencies, setCurrencies] = useState<Currency[]>([]);
   const [selectedCurrency, setSelectedCurrency] = useState<Currency | null>(null);

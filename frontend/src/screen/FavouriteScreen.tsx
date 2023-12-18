@@ -1,20 +1,16 @@
 import AsyncStorage from "@react-native-async-storage/async-storage";
-import { NativeStackScreenProps } from "@react-navigation/native-stack";
-import { useAtom } from "jotai";
-import React, { useEffect, useState } from "react";
-import { StyleSheet, Text, View } from "react-native";
+import { Link } from "react-router-native";
+import { View, Text, StyleSheet, useEffect, useState } from "react-native";
 import FavouriteListComponent from "../components/currency/FavouriteListComponent";
 import MenuComponent from "../components/menu/MenuComponent";
 import { loggedUserAtom } from "../jotai/loggedUserAtom";
 import { FavouriteService } from "../services/FavouriteService";
-import { Currency } from "../type/Currency";
-import { ScreenNaviagtion } from "../type/ScreenNavigation";
-import { User } from "../type/User";
 import { CurrencyService } from "../services/CurrencyService";
+import { Currency } from "../type/Currency";
+import { User } from "../type/User";
+import { useAtom } from "jotai";
 
-type Props = NativeStackScreenProps<ScreenNaviagtion, "Favourite">;
-
-const FavouriteScreen = ({ navigation }: Props) => {
+const FavouriteScreen = () => {
   const favouriteService = new FavouriteService();
   const currencyService = new CurrencyService();
 
@@ -45,7 +41,9 @@ const FavouriteScreen = ({ navigation }: Props) => {
       });
   }, []);
 
-  useEffect(() => {}, []);
+
+  useEffect(() => {
+  }, []);
 
   const handleCurrencyPress = (currency: Currency) => {
     setSelectedCurrency(currency);

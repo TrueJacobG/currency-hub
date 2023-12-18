@@ -1,19 +1,13 @@
-import { NativeStackScreenProps } from "@react-navigation/native-stack";
-import { useAtom } from "jotai";
-import { useState } from "react";
+import React, { useState } from "react";
 import { Pressable, StyleSheet, Text, View } from "react-native";
 import LoginComponent from "../components/auth/LoginComponent";
-import { loggedUserAtom } from "../jotai/loggedUserAtom";
 import { AuthorizationService } from "../services/AuthorizationService";
 import { LoginUser } from "../type/LoginUser";
-import { ScreenNaviagtion } from "../type/ScreenNavigation";
+import { useNavigate } from "react-router-native";
 
-type Props = NativeStackScreenProps<ScreenNaviagtion, "Log">;
-
-const LogScreen = ({ navigation }: Props) => {
+const LogScreen = () => {
   const authService = new AuthorizationService();
-
-  const [loggedUser, setLoggedUser] = useAtom(loggedUserAtom);
+  const navigate = useNavigate();
 
   const [loginUser, setLoginUser] = useState<LoginUser>({
     email: "",
@@ -28,10 +22,10 @@ const LogScreen = ({ navigation }: Props) => {
 
     const result = await authService.loginUser(loginUser);
 
-    if (result.status == "OK") {
-      setLoggedUser({ ...loggedUser, ...loginUser });
+    if (result.status === "OK") {
       setLoginUser({ email: "", authCode: "" });
-      navigation.navigate("Home");
+      console.log(setLoginUser);
+      navigate("/home");
     }
   };
 
@@ -46,7 +40,7 @@ const LogScreen = ({ navigation }: Props) => {
       </Text>
       <Pressable
         style={() => [styles.button]}
-        onPress={() => navigation.navigate("Sign")}
+        onPress={() => navigate("/")}
       >
         <Text style={[styles.text]}>Register</Text>
       </Pressable>
