@@ -62,12 +62,13 @@ const FavouriteScreen = ({ navigation }: Props) => {
         <View>
           <Text>Email: {loggedUser.email}</Text>
         </View>
-        <View style={styles.listView}>
+        <View>
           <FavouriteListComponent
             currencies={favourites}
             onCurrencyPress={handleCurrencyPress}
             onButtonPress="Delete"
           />
+          <View style={styles.space}></View>
           <FavouriteListComponent
             currencies={currencies}
             onCurrencyPress={handleCurrencyPress}
@@ -105,7 +106,8 @@ const styles = StyleSheet.create({
     alignItems: "center",
     marginTop: "auto",
   },
-  listView: {
-    gap: 50,
+  space: {
+    borderBottomColor: "black",
+    borderBottomWidth: StyleSheet.hairlineWidth,
   },
 });

@@ -29,7 +29,7 @@ export class FavouriteService {
       });
   }
 
-  async DeleteUserFavourite(currencyCode: string) {
+  async deleteUserFavourite(currencyCode: string) {
     this.userFavouritesLink += currencyCode;
 
     let token = await this.tokenService.getToken().then((t) => {
@@ -53,7 +53,7 @@ export class FavouriteService {
       });
   }
 
-  async AddUserFavourite(currencyCode: string) {
+  async addUserFavourite(currencyCode: string) {
     this.userFavouritesLink += currencyCode;
 
     let token = await this.tokenService.getToken().then((t) => {

@@ -33,7 +33,7 @@ const CurrencyElementComponent = ({ currency, onCloseModal }: Props) => {
   });
 
   const addFavourite = async (currencyCode: string) => {
-    favouriteService.AddUserFavourite(currencyCode).catch((error) => {
+    favouriteService.addUserFavourite(currencyCode).catch((error) => {
       console.error(error);
     });
   };
