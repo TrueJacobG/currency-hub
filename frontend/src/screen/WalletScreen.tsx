@@ -37,6 +37,9 @@ const WalletScreen = () => {
     let data = await AsyncStorage.getItem("token");
   };
 
+  //TODO::dodac jakiekolwiek wyswietlanie
+  //TODO::mam mape, to przyjmuje Array jakis, nie wiem jak zmienic zeby dane byly dobrze
+  //TODO:: dodac ekran wymiany
   return (
     <View>
       <View>
@@ -54,6 +57,7 @@ const WalletScreen = () => {
           title="AddCash"
           onPress={() => walletService.addCash(parseFloat(inputValue))}
         ></Button>
+
         <FlatList
           data={wallet}
           renderItem={({ item }) => <Text>asd</Text>}

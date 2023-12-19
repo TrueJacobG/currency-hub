@@ -13,7 +13,7 @@ export class WalletService {
     let token = await this.tokenService.getToken().then((t) => {
       return t;
     });
-
+    //TODO:: spojrz tu, problwalem naprawic zamieniajc map na 2 listy, nie wiedzialem jak
     let wallet = {
       codes: [],
       values: Number,
