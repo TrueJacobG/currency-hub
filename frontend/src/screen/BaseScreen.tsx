@@ -54,7 +54,7 @@ const BaseScreen = () => {
         <Text>{}</Text>
       </View>
       <ScrollView
-        onContentSizeChange={() => scrollViewRef.current?.scrollToEnd()}
+        onContentSizeChange={() => scrollViewRef.current}
         ref={scrollViewRef}
       >
         <CurrencyListComponent
