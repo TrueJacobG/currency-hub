@@ -22,7 +22,7 @@ public class FavoriteService {
 
 
     public CreateFavoriteResponseDTO addFavoriteCurrency(String currencyCode, HttpServletRequest servletRequest) {
-
+        // TODO: sprawdz czy currency code jest w bazie?
         JWTDecoder jwtDecoder = new JWTDecoder(servletRequest);
         String userName = jwtDecoder.getNameFromToken(servletRequest);
 
@@ -36,7 +36,7 @@ public class FavoriteService {
     }
 
     public DeleteFavoriteResponseDTO deleteFavoriteCurrency(String currencyCode, HttpServletRequest servletRequest) {
-
+        // TODO tu też to co wyzej
         JWTDecoder jwtDecoder = new JWTDecoder(servletRequest);
         String userName = jwtDecoder.getNameFromToken(servletRequest);
 
