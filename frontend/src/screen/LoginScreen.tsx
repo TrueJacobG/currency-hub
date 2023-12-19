@@ -24,7 +24,6 @@ const LogScreen = () => {
 
     if (result.status === "OK") {
       setLoginUser({ email: "", authCode: "" });
-      console.log(setLoginUser);
       navigate("/home");
     }
   };
@@ -38,10 +37,7 @@ const LogScreen = () => {
       <Text style={styles.textintro}>
         If you do not have an account please register
       </Text>
-      <Pressable
-        style={() => [styles.button]}
-        onPress={() => navigate("/")}
-      >
+      <Pressable style={() => [styles.button]} onPress={() => navigate("/")}>
         <Text style={[styles.text]}>Register</Text>
       </Pressable>
     </View>
