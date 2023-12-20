@@ -7,10 +7,7 @@ import com.truejacobg.currencyhub.exception.NoEnoughBalanceInWallet;
 import com.truejacobg.currencyhub.exception.WalletDoesntExistException;
 import com.truejacobg.currencyhub.exception.WrongCurrencyCodeException;
 import com.truejacobg.currencyhub.security.JWTDecoder;
-import com.truejacobg.currencyhub.wallet.dto.WalletAddBalanceDTO;
-import com.truejacobg.currencyhub.wallet.dto.WalletCurrencyExchangeDTO;
-import com.truejacobg.currencyhub.wallet.dto.WalletResponseDTO;
-import com.truejacobg.currencyhub.wallet.dto.WalletStatusResponseDTO;
+import com.truejacobg.currencyhub.wallet.dto.*;
 import com.truejacobg.currencyhub.wallet.entity.WalletCurrencyExchangeEntity;
 import com.truejacobg.currencyhub.wallet.entity.WalletEntity;
 import jakarta.servlet.http.HttpServletRequest;
@@ -33,9 +30,11 @@ public class WalletService {
     private CurrencyService currencyService;
     private CurrencyRepository currencyRepository;
 
-    public WalletResponseDTO addBalance(WalletAddBalanceDTO value, HttpServletRequest servletRequest) {
+    public WalletAddResponseDTO addBalance(WalletAddBalanceDTO value, HttpServletRequest servletRequest) {
         JWTDecoder jwtDecoder = new JWTDecoder(servletRequest);
         String userName = jwtDecoder.getNameFromToken(servletRequest);
+
+        WalletEntity result;
 
         if (value.getValue() <= 0) {
             throw new AddBalanceException("Value you add must be greater then 0", HttpStatus.EXPECTATION_FAILED);
@@ -44,15 +43,15 @@ public class WalletService {
                 WalletEntity walletEntity = walletRepository.findWalletEntityByName(userName);
                 double currentValue = walletEntity.getWalletMap().get("PLN");
                 walletEntity.getWalletMap().put("PLN", currentValue + value.getValue());
-                walletRepository.save(walletEntity);
+                result = walletRepository.save(walletEntity);
             } catch (NullPointerException e) {
                 Map<String, Double> walletMap = new HashMap<>();
                 walletMap.put("PLN", value.getValue());
                 WalletEntity newWalletEntity = new WalletEntity(userName, walletMap);
-                walletRepository.save(newWalletEntity);
+                result = walletRepository.save(newWalletEntity);
             }
         }
-        return new WalletResponseDTO("Balance added successfully", HttpStatus.OK);
+        return new WalletAddResponseDTO("Balance added successfully", HttpStatus.OK, result.getWalletMap().get("PLN"));
     }
 
     public WalletStatusResponseDTO getWalletStatus(HttpServletRequest servletRequest) {

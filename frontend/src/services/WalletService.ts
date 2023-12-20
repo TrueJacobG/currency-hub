@@ -1,6 +1,6 @@
 import { REACT_APP_UNIVERSAL_LINK } from "@env";
+import { Float } from "react-native/Libraries/Types/CodegenTypes";
 import { TokenService } from "./TokenService";
-import { Double, Float } from "react-native/Libraries/Types/CodegenTypes";
 
 export class WalletService {
   universalLink: string = REACT_APP_UNIVERSAL_LINK;
@@ -9,15 +9,12 @@ export class WalletService {
 
   tokenService = new TokenService();
 
+  // TODO
+  // after @Łukasz change
   async getUserWallet() {
     let token = await this.tokenService.getToken().then((t) => {
       return t;
     });
-    //TODO:: spojrz tu, problwalem naprawic zamieniajc map na 2 listy, nie wiedzialem jak
-    let wallet = {
-      codes: [],
-      values: Number,
-    };
 
     return await fetch(this.getUserWalletLink, {
       method: "GET",
@@ -53,7 +50,7 @@ export class WalletService {
     })
       .then((response) => response.json())
       .then((data) => {
-        return data;
+        return data.newWalletValue;
       })
       .catch((error) => {
         console.error(error);

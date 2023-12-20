@@ -1,9 +1,6 @@
 package com.truejacobg.currencyhub.wallet;
 
-import com.truejacobg.currencyhub.wallet.dto.WalletAddBalanceDTO;
-import com.truejacobg.currencyhub.wallet.dto.WalletCurrencyExchangeDTO;
-import com.truejacobg.currencyhub.wallet.dto.WalletResponseDTO;
-import com.truejacobg.currencyhub.wallet.dto.WalletStatusResponseDTO;
+import com.truejacobg.currencyhub.wallet.dto.*;
 import jakarta.servlet.http.HttpServletRequest;
 import lombok.AllArgsConstructor;
 import org.springframework.http.ResponseEntity;
@@ -17,8 +14,8 @@ public class WalletController {
     private WalletService walletService;
 
     @PostMapping("/transfer")
-    ResponseEntity<WalletResponseDTO> addBalance(@RequestBody WalletAddBalanceDTO value, HttpServletRequest servletRequest) {
-        WalletResponseDTO walletResponseDTO = walletService.addBalance(value, servletRequest);
+    ResponseEntity<WalletAddResponseDTO> addBalance(@RequestBody WalletAddBalanceDTO value, HttpServletRequest servletRequest) {
+        WalletAddResponseDTO walletResponseDTO = walletService.addBalance(value, servletRequest);
         return ResponseEntity.ok(walletResponseDTO);
     }
 

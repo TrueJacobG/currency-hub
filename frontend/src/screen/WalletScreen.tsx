@@ -1,26 +1,25 @@
 import AsyncStorage from "@react-native-async-storage/async-storage";
-import {
-  View,
-  Text,
-  StyleSheet,
-  Button,
-  TextInput,
-  FlatList,
-} from "react-native";
+import { useAtom } from "jotai";
+import { useEffect, useState } from "react";
+import { Button, FlatList, StyleSheet, Text, TextInput, View } from "react-native";
 import MenuComponent from "../components/menu/MenuComponent";
 import { loggedUserAtom } from "../jotai/loggedUserAtom";
 import { WalletService } from "../services/WalletService";
-import { Wallet } from "../type/Wallet";
 import { User } from "../type/User";
-import { useAtom } from "jotai";
-import { useEffect, useState } from "react";
 
 const WalletScreen = () => {
   const walletService = new WalletService();
 
+  const [userWallet, setUserWallet] = useState<number>(-1);
   const [loggedUser, setLoggedUser] = useAtom<User>(loggedUserAtom);
   const [wallet, setWallet] = useState(new Map());
   const [inputValue, setInputValue] = useState("");
+
+  const addToUserWallet = () => {
+    walletService.addCash(parseFloat(inputValue)).then((value) => {
+      setUserWallet(value);
+    });
+  };
 
   useEffect(() => {
     getData();
@@ -44,25 +43,15 @@ const WalletScreen = () => {
     <View>
       <View>
         <Text style={styles.textintro}>Welcome to your wallet!</Text>
-        <View>
-          <Text>Email: {loggedUser.email}</Text>
-        </View>
       </View>
       <View>
-        <TextInput
-          placeholder="Input cash here"
-          onChangeText={(text) => setInputValue(text)}
-        ></TextInput>
-        <Button
-          title="AddCash"
-          onPress={() => walletService.addCash(parseFloat(inputValue))}
-        ></Button>
+        <Text>{userWallet === -1 ? "Not fetched" : userWallet}</Text>
+      </View>
+      <View>
+        <TextInput placeholder="Input cash here" onChangeText={(text) => setInputValue(text)}></TextInput>
+        <Button title="AddCash" onPress={() => addToUserWallet()}></Button>
 
-        <FlatList
-          data={wallet}
-          renderItem={({ item }) => <Text>asd</Text>}
-          keyExtractor={(item) => item}
-        />
+        <FlatList data={wallet} renderItem={({ item }) => <Text>asd</Text>} keyExtractor={(item) => item} />
       </View>
       <View style={styles.bottomView}>
         <MenuComponent />
