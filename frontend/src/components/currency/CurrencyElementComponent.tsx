@@ -6,12 +6,14 @@ import {
   Text,
   TouchableOpacity,
   View,
+  Image,
 } from "react-native";
 import { ChartData } from "react-native-chart-kit/dist/HelperTypes";
 import { CurrencyService } from "../../services/CurrencyService";
 import { FavouriteService } from "../../services/FavouriteService";
 import { Currency } from "../../type/Currency";
 import LineChartComponent from "./LineChartComponent";
+import { MaterialCommunityIcons } from "@expo/vector-icons";
 
 type Props = { currency: Currency; onCloseModal: () => void };
 
@@ -71,6 +73,23 @@ const CurrencyElementComponent = ({ currency, onCloseModal }: Props) => {
     }
   }, [selectedTimeRange]);
 
+  const renderArrow = () => {
+    if (currency.pointerUP !== undefined) {
+      const iconName = currency.pointerUP ? "trending-up" : "trending-down";
+      const iconColor = currency.pointerUP ? "green" : "red";
+  
+      return (
+        <MaterialCommunityIcons
+          name={iconName}
+          size={40}
+          color={iconColor}
+          style={styles.arrowIcon}
+        />
+      );
+    }
+    return null;
+  };
+
   return (
     <View style={styles.currencyContainer}>
       <TouchableOpacity onPress={toggleModal}>
@@ -78,6 +97,7 @@ const CurrencyElementComponent = ({ currency, onCloseModal }: Props) => {
         <Text>{currency.currencyName}</Text>
         <Text>{currency.mid}</Text>
       </TouchableOpacity>
+      {renderArrow()}
 
       <Modal animationType="slide" transparent={true} visible={isModalVisible}>
         <View style={styles.modalContainer}>
@@ -144,6 +164,11 @@ const styles = StyleSheet.create({
     flexDirection: "row-reverse",
     justifyContent: "space-between",
     marginBottom: 16,
+  },
+  arrowIcon: {
+    width: 40,
+    height: 40,
+    marginTop: 10,
   },
 });
 

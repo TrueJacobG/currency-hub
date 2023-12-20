@@ -11,13 +11,15 @@ type Props = {
 const CurrencyListComponent = ({ currencies, onCurrencyPress }: Props) => {
   return (
     <View>
-      <FlatList
-        data={currencies}
-        renderItem={({ item }) => (
+        <FlatList
+          data={currencies}
+          renderItem={({ item }) => (
+            (
           <CurrencyElementComponent currency={item} onCloseModal={() => {}} />
+          )
         )}
-        keyExtractor={(item) => item.currencyCode.toString()}
-      />
+          keyExtractor={(item) => item.currencyCode.toString()}
+        />
     </View>
   );
 };
