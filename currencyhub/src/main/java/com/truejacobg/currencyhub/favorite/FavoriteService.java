@@ -1,6 +1,9 @@
 package com.truejacobg.currencyhub.favorite;
 
+import com.truejacobg.currencyhub.currency.CurrencyRepository;
+import com.truejacobg.currencyhub.exception.CurrencyNotFoundException;
 import com.truejacobg.currencyhub.exception.UserFavoriteCurrencyException;
+import com.truejacobg.currencyhub.exception.WrongCurrencyCodeException;
 import com.truejacobg.currencyhub.favorite.dto.CreateFavoriteResponseDTO;
 import com.truejacobg.currencyhub.favorite.dto.DeleteFavoriteResponseDTO;
 import com.truejacobg.currencyhub.favorite.dto.GetFavoriteResponseDTO;
@@ -19,10 +22,12 @@ import java.util.List;
 @Service
 public class FavoriteService {
     private FavoriteRepository favoriteRepository;
-
+    private CurrencyRepository currencyRepository;
 
     public CreateFavoriteResponseDTO addFavoriteCurrency(String currencyCode, HttpServletRequest servletRequest) {
-        // TODO: sprawdz czy currency code jest w bazie?
+
+        currencyRepository.findByCurrencyCode(currencyCode).orElseThrow(() -> new WrongCurrencyCodeException("Currency not found in the database", HttpStatus.NOT_FOUND));
+
         JWTDecoder jwtDecoder = new JWTDecoder(servletRequest);
         String userName = jwtDecoder.getNameFromToken(servletRequest);
 
@@ -36,7 +41,9 @@ public class FavoriteService {
     }
 
     public DeleteFavoriteResponseDTO deleteFavoriteCurrency(String currencyCode, HttpServletRequest servletRequest) {
-        // TODO tu też to co wyzej
+
+        currencyRepository.findByCurrencyCode(currencyCode).orElseThrow(() -> new WrongCurrencyCodeException("Currency not found in the database", HttpStatus.NOT_FOUND));
+
         JWTDecoder jwtDecoder = new JWTDecoder(servletRequest);
         String userName = jwtDecoder.getNameFromToken(servletRequest);
 
