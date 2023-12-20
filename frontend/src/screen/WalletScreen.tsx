@@ -1,32 +1,45 @@
 import AsyncStorage from "@react-native-async-storage/async-storage";
-import { Link } from "react-router-native";
-import { View, Text, StyleSheet } from "react-native";
+import {
+  View,
+  Text,
+  StyleSheet,
+  Button,
+  TextInput,
+  FlatList,
+} from "react-native";
 import MenuComponent from "../components/menu/MenuComponent";
 import { loggedUserAtom } from "../jotai/loggedUserAtom";
 import { WalletService } from "../services/WalletService";
+import { Wallet } from "../type/Wallet";
 import { User } from "../type/User";
 import { useAtom } from "jotai";
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 
 const WalletScreen = () => {
   const walletService = new WalletService();
 
   const [loggedUser, setLoggedUser] = useAtom<User>(loggedUserAtom);
+  const [wallet, setWallet] = useState(new Map());
+  const [inputValue, setInputValue] = useState("");
 
   useEffect(() => {
-    walletService.getUserWallet().catch((error) => {
-      console.error(error);
-    });
+    getData();
+
+    walletService
+      .getUserWallet()
+      .then((data) => setWallet(data))
+      .catch((error) => {
+        console.error(error);
+      });
   }, []);
 
   const getData = async () => {
     let data = await AsyncStorage.getItem("token");
   };
 
-  useEffect(() => {
-    getData();
-  }, []);
-
+  //TODO::dodac jakiekolwiek wyswietlanie
+  //TODO::mam mape, to przyjmuje Array jakis, nie wiem jak zmienic zeby dane byly dobrze
+  //TODO:: dodac ekran wymiany
   return (
     <View>
       <View>
@@ -36,7 +49,20 @@ const WalletScreen = () => {
         </View>
       </View>
       <View>
-        <Text>WALLET HERE</Text>
+        <TextInput
+          placeholder="Input cash here"
+          onChangeText={(text) => setInputValue(text)}
+        ></TextInput>
+        <Button
+          title="AddCash"
+          onPress={() => walletService.addCash(parseFloat(inputValue))}
+        ></Button>
+
+        <FlatList
+          data={wallet}
+          renderItem={({ item }) => <Text>asd</Text>}
+          keyExtractor={(item) => item}
+        />
       </View>
       <View style={styles.bottomView}>
         <MenuComponent />
