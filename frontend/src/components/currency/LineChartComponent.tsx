@@ -29,6 +29,10 @@ const LineChartComponent = ({ chartData }: Props) => {
             strokeWidth: "0.5",
             stroke: "#ffa726",
           },
+          propsForBackgroundLines: {
+            stroke: "rgba(0, 0, 0, 0.1)",
+            strokeOpacity: 0.5,
+          },
         }}
         bezier = {false}
         style={{ marginVertical: 8, borderRadius: 5 }}
