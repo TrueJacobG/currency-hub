@@ -15,6 +15,7 @@ const MenuComponent = () => {
     </View>
   );
 };
+export default MenuComponent;
 
 const styles = StyleSheet.create({
   container: {

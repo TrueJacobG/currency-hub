@@ -1,10 +1,11 @@
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import { Link } from "react-router-native";
 import { View, Text, StyleSheet } from "react-native";
-import CurrencyListComponent from "../components/currency/CurrencyListComponent";
+import FavouriteListComponent from "../components/currency/FavouriteListComponent";
 import MenuComponent from "../components/menu/MenuComponent";
 import { loggedUserAtom } from "../jotai/loggedUserAtom";
 import { FavouriteService } from "../services/FavouriteService";
+import { CurrencyService } from "../services/CurrencyService";
 import { Currency } from "../type/Currency";
 import { User } from "../type/User";
 import { useAtom } from "jotai";
@@ -12,15 +13,24 @@ import { useEffect, useState } from "react";
 
 const FavouriteScreen = () => {
   const favouriteService = new FavouriteService();
+  const currencyService = new CurrencyService();
+
   const [loggedUser, setLoggedUser] = useAtom<User>(loggedUserAtom);
+
+  const [favourites, setFavourites] = useState<Currency[]>([]);
   const [currencies, setCurrencies] = useState<Currency[]>([]);
-  const [selectedCurrency, setSelectedCurrency] = useState<Currency | null>(
-    null
-  );
 
   useEffect(() => {
     favouriteService
       .getUserFavourites()
+      .then((data) => {
+        setFavourites(data.list);
+      })
+      .catch((error) => {
+        console.error(error);
+      });
+    currencyService
+      .getAllCurrencies()
       .then((data) => {
         setCurrencies(data.list);
       })
@@ -28,16 +38,6 @@ const FavouriteScreen = () => {
         console.error(error);
       });
   }, []);
-
-  useEffect(() => {}, []);
-
-  const handleCurrencyPress = (currency: Currency) => {
-    setSelectedCurrency(currency);
-  };
-
-  const handleModalClose = () => {
-    setSelectedCurrency(null);
-  };
 
   return (
     <View>
@@ -47,10 +47,12 @@ const FavouriteScreen = () => {
           <Text>Email: {loggedUser.email}</Text>
         </View>
         <View>
-          <CurrencyListComponent
-            currencies={currencies}
-            onCurrencyPress={handleCurrencyPress}
+          <FavouriteListComponent
+            currencies={favourites}
+            onButtonPress="Delete"
           />
+          <View style={styles.space}></View>
+          <FavouriteListComponent currencies={currencies} onButtonPress="Add" />
         </View>
       </View>
       <View style={styles.bottomView}>
@@ -82,5 +84,9 @@ const styles = StyleSheet.create({
   bottomView: {
     alignItems: "center",
     marginTop: "auto",
+  },
+  space: {
+    borderBottomColor: "black",
+    borderBottomWidth: StyleSheet.hairlineWidth,
   },
 });
