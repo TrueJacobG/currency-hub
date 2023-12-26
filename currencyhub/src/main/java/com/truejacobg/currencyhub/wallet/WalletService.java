@@ -30,28 +30,47 @@ public class WalletService {
     private CurrencyService currencyService;
     private CurrencyRepository currencyRepository;
 
+    public List<WalletListElementDTO> walletMapToListParser(Map<String, Double> walletMap) {
+        List<WalletListElementDTO> walletList = new ArrayList<>();
+        for (Map.Entry<String, Double> entry : walletMap.entrySet()) {
+            WalletListElementDTO walletListElementDTO = new WalletListElementDTO(entry.getKey(), entry.getValue());
+            walletList.add(walletListElementDTO);
+        }
+        return walletList;
+    }
+
     public WalletAddResponseDTO addBalance(WalletAddBalanceDTO value, HttpServletRequest servletRequest) {
         JWTDecoder jwtDecoder = new JWTDecoder(servletRequest);
         String userName = jwtDecoder.getNameFromToken(servletRequest);
 
-        WalletEntity result;
+        WalletEntity walletEntity;
+        WalletCurrencyExchangeEntity walletCurrencyExchangeEntity;
+
 
         if (value.getValue() <= 0) {
             throw new AddBalanceException("Value you add must be greater then 0", HttpStatus.EXPECTATION_FAILED);
         } else {
             try {
-                WalletEntity walletEntity = walletRepository.findWalletEntityByName(userName);
+                walletCurrencyExchangeEntity = walletCurrencyExchangeRepository.findByName(userName);
+                walletEntity = walletRepository.findWalletEntityByName(userName);
                 double currentValue = walletEntity.getWalletMap().get("PLN");
                 walletEntity.getWalletMap().put("PLN", currentValue + value.getValue());
-                result = walletRepository.save(walletEntity);
+                WalletCurrencyExchangeDTO walletCurrencyExchangeDTO = new WalletCurrencyExchangeDTO("-", "PLN", value.getValue(), LocalDateTime.now());
+                walletCurrencyExchangeEntity.getExchangeCurrencyDTOList().add(walletCurrencyExchangeDTO);
             } catch (NullPointerException e) {
                 Map<String, Double> walletMap = new HashMap<>();
+                List<WalletCurrencyExchangeDTO> currencyExchangeDTOList = new ArrayList<>();
                 walletMap.put("PLN", value.getValue());
-                WalletEntity newWalletEntity = new WalletEntity(userName, walletMap);
-                result = walletRepository.save(newWalletEntity);
+                walletEntity = new WalletEntity(userName, walletMap);
+                WalletCurrencyExchangeDTO walletCurrencyExchangeDTO = new WalletCurrencyExchangeDTO("-", "PLN", value.getValue(), LocalDateTime.now());
+                currencyExchangeDTOList.add(walletCurrencyExchangeDTO);
+                walletCurrencyExchangeEntity = new WalletCurrencyExchangeEntity(userName, currencyExchangeDTOList);
             }
+            walletCurrencyExchangeRepository.save(walletCurrencyExchangeEntity);
+            walletRepository.save(walletEntity);
+
         }
-        return new WalletAddResponseDTO("Balance added successfully", HttpStatus.OK, result.getWalletMap().get("PLN"));
+        return new WalletAddResponseDTO("Balance added successfully", HttpStatus.OK, walletEntity.getWalletMap().get("PLN"));
     }
 
     public WalletStatusResponseDTO getWalletStatus(HttpServletRequest servletRequest) {
@@ -66,7 +85,7 @@ public class WalletService {
             throw new WalletDoesntExistException("There is no wallet for this user", HttpStatus.EXPECTATION_FAILED);
         }
 
-        return new WalletStatusResponseDTO("Current wallet status returned", walletMap, HttpStatus.OK);
+        return new WalletStatusResponseDTO("Current wallet status returned", walletMapToListParser(walletMap), HttpStatus.OK);
     }
 
     public WalletResponseDTO exchangeCurrency(WalletCurrencyExchangeDTO currencyExchangeDTO, HttpServletRequest servletRequest) {
@@ -143,7 +162,6 @@ public class WalletService {
             walletRepository.save(walletEntity);
 
         } catch (NullPointerException e) {
-            System.out.println("to catch");
             try {
                 walletEntity = walletRepository.findWalletEntityByName(userName);
             } catch (NullPointerException ex) {
