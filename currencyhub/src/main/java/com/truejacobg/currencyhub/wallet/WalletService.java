@@ -128,7 +128,7 @@ public class WalletService {
                     throw new NoEnoughBalanceInWallet("You don't have enough balance, try change currencyFrom or add balance", HttpStatus.EXPECTATION_FAILED);
                 } else {
                     walletEntity.getWalletMap().merge(currencyExchangeDTO.getCurrencyCodeTo(), currencyExchangeDTO.getValue(), Double::sum);
-                    walletEntity.getWalletMap().put(currencyExchangeDTO.getCurrencyCodeFrom(), walletEntity.getWalletMap().get(currencyExchangeDTO.getCurrencyCodeFrom()) - currencyExchangeDTO.getValue() * midTo);
+                    walletEntity.getWalletMap().put(currencyExchangeDTO.getCurrencyCodeFrom(), walletEntity.getWalletMap().get(currencyExchangeDTO.getCurrencyCodeFrom()) - (currencyExchangeDTO.getValue() * midTo)*1.0019);
                 }
 
             } else if (currencyExchangeDTO.getCurrencyCodeTo().equals("PLN")) {
@@ -139,7 +139,7 @@ public class WalletService {
                     throw new NoEnoughBalanceInWallet("You don't have enough balance, try change currencyFrom or add balance", HttpStatus.EXPECTATION_FAILED);
                 } else {
                     walletEntity.getWalletMap().merge(currencyExchangeDTO.getCurrencyCodeTo(), currencyExchangeDTO.getValue(), Double::sum);
-                    walletEntity.getWalletMap().put(currencyExchangeDTO.getCurrencyCodeFrom(), (walletEntity.getWalletMap().get(currencyExchangeDTO.getCurrencyCodeFrom()) - currencyExchangeDTO.getValue() / midFrom));
+                    walletEntity.getWalletMap().put(currencyExchangeDTO.getCurrencyCodeFrom(), (walletEntity.getWalletMap().get(currencyExchangeDTO.getCurrencyCodeFrom()) - (currencyExchangeDTO.getValue() / midFrom)*1.0019));
                 }
             } else {
                 midTo = currencyService.getCurrencyRateByCode(currencyExchangeDTO.getCurrencyCodeTo()).getList().get(0).getMid();
@@ -149,7 +149,7 @@ public class WalletService {
                     throw new NoEnoughBalanceInWallet("You don't have enough balance, try change currencyFrom or add balance", HttpStatus.EXPECTATION_FAILED);
                 } else {
                     walletEntity.getWalletMap().merge(currencyExchangeDTO.getCurrencyCodeTo(), currencyExchangeDTO.getValue(), Double::sum);
-                    walletEntity.getWalletMap().put(currencyExchangeDTO.getCurrencyCodeFrom(), ((walletEntity.getWalletMap().get(currencyExchangeDTO.getCurrencyCodeFrom())) * midFrom - currencyExchangeDTO.getValue() * midTo) / midFrom);
+                    walletEntity.getWalletMap().put(currencyExchangeDTO.getCurrencyCodeFrom(), ((walletEntity.getWalletMap().get(currencyExchangeDTO.getCurrencyCodeFrom())) * midFrom - (currencyExchangeDTO.getValue() * midTo)*1.0019) / midFrom);
                 }
             }
 
