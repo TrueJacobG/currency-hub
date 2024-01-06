@@ -5,11 +5,15 @@ import FavouriteElementComponent from "./FavouriteElementComponent";
 
 type Props = {
   currencies: Currency[];
-  onButtonPress: string;
-  func: Function;
+  action: string;
+  onButtonPress: Function;
 };
 
-const FavouriteListComponent = ({ currencies, onButtonPress, func }: Props) => {
+const FavouriteListComponent = ({
+  currencies,
+  action,
+  onButtonPress,
+}: Props) => {
   return (
     <View>
       <FlatList
@@ -17,8 +21,8 @@ const FavouriteListComponent = ({ currencies, onButtonPress, func }: Props) => {
         renderItem={({ item }) => (
           <FavouriteElementComponent
             currency={item}
+            action={action}
             onButtonPress={onButtonPress}
-            func={func}
           ></FavouriteElementComponent>
         )}
         keyExtractor={(item) => item.currencyCode.toString()}

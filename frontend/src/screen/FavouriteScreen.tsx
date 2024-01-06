@@ -39,16 +39,6 @@ const FavouriteScreen = () => {
       });
   }, []);
 
-  function isFound(cur: Currency): boolean {
-    favourites.find((element) => {
-      if (element.currencyCode === cur.currencyCode) {
-        return true;
-      }
-      return false;
-    });
-    return false;
-  }
-
   function addFunc(cur: Currency) {
     if (!favourites.some((d) => cur.currencyCode === d.currencyCode)) {
       setFavourites(favourites.concat(cur));
@@ -73,14 +63,14 @@ const FavouriteScreen = () => {
         <View>
           <FavouriteListComponent
             currencies={favourites}
-            onButtonPress="Delete"
-            func={delFunc}
+            action="Delete"
+            onButtonPress={delFunc}
           />
           <View style={styles.space}></View>
           <FavouriteListComponent
             currencies={currencies}
-            onButtonPress="Add"
-            func={addFunc}
+            action="Add"
+            onButtonPress={addFunc}
           />
         </View>
       </View>

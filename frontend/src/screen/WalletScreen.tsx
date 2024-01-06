@@ -15,7 +15,6 @@ import { WalletService } from "../services/WalletService";
 import { CurrencyService } from "../services/CurrencyService";
 import { User } from "../type/User";
 import { Dropdown } from "react-native-element-dropdown";
-import { Currency } from "../type/Currency";
 
 const WalletScreen = () => {
   const walletService = new WalletService();
@@ -45,8 +44,6 @@ const WalletScreen = () => {
       currencyValue.currencyCode,
       exchangeValue
     );
-
-    console.log("EXCHANGE");
   };
 
   useEffect(() => {

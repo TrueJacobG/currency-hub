@@ -7,14 +7,14 @@ import FavouriteScreen from "../../screen/FavouriteScreen";
 
 type Props = {
   currency: Currency;
-  onButtonPress: string;
-  func: Function;
+  action: string;
+  onButtonPress: Function;
 };
 
 const FavouriteElementComponent = ({
   currency,
-  onButtonPress,
-  func,
+  action: onButtonPress,
+  onButtonPress: func,
 }: Props) => {
   const favouriteService = new FavouriteService();
 
