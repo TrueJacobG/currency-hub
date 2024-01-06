@@ -39,6 +39,20 @@ const FavouriteScreen = () => {
       });
   }, []);
 
+  function addFunc(cur: Currency) {
+    if (!favourites.some((d) => cur.currencyCode === d.currencyCode)) {
+      setFavourites(favourites.concat(cur));
+    }
+  }
+
+  function delFunc(cur: Currency) {
+    const newList = favourites.filter(
+      (item) => item.currencyCode != cur.currencyCode
+    );
+
+    setFavourites(newList);
+  }
+
   return (
     <View>
       <View>
@@ -49,10 +63,15 @@ const FavouriteScreen = () => {
         <View>
           <FavouriteListComponent
             currencies={favourites}
-            onButtonPress="Delete"
+            action="Delete"
+            onButtonPress={delFunc}
           />
           <View style={styles.space}></View>
-          <FavouriteListComponent currencies={currencies} onButtonPress="Add" />
+          <FavouriteListComponent
+            currencies={currencies}
+            action="Add"
+            onButtonPress={addFunc}
+          />
         </View>
       </View>
       <View style={styles.bottomView}>

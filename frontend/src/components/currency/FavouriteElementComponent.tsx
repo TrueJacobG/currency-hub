@@ -1,19 +1,22 @@
 import React, { useState } from "react";
-import { Image, StyleSheet, Text, TouchableOpacity, View } from "react-native";
-import { CurrencyService } from "../../services/CurrencyService";
+import { StyleSheet, Text, TouchableOpacity, View } from "react-native";
 import { Currency } from "../../type/Currency";
 import { FavouriteService } from "../../services/FavouriteService";
-import { useNavigation } from "@react-navigation/native";
+import { MaterialCommunityIcons } from "@expo/vector-icons";
+import FavouriteScreen from "../../screen/FavouriteScreen";
 
 type Props = {
   currency: Currency;
-  onButtonPress: string;
+  action: string;
+  onButtonPress: Function;
 };
 
-const FavouriteElementComponent = ({ currency, onButtonPress }: Props) => {
+const FavouriteElementComponent = ({
+  currency,
+  action: onButtonPress,
+  onButtonPress: func,
+}: Props) => {
   const favouriteService = new FavouriteService();
-  const heartImageLink = require("../../../assets/heart.png");
-  const noHeartImageLink = require("../../../assets/noHeart.png");
 
   const favouriteAddDelete = async (currencyCode: string) => {
     switch (onButtonPress) {
@@ -21,6 +24,7 @@ const FavouriteElementComponent = ({ currency, onButtonPress }: Props) => {
         favouriteService.addUserFavourite(currencyCode).catch((error) => {
           console.error(error);
         });
+        func(currency);
         break;
       case "Delete":
         favouriteService
@@ -28,6 +32,7 @@ const FavouriteElementComponent = ({ currency, onButtonPress }: Props) => {
           .catch((error) => {
             console.error(error);
           });
+        func(currency);
         break;
       default:
         console.error("[Add] or [Delete]");
@@ -37,9 +42,9 @@ const FavouriteElementComponent = ({ currency, onButtonPress }: Props) => {
   const handleImage = () => {
     switch (onButtonPress) {
       case "Add":
-        return heartImageLink;
+        return "heart";
       case "Delete":
-        return noHeartImageLink;
+        return "heart-broken";
     }
   };
 
@@ -57,7 +62,11 @@ const FavouriteElementComponent = ({ currency, onButtonPress }: Props) => {
             favouriteAddDelete(currency.currencyCode);
           }}
         >
-          <Image resizeMode="contain" source={handleImage()} />
+          <MaterialCommunityIcons
+            name={handleImage()}
+            size={40}
+            color={"red"}
+          />
         </TouchableOpacity>
       </View>
     </View>
@@ -75,8 +84,6 @@ const styles = StyleSheet.create({
   heartIcon: {
     aspectRatio: 1,
     resizeMode: "contain",
-    top: -15,
-    marginBottom: -25,
     alignItems: "flex-end",
     marginLeft: "auto",
   },

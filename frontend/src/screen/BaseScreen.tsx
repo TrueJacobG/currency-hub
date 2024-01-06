@@ -25,6 +25,7 @@ const BaseScreen = () => {
   const scrollViewRef = useRef<ScrollView>(null);
 
   useEffect(() => {
+    
     currencyService
       .getAllCurrencies()
       .then((data) => {
