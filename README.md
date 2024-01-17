@@ -28,6 +28,8 @@
 - Typescript / Javascript
 - React Native
 - MongoDB
+-
+- Maven 
 - Junit
 - Postman
 
