@@ -37,9 +37,9 @@
 
 #### Roles in team:
 - @TrueJacobG: Frontend, Backend, Tester, Scrum master (kinda), Product Owner (kinda) 
-- @GGGeralt: Frontend, Backend
-- @SARUXSARU: Database, Tester
-- @GoldFireGames: Tester
+- @GGGeralt: Backend, Frontend
+- @SARUXSARU: Database, Backend, Tester
+- @GoldFireGames: Tester, Backend
 - @KubaPlayer1: Frontend
 
 
