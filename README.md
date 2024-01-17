@@ -28,9 +28,9 @@
 - Typescript / Javascript
 - React Native
 - MongoDB
--
 - Maven 
 - Junit
+- Expo
 - Postman
 
 ---
@@ -46,11 +46,32 @@
 
 #### Future improvements / fixes:
 - Redis: for caching currency codes, currency rates etc.
-- Jenkins: for CI/CD and testing
+- Docker + Jenkins: for CI/CD and testing
 - Frontend fixes: lack of the major error handlings, lack of animation, probably add [TamaGUI][tamagui] for visual improvements
 - Security: token validations and in the futre use fe. google oauth service
 - Maybe try to deploy on AWS + Expo
 
+---
+
+#### Installation
+
+Backend:
+```
+cd ./currencyhub
+
+cd ./src/main/resources
+<add application.yml as application.yml.example says> 
+
+mvn clean install
+mvn spring-boot:run
+```
+
+Frontend
+```
+cd ./frontend
+npm install
+npm run start
+```
 
 [nbpApi]: https://api.nbp.pl/en.html
 [tamagui]: https://tamagui.dev/
