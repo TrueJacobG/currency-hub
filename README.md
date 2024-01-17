@@ -47,7 +47,7 @@
 #### Future improvements / fixes:
 - Redis: for caching currency codes, currency rates etc.
 - Jenkins: for CI/CD and testing
-- Frontend fixes: lack of the major error handlings, lack of animation, probably add TamaGUI[tamagui] for visual improvements
+- Frontend fixes: lack of the major error handlings, lack of animation, probably add [TamaGUI][tamagui] for visual improvements
 - Security: token validations and in the futre use fe. google oauth service
 - Maybe try to deploy on AWS + Expo
 
