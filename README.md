@@ -1,4 +1,4 @@
-### Group project with @GGGeralt, @SARUXSARU, @GoldFireGames and @KubaPlayer1
+### Group project with [@GGGeralt][GGGeralt], [@SARUXSARU][SARUXSARU], [@GoldFireGames][GoldFireGames] and [@KubaPlayer1][KubaPlayer1]
 
 ---
 
@@ -28,20 +28,55 @@
 - Typescript / Javascript
 - React Native
 - MongoDB
--
 - Maven 
 - Junit
+- Expo
 - Postman
 
 ---
 
 #### Roles in team:
-- @TrueJacobG: Frontend, Backend, Tester, Scrum master (kinda), Product Owner (kinda) 
-- @GGGeralt: Backend, Frontend
-- @SARUXSARU: Database, Backend, Tester
-- @GoldFireGames: Tester, Backend
-- @KubaPlayer1: Frontend
+- [@TrueJacobG][TrueJacobG]: Frontend, Backend, Tester, Scrum master (kinda), Product Owner (kinda) 
+- [@GGGeralt][GGGeralt]: Backend, Frontend
+- [@SARUXSARU][SARUXSARU]: Database, Backend, Tester
+- [@GoldFireGames][GoldFireGames]: Tester, Backend
+- [@KubaPlayer1][KubaPlayer1]: Frontend
 
+---
 
+#### Future improvements / fixes:
+- Redis: for caching currency codes, currency rates etc.
+- Docker + Jenkins: for CI/CD and testing
+- Frontend fixes: lack of the major error handlings, lack of animation, probably add [TamaGUI][tamagui] for visual improvements
+- Security: token validations and in the futre use fe. google oauth service
+- Maybe try to deploy on AWS + Expo
+
+---
+
+#### Installation
+
+Backend:
+```
+cd ./currencyhub
+
+cd ./src/main/resources
+<add application.yml as application.yml.example says> 
+
+mvn clean install
+mvn spring-boot:run
+```
+
+Frontend
+```
+cd ./frontend
+npm install
+npm run start
+```
 
 [nbpApi]: https://api.nbp.pl/en.html
+[tamagui]: https://tamagui.dev/
+[TrueJacobG]: https://github.com/TrueJacobG
+[GGGeralt]: https://github.com/GGGeralt
+[SARUXSARU]: https://github.com/SARUXSARU
+[GoldFireGames]: https://github.com/GoldFireGames
+[KubaPlayer1]: https://github.com/KubaPlayer1
