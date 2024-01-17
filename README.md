@@ -25,6 +25,7 @@
 
 - Java 17
 - Spring Boot 3
+- Typescript / Javascript
 - React Native
 - MongoDB
 - Junit
