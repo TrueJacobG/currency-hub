@@ -31,4 +31,15 @@
 - Junit
 - Postman
 
+---
+
+#### Roles in team:
+- @TrueJacobG: Frontend, Backend, Tester, Scrum master (kinda), Product Owner (kinda) 
+- @GGGeralt: Frontend, Backend
+- @SARUXSARU: Database, Tester
+- @GoldFireGames: Tester
+- @KubaPlayer1: Frontend
+
+
+
 [nbpApi]: https://api.nbp.pl/en.html
